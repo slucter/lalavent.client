@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="evn-primary">
     <navbar />
     <div class="container">
       <router-view/>
@@ -25,12 +25,8 @@ export default {
     margin: 0;
     padding: 0;
   }
-  body{
-  }
-  #app{
+  #app {
     min-height: 100vh;
-    background-color: #2c3e50;
-    color: #ffffff;
   }
   .evn-primary{
     background-color: #2c3e50;
