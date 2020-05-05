@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import OrganizerEventList from '../views/OrganizerEventList.vue'
+import AddEvent from '../views/AddEvent.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/:organizerId/event-list',
     name: 'OrganizerEventList',
     component: OrganizerEventList
+  },
+  {
+    path: '/:organizerId/add-event',
+    name: 'AddEvent',
+    component: AddEvent
   }
 ]
 
