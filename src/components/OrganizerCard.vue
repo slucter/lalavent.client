@@ -7,10 +7,10 @@
         </div>
         <div class="col-md-10 d-flex flex-column">
           <div class="pt-3">
-            <h3>Excision</h3>
-            <p>Total Events: 666</p>
+            <h3 class="evn-title">Excision</h3>
+            <p class="evn-desc">Total Events: 666</p>
           </div>
-          <p>Member sejak 17 Agustus 1945</p>
+          <p class="evn-desc">Member sejak 17 Agustus 1945</p>
         </div>
       </div>
     </div>
