@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="evn-primary">
     <router-view/>
   </div>
 </template>
@@ -11,7 +11,9 @@
     margin: 0;
     padding: 0;
   }
-
+  #app {
+    min-height: 100vh;
+  }
   .evn-primary{
     background-color: #2c3e50;
   }
