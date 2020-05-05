@@ -1,12 +1,17 @@
 <template>
-  <div>
-
+  <div class="container">
+    <OrganizerCard/>
   </div>
 </template>
 
 <script>
-export default {
+import OrganizerCard from '@/components/OrganizerCard'
 
+export default {
+  name: 'OrganizerEventlist',
+  components: {
+    OrganizerCard
+  }
 }
 </script>
 
