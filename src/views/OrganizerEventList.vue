@@ -11,6 +11,7 @@
     <div class="mt-3 d-flex flex-wrap justify-content-center">
       <CardEvent class="evn-shadow" v-for="item in 8" :key="item"/>
     </div>
+    <Pagination class="mt-5"/>
   </div>
 </template>
 
@@ -19,6 +20,7 @@ import OrganizerCard from '@/components/OrganizerCard'
 import Button from '@/components/Button'
 import SearchSort from '@/components/SearchSort'
 import CardEvent from '@/components/EventList/CardEvent'
+import Pagination from '@/components/Pagination'
 
 export default {
   name: 'OrganizerEventlist',
@@ -26,7 +28,8 @@ export default {
     OrganizerCard,
     Button,
     SearchSort,
-    CardEvent
+    CardEvent,
+    Pagination
   }
 }
 </script>
