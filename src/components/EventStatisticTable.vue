@@ -1,5 +1,6 @@
 <template>
   <div class="card evn-rounded evn-secondary evn-shadow mt-3">
+    <SearchSort class="px-5 mt-4"/>
     <div class="card-body">
       <div class="table-responsive mt-3">
         <table class="table text-white">
@@ -47,8 +48,12 @@
 </template>
 
 <script>
+import SearchSort from '@/components/SearchSort'
 export default {
-
+  name: 'EventStatisticTable',
+  components: {
+    SearchSort
+  }
 }
 </script>
 
