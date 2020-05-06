@@ -29,6 +29,6 @@ export default {
 <style scoped>
 
 .card{
-    width: 260px!important;
+    width: 250px!important;
 }
 </style>
