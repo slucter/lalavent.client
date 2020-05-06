@@ -2,29 +2,25 @@
   <div class="container mt-5">
     <OrganizerCard/>
     <div class="px-3 mt-5 d-flex flex-row justify-content-between">
-      <h3 class="evn-title text-white">Semua Event</h3>
-      <Button>
-        <router-link class="link-anchor" to="/:organizerId/add-event">Buat Event</router-link>
-      </Button>
+      <h3 class="evn-title text-white">Statistik Semua Event</h3>
     </div>
+    <EventStatisticTable/>
   </div>
 </template>
 
 <script>
 import OrganizerCard from '@/components/OrganizerCard'
-import Button from '@/components/Button'
+import EventStatisticTable from '@/components/EventStatisticTable'
 
 export default {
-  name: 'OrganizerEventlist',
+  name: 'EventStatistic',
   components: {
     OrganizerCard,
-    Button
+    EventStatisticTable
   }
 }
 </script>
 
 <style lang="scss" scoped>
-a {
-  color: #000000;
-}
+
 </style>
