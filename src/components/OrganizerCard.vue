@@ -1,9 +1,9 @@
 <template>
-  <div class="card org-card evn-rounded evn-secondary text-white">
+  <div class="card org-card evn-shadow evn-rounded evn-secondary text-white">
     <div class="card-body">
       <div class="row">
         <div class="col-md-2">
-          <img src="https://pbs.twimg.com/profile_images/1215680634615627778/Z7LARlZd_400x400.jpg" class="org-icon" alt="">
+          <img src="https://pbs.twimg.com/profile_images/1215680634615627778/Z7LARlZd_400x400.jpg" class="org-icon evn-shadow" alt="">
         </div>
         <div class="col-md-10 d-flex flex-column">
           <div class="pt-3">
@@ -26,11 +26,9 @@ export default {
 <style lang="scss" scoped>
 .org-card {
   height: auto;
-  box-shadow: 0 0px 20px 0 #000000, 0 0px 10px 0 #000000;
   .org-icon {
     width: 100%;
     border-radius: 50%;
-    box-shadow: 0 0px 20px 0 #000000, 0 0px 10px 0 #000000;
   }
 }
 </style>

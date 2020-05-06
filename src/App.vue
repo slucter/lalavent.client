@@ -50,10 +50,10 @@ export default {
     font-family: 'Poppins', sans-serif;
   }
   .evn-shadow{
-    box-shadow: 0 0px 20px 0 #000000, 0 0px 10px 0 #000000;
+    box-shadow: 0 0px 10px 0 #000000, 0 0px 5px 0 #000000;
   }
   .evn-rounded{
-    border-radius: 25px;
+    border-radius: 10px;
   }
   a{
     color: #ffffff;
