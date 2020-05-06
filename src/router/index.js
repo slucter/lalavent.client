@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Event from '../views/EventList.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import RegisterOrganizer from '../views/Register-Owner.vue'
 import OrganizerEventList from '../views/OrganizerEventList.vue'
 import AdminEventList from '../views/AdminEventList.vue'
 import AdminOrganizerList from '../views/AdminOrganizerList.vue'
@@ -33,6 +34,11 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register
+  },
+  {
+    path: '/register-organizer',
+    name: 'RegisterOrganizer',
+    component: RegisterOrganizer
   },
   {
     path: '/:organizerId/event-list',

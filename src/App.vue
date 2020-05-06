@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="evn-primary">
-    <navbar />
-    <div class="container">
+    <navbar v-if="login==true" />
+    <div class="container" v-if="login==true">
       <router-view/>
     </div>
     <small-footer />

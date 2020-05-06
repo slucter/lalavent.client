@@ -35,6 +35,7 @@
           </li>
           <li class="nav-item mr-4" v-else>
             <i class="fas fa-sign-in-alt mr-2"></i>
+            <a class="nav-link"> <router-link to="/login">Login</router-link> </a>
             <router-link to="/login" class="nav-link">Login</router-link>
           </li>
         </ul>
