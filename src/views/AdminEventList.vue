@@ -4,12 +4,12 @@
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-secondary">
           <router-link to="/admin/admin-organizer-list">
-            <input type="radio" name="options" id="option1" checked> Organizer List
+            <input type="radio" name="options" id="option1" checked> Daftar Penyelenggara
           </router-link>
         </label>
         <label class="btn evn-secondary active">
           <router-link to="/admin/admin-event-list">
-            <input type="radio" name="options" id="option2"> Event List
+            <input type="radio" name="options" id="option2"> Daftar Acara
           </router-link>
         </label>
       </div>
@@ -20,8 +20,8 @@
       th1="Nama Event"
       th2="Tanggal"
       th3="Tempat"
-      th4="Action"
-      title="Event List"
+      th4="Tindakan"
+      title="Daftar Acara"
     >
     <tbody>
       <tr v-for="data in events" :key="data.id">
@@ -30,17 +30,23 @@
         <td>{{ data.date }}</td>
         <td>{{ data.location }}</td>
         <td class="d-flex">
-          <div class="btn btn-sm btn-outline-light approved mr-2">
-            <i class="fas fa-user-check mr-2"></i>Approve
+          <div class="btn btn-sm btn-outline-light approved mr-2" data-toggle="modal" data-target="#event-agree">
+            <i class="fas fa-user-check mr-2"></i>Setujui
           </div>
-          <div class="btn btn-sm btn-outline-light delete">
-            <i class="fas fa-trash mr-2"></i>Delete
+          <div class="btn btn-sm btn-outline-light delete" data-toggle="modal" data-target="#event-delete">
+            <i class="fas fa-trash mr-2"></i>Hapus
           </div>
         </td>
       </tr>
     </tbody>
     </tables>
     <footers />
+    <modal title="Daftar Acara" button="Setuju" id="event-agree">
+      <p>Yakin ingin menyetujui acara ini?</p>
+    </modal>
+    <modal title="Hapus Acara" button="Hapus" id="event-delete">
+      <p>Yakin ingin menghapus acara ini?</p>
+    </modal>
   </section>
 </template>
 
@@ -48,12 +54,14 @@
 import { mapActions, mapState } from 'vuex'
 import tables from '@/components/Tabel.vue'
 import footers from '@/components/_module/Footer.vue'
+import modal from '@/components/Modal.vue'
 
 export default {
   name: 'AdminEventList',
   components: {
     tables,
-    footers
+    footers,
+    modal
   },
   data () {
     return {
