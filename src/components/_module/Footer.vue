@@ -74,6 +74,7 @@ export default {
 
 <style lang="scss" scoped>
 .container-footer {
+  border-top: 3px solid #34495e;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="container py-5">
+    <div class="container py-3">
       <div class="card evn-secondary px-3">
         <div class="card-body">
-          <h1 class="text-center text-light evn-title">Tabel Event</h1>
+          <h1 class="text-center text-light evn-title">{{ title }}</h1>
           <div class="d-flex justify-content-between">
             <div class="search">
               <form class="form-inline mb-2">
@@ -11,7 +11,7 @@
                   <input type="text" class="form-control mr-2" placeholder="Cari Data">
                 </div>
                 <div class="form-group">
-                  <button type="button" class="form-control evn-btn text-light"><i class="fas fa-search fa-2x"></i></button>
+                  <button type="button" class="form-control evn-btn text-light"><i class="fas fa-search"></i></button>
                 </div>
               </form>
             </div>
@@ -29,35 +29,30 @@
             </div>
           </div>
           <div class="row table-responsive">
-            <table class="table table-bordered text-light">
+            <table class="table my-3 text-light">
               <thead class="evn-title">
                 <tr>
-                  <th scope="col-2">#</th>
-                  <th scope="col">Nomor Tiket</th>
-                  <th scope="col">Nama Event</th>
-                  <th scope="col">Tanggal Event</th>
-                  <th scope="col">Harga Tiket</th>
+                  <th scope="col">{{ hash }}</th>
+                  <th scope="col">{{ th1 }}</th>
+                  <th scope="col">{{ th2 }}</th>
+                  <th scope="col">{{ th3 }}</th>
+                  <th scope="col">{{ th4 }}</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
+              <!-- <tbody>
+                <tr :v-for="data in datas" :key="data.id">
+                  <th scope="row">{{ data }}</th>
+                  <td>{{ td1 }}</td>
+                  <td>{{ td2 }}</td>
+                  <td>{{ td3 }}</td>
+                  <td>{{ td4 }}</td>
                 </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                  <td>@mdo</td>
-                </tr>
-              </tbody>
+              </tbody> -->
+              <slot></slot>
             </table>
           </div>
-            <nav aria-label="Page navigation example">
+        </div>
+            <!-- <nav aria-label="Page navigation example">
             <ul class="pagination d-flex justify-content-center">
               <li class="page-item "><a class="page-link evn-secondary text-light" href="#">Previous</a></li>
               <li class="page-item"><a class="page-link evn-secondary text-light" href="#">1</a></li>
@@ -65,8 +60,7 @@
               <li class="page-item"><a class="page-link evn-secondary text-light" href="#">3</a></li>
               <li class="page-item"><a class="page-link evn-secondary text-light" href="#">Next</a></li>
             </ul>
-          </nav>
-        </div>
+          </nav> -->
       </div>
     </div>
   </div>
@@ -75,8 +69,12 @@
 <script>
 export default {
   name: 'Tabel',
-  props: ['nomor', 'thead', 'th2', 'th3', 'th4', 'tbody', 'td2', 'td3', 'td4']
-
+  props: ['hash', 'th1', 'th2', 'th3', 'th4', 'title'],
+  data () {
+    return {
+      datas: 10
+    }
+  }
 }
 </script>
 
