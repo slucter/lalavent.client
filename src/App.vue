@@ -4,16 +4,19 @@
     <div class="container">
       <router-view/>
     </div>
+    <small-footer />
   </div>
 </template>
 
 <script>
 import navbar from '@/components/Navbar.vue'
+import SmallFooter from '@/components/_module/Small-Footer.vue'
 
 export default {
   name: 'App',
   components: {
-    navbar
+    navbar,
+    'small-footer': SmallFooter
   }
 }
 </script>
