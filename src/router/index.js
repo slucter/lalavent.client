@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Event from '../views/EventList.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import OrganizerEventList from '../views/OrganizerEventList.vue'
 import AdminEventList from '../views/AdminEventList.vue'
 import AdminOrganizerList from '../views/AdminOrganizerList.vue'
+import EventStatistic from '../views/EventStatistic.vue'
 import AddEvent from '../views/AddEvent.vue'
 import Logout from '../views/Logout.vue'
 
@@ -16,6 +18,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/event',
+    name: 'Event',
+    component: Event
   },
   {
     path: '/login',
@@ -31,6 +38,11 @@ const routes = [
     path: '/:organizerId/event-list',
     name: 'OrganizerEventList',
     component: OrganizerEventList
+  },
+  {
+    path: '/:organizerId/event-statistic',
+    name: 'EventStatistic',
+    component: EventStatistic
   },
   {
     path: '/:organizerId/add-event',
