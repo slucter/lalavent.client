@@ -1,5 +1,5 @@
 <template>
-    <div class="card evn-secondary my-2 mx-2" style="width: 18rem;">
+    <div class="card evn-secondary my-2 mx-2">
             <img src="../../assets/img/thumb/20191229000837_5e078c15ca01c.jpg" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title mb-5 text-light evn-title">Live Streaming Bread Workshop - Scones</h5>
@@ -29,6 +29,6 @@ export default {
 <style scoped>
 
 .card{
-    min-width: 385px!important;
+    width: 260px!important;
 }
 </style>
