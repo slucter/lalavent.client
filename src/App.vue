@@ -52,4 +52,11 @@ export default {
   .evn-shadow{
       box-shadow: 0 0px 20px 0 #000000, 0 0px 10px 0 #000000;
   }
+  a{
+    color: #ffffff;
+  }
+  a:hover{
+    color: #ffffff;
+    text-decoration: none;
+  }
 </style>

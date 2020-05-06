@@ -1,5 +1,5 @@
 <template>
-  <button class="evn-desc evn-btn evn-shadow btn-custom">
+  <button @click.prevent="$emit('btn-click')" class="evn-desc evn-btn evn-shadow btn-custom">
     <slot></slot>
   </button>
 </template>
