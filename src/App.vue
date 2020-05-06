@@ -1,9 +1,10 @@
 <template>
   <div id="app" class="evn-primary">
-    <navbar />
-    <div class="container">
+    <navbar v-if="login==true" />
+    <div class="container" v-if="login==true">
       <router-view/>
     </div>
+    <router-view/>
   </div>
 </template>
 
@@ -14,6 +15,11 @@ export default {
   name: 'App',
   components: {
     navbar
+  },
+  data () {
+    return {
+      login: false
+    }
   }
 }
 </script>

@@ -20,7 +20,7 @@
           </li>
           <li class="nav-item">
             <i class="fas fa-sign-in-alt mr-2"></i>
-            <a class="nav-link" href="#">Login</a>
+            <a class="nav-link"> <router-link to="/login">Login</router-link> </a>
           </li>
         </ul>
       </div>
