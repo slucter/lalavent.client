@@ -1,9 +1,9 @@
 <template>
-  <div class="modal fade modal-custom-bg" id="evn-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal fade modal-custom-bg" :id="id" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content evn-secondary evn-shadow text-white">
         <div class="modal-header">
-          <h5 class="modal-title evn-title" id="exampleModalScrollableTitle">Lalavent</h5>
+          <h5 class="modal-title evn-title" id="exampleModalScrollableTitle">{{ title }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="text-white fas fa-times-circle"></i></span>
           </button>
@@ -12,7 +12,7 @@
           <slot></slot>
         </div>
         <div class="modal-footer">
-          <Button>Simpan</Button>
+          <Button>{{ button }}</Button>
         </div>
       </div>
     </div>
@@ -26,7 +26,12 @@ export default {
   name: 'Modal',
   components: {
     Button
-  }
+  },
+  props: [
+    'title',
+    'button',
+    'id'
+  ]
 }
 </script>
 

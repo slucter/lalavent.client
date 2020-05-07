@@ -19,7 +19,7 @@
             <a class="nav-link" href="#">Semua Event</a>
           </li>
           <li class="nav-item mr-4 dropdown" v-if="isLogin == true">
-            <img src="https://lh3.googleusercontent.com/proxy/izPO25eAFYRoPiziPUtHrIUm1NcYaB4i17mDf_wnCS5gJttFiNwkfMBV5HHB46_4j-W6QaBBzHtYoul95tzIetkUV4QMLi6W8PbHvjDSvVK_ccGOGtLo3-VfRIDIcHXM" alt="profile-img" class="profile-img">
+            <img src="https://vectorified.com/images/default-image-icon-7.jpg" alt="profile-img" class="profile-img">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">
@@ -80,5 +80,8 @@ export default {
     border-radius: 50%;
     width: 30px;
     height: 30px;
+  }
+  .dropdown-item{
+    color: #2c3e50;
   }
 </style>
