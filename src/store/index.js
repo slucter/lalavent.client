@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import organizer from './organizer'
+import admin from './admin'
 import event from './event/'
+import organizer from './organizer/'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    organizer,
-    event
+    admin,
+    event,
+    organizer
   }
 })
