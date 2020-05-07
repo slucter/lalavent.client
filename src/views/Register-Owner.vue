@@ -1,88 +1,102 @@
 <template>
   <div class="container-register evn-primary">
-    <div class="left-register">
+    <div class="up-register">
       <div class="title-register">
-        <h5 class="evn-title">Daftar sebagai
-          Penyelenggara</h5>
+        <h5 class="evn-title">Daftar sebagai Penyelenggara</h5>
       </div>
     </div>
-    <div class="right-register">
-      <div class="body-register">
-        <div class="leftside-register">
-          <div class="form-register evn-title">
-            <label for="email">Email</label>
-            <input v-model="$v.email.$model" type="email" id="email" placeholder="event@lalavent.com">
-            <div class="error-msg"><p v-if="!$v.email.email">Belum sesuai format!</p></div>
-          </div>
-          <div class="form-register evn-title">
-            <label for="password">Kata Sandi</label>
-            <input v-model="$v.password.$model" type="password" id="password" placeholder="Kata Sandi">
-            <div class="error-msg"><p v-if="!$v.password.minLength">Wajib diisi! Minimal 6 karakter!</p></div>
-          </div>
-          <div class="form-register evn-title">
-            <label for="name">Nama Penyelenggara</label>
-            <input v-model="$v.name.$model" type="text" id="name" placeholder="Lalavent">
-            <div class="error-msg"><p v-if="!$v.name.minLength">Wajib diisi! Minimal 4 karakter!</p></div>
-          </div>
-        </div>
-        <div class="rightside-register">
-          <div class="form-register evn-title">
-            <label for="address">Alamat</label>
-            <input v-model="$v.address.$model" class="address"  type="text" id="address" placeholder="Jalan Pesona Depok Estate">
-            <div class="error-msg"><p v-if="!$v.address.minLength">Wajib diisi! Minimal 10 karakter!</p></div>
-          </div>
-          <div class="form-register evn-title">
-            <label for="description">Deskripsi</label>
-            <input v-model="$v.description.$model" class="description" type="text" id="description" placeholder="Deskripsi...">
-            <div class="error-msg"><p v-if="!$v.description.maxLength">Wajib diisi! Maksimal 10 karakter!</p></div>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="photo" class="evn-title text-white">Foto<span class="star">*</span></label>
+            <input type="file" class="form-control-file bg-light p-2 rounded-lg">
           </div>
         </div>
       </div>
-      <div class="account evn-title">
-        <p>Sudah punya akun? <router-link to="/login"> Masuk </router-link></p>
+      <hr class="border-light">
+      <div class="row">
+        <div class="col-md-6 text-white">
+          <div class="form-group">
+            <label for="title" class="evn-title">Nama Penyelenggara<span class="star">*</span></label>
+            <input type="text" placeholder="Lalavent" :class="$v.title.$error ? 'form-control is-invalid' : 'form-control'" v-model="title">
+            <p v-if="$v.title.$error" class="invalid-feedback">Nama Penyelenggara harus diisi!</p>
+          </div>
+          <div class="form-group">
+            <label for="location" class="evn-title">Alamat<span class="star">*</span></label>
+            <input type="text" placeholder="Jalan Pesona Depok Estate" :class="$v.location.$error ? 'form-control is-invalid' : 'form-control'" v-model="location">
+            <p v-if="$v.location.$error" class="invalid-feedback">Alamat harus diisi!</p>
+          </div>
+        </div>
+        <div class="col-md-6 text-white">
+          <div class="form-group">
+            <label for="email" class="evn-title">Email<span class="star">*</span></label>
+            <input type="email" placeholder="event@lalavent.com" :class="$v.email.$error ? 'form-control is-invalid' : 'form-control'" v-model="email">
+            <p v-if="$v.email.$error"  class="invalid-feedback">Email belum diisi!</p>
+          </div>
+          <div class="form-group">
+            <label for="password" class="evn-title">Kata Sandi<span class="star">*</span></label>
+            <input type="password" placeholder="Kata Sandi" :class="$v.password.$error ? 'form-control is-invalid' : 'form-control'" v-model="password">
+            <p v-if="$v.password.$error" class="invalid-feedback">Kata Sandi harus diisi!</p>
+          </div>
+        </div>
+      </div>
+      <hr class="border-light">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="description" class="evn-title text-white">Deskripsi<span class="star">*</span></label>
+            <textarea placeholder="Deskripsi..."  :class="$v.description.$error ? 'form-control is-invalid' : 'form-control'" v-model="description" rows="10"></textarea>
+            <p v-if="$v.description.$error" class="invalid-feedback">Deskripsi event harus diisi!</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 d-flex flex-row-reverse">
+        <Button @btn-click="submitEvent">Daftar</Button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
-// import axios from 'axios'
+import { required } from 'vuelidate/lib/validators'
+import Button from '../components/Button.vue'
 
 export default {
   name: 'Login',
+  components: {
+    Button
+  },
   data () {
     return {
-      name: '',
+      title: '',
       email: '',
       password: '',
-      address: '',
-      description: ''
+      location: '',
+      description: '',
+      submitStatus: false
     }
   },
   validations: {
-    name: {
-      required,
-      minLength: minLength(4)
-    },
-    email: {
-      required,
-      email
-    },
-    password: {
-      required,
-      minLength: minLength(6)
-    },
-    address: {
-      required,
-      minLength: minLength(10)
-    },
-    description: {
-      required,
-      maxLength: maxLength(100)
+    title: { required },
+    email: { required },
+    password: { required },
+    location: { required },
+    description: { required }
+  },
+  methods: {
+    submitEvent () {
+      this.submitStatus = true
+      console.log('submit!')
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        // eslint-disable-next-line no-useless-return
+        return
+      } else {
+        console.log('Submit ok')
+      }
     }
   }
-
 }
 </script>
 
@@ -90,13 +104,16 @@ export default {
 .container-register{
   display: flex;
   flex-direction: column;
-  .left-register{
+  .up-register{
     background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../assets/img/owner.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     height: 350px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     .title-register{
-      margin: 200px 0 0 130px;
+      margin: 200px 0 0 115px;
       h5{
         font-size: 55px;
         font-weight: bolder;
@@ -104,72 +121,17 @@ export default {
       }
     }
   }
-  .right-register{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    .body-register{
-      display: flex;
-      padding: 50px 130px 20px 130px;
-      .leftside-register{
-        .form-register{
-          display: flex;
-          flex-direction: column;
-          label{
-            font-size: 14px;
-            color: white;
-            margin: 20px 0 0;
-          }
-          input{
-            height: 35px;
-            width: 400px;
-            padding: 10px;
-            border-radius: 5px;
-          }
-          .error-msg{
-            p{
-              margin: 3px 0 0;
-              color: #f1c40f;
-            }
-          }
-        }
-      }
-      .rightside-register{
-        margin: 0 100px;
-        .form-register{
-          display: flex;
-          flex-direction: column;
-          label{
-            font-size: 14px;
-            color: white;
-            margin: 20px 0 0;
-          }
-          input{
-            border-radius: 5px;
-          }
-          .address{
-            height: 35px;
-            width: 570px;
-            padding: 10px;
-          }
-          .description{
-            height: 112px;
-            width: 570px;
-            padding: 10px;
-          }
-          .error-msg{
-            p{
-              margin: 3px 0 0;
-              color: #f1c40f;
-            }
-          }
-        }
-      }
-    }
-    .account{
-      margin: 0 130px;
-      color: white;
-    }
+  label {
+  font-size: 1.5rem;
+  }
+  .star {
+  color: #f1c40f;
+  }
+  .is-invalid {
+  border-color: red !important;
+  }
+  .invalid-feedback {
+  color: red;
   }
 }
 </style>

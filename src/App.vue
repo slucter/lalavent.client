@@ -4,6 +4,7 @@
     <div class="container">
       <router-view/>
     </div>
+    <router-view/>
     <small-footer />
   </div>
 </template>

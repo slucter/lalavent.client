@@ -1,72 +1,78 @@
 <template>
-  <div class="container-register evn-primary">
+  <div class="container-login evn-primary">
     <div class="left-login">
     </div>
     <div class="right-login">
       <div class="title-login">
         <h5 class="evn-title">Daftar</h5>
       </div>
-      <form>
+      <form class="mt-2 text-white">
         <div class="form-group">
-          <label for="exampleInputName1" class="evn-title">Name</label>
-          <input v-model="$v.name.$model" type="text" class="form-control" id="exampleInputName1">
-          <div class="error-name">
-            <p v-if="!$v.name.minLength">Wajib diisi! Minimal 4 karakter</p>
-          </div>
+          <label for="title" class="evn-title">Nama<span class="star">*</span></label>
+          <input type="text" placeholder="Lalavent" :class="$v.title.$error ? 'form-control is-invalid' : 'form-control'" v-model="title">
+          <p v-if="$v.title.$error" class="invalid-feedback">Nama harus diisi!</p>
         </div>
         <div class="form-group">
-          <label for="exampleInputEmail1" class="evn-title">Email</label>
-          <input v-model="$v.email.$model" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <label for="email" class="evn-title">Email<span class="star">*</span></label>
+          <input type="email" placeholder="event@lalavent.com" :class="$v.email.$error ? 'form-control is-invalid' : 'form-control'" v-model="email">
+          <p v-if="$v.email.$error"  class="invalid-feedback">Email belum diisi!</p>
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1" class="evn-title">Password</label>
-          <input v-model="$v.password.$model" type="password" class="form-control" id="exampleInputPassword1">
-          <div class="error-password">
-            <p v-if="!$v.password.minLength" >Minimal kata sandi 6 karakter</p>
-          </div>
+          <label for="password" class="evn-title">Kata Sandi<span class="star">*</span></label>
+          <input type="password" placeholder="Kata Sandi" :class="$v.password.$error ? 'form-control is-invalid' : 'form-control'" v-model="password">
+          <p v-if="$v.password.$error" class="invalid-feedback">Kata Sandi harus diisi!</p>
         </div>
-        <button type="submit" class="btn evn-title evn-btn evn-btn:hover" @click="register">DAFTAR</button>
+        <div class="mt-4">
+          <Button @btn-click="submitEvent">Daftar</Button>
+        </div>
       </form>
       <div class="account evn-title">
-        <p>Sudah punya akun?<router-link to="/register"> Masuk </router-link></p>
+        <p>Sudah punya akun? <router-link to="/register">Masuk</router-link></p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { required, email, minLength } from 'vuelidate/lib/validators'
+import { required } from 'vuelidate/lib/validators'
+import Button from '../components/Button.vue'
 
 export default {
   name: 'Register',
+  components: {
+    Button
+  },
   data () {
     return {
-      name: '',
+      title: '',
       email: '',
       password: '',
-      repeatPassword: ''
+      submitStatus: false
     }
   },
   validations: {
-    name: {
-      required,
-      minLength: minLength(4)
-    },
-    email: {
-      required,
-      email
-    },
-    password: {
-      required,
-      minLength: minLength(6)
+    title: { required },
+    email: { required },
+    password: { required }
+  },
+  methods: {
+    submitEvent () {
+      this.submitStatus = true
+      console.log('submit!')
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        // eslint-disable-next-line no-useless-return
+        return
+      } else {
+        console.log('Submit ok')
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.container-register{
+.container-login{
   display: flex;
   .left-login{
     background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../assets/img/event.jpg');
@@ -82,38 +88,27 @@ export default {
     margin-left: 140px;
     .title-login{
       h5{
-        font-size: 35px;
+        font-size: 50px;
         font-weight: bolder;
         color: white;
       }
     }
-    form{
-      .form-group{
-        label{
-          color: white;
-        }
-        .error-name{
-          p{
-            color: yellow;
-            font-size: 12px;
-            padding: 5px 0;
-          }
-        }
-        .error-password{
-          p{
-            color: yellow;
-            font-size: 12px;
-            padding: 5px 0;
-          }
-        }
-      }
-      button{
-        color: white;
-      }
+    label {
+      font-size: 1.5rem;
+    }
+    .star {
+      color: #f1c40f;
+    }
+    .is-invalid {
+      border-color: red !important;
+    }
+    .invalid-feedback {
+      color: red;
     }
     .account{
-      padding: 20px 0;
-      color: white;
+      p{
+        margin: 20px 0;
+      }
     }
   }
 }
