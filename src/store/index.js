@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Axios from 'axios'
-import organizer from './organizer'
+import admin from './admin'
 import event from './event/'
+import organizer from './organizer/'
+import Axios from 'axios'
 import user from './user'
 
 Vue.use(Vuex)
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    admin,
     organizer,
     event,
     user

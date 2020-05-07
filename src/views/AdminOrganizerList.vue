@@ -69,13 +69,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions('organizer', ['getAllOrganizers'])
+    ...mapActions('admin', ['getAllOrganizers'])
   },
   mounted () {
     this.getAllOrganizers()
   },
   computed: {
-    ...mapState('organizer', ['organizers'])
+    ...mapState('admin', ['organizers'])
   }
 }
 </script>
