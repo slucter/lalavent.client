@@ -4,6 +4,7 @@
     <div class="container" v-if="login==true">
       <router-view/>
     </div>
+    <router-view/>
     <small-footer />
   </div>
 </template>

@@ -6,56 +6,63 @@
       <div class="title-login">
         <h5 class="evn-title">Masuk</h5>
       </div>
-      <form>
+      <form class="mt-2 text-white">
         <div class="form-group">
-          <label for="exampleInputEmail1" class="evn-title">Email</label>
-          <input v-model="$v.email.$model" type="email" class="form-control"
-          id="exampleInputEmail1" aria-describedby="emailHelp">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <label for="email" class="evn-title">Email<span class="star">*</span></label>
+          <input type="email" placeholder="event@lalavent.com" :class="$v.email.$error ? 'form-control is-invalid' : 'form-control'" v-model="email">
+          <p v-if="$v.email.$error"  class="invalid-feedback">Email belum diisi!</p>
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1" class="evn-title">Password</label>
-          <input v-model="$v.password.$model" type="password"
-          class="form-control" id="exampleInputPassword1">
-          <div class="error-password">
-            <p v-if="!$v.password.minLength">Minimal kata sandi 6 karakter</p>
-          </div>
-          <!-- <div class="error-password">
-            <p v-if="!$v.password.minLength">Harus diisi</p>
-          </div> -->
+          <label for="password" class="evn-title">Kata Sandi<span class="star">*</span></label>
+          <input type="password" placeholder="Kata Sandi" :class="$v.password.$error ? 'form-control is-invalid' : 'form-control'" v-model="password">
+          <p v-if="$v.password.$error" class="invalid-feedback">Kata Sandi harus diisi!</p>
         </div>
-        <button type="submit" class="btn evn-title evn-btn evn-btn:hover" @click="login">MASUK</button>
+        <div class="mt-4">
+          <Button @btn-click="submitEvent">Masuk</Button>
+        </div>
       </form>
       <div class="account evn-title">
-        <p>Belum punya akun? <router-link to="/register"> Daftar </router-link></p>
+        <p>Belum punya akun? <router-link to="/register">Daftar</router-link></p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { required, email, minLength } from 'vuelidate/lib/validators'
-// import axios from 'axios'
+import { required } from 'vuelidate/lib/validators'
+import Button from '../components/Button.vue'
 
 export default {
-  name: 'Login',
+  name: 'Register',
+  components: {
+    Button
+  },
   data () {
     return {
+      title: '',
       email: '',
-      password: ''
+      password: '',
+      submitStatus: false
     }
   },
   validations: {
-    email: {
-      required,
-      email
-    },
-    password: {
-      required,
-      minLength: minLength(6)
+    title: { required },
+    email: { required },
+    password: { required }
+  },
+  methods: {
+    submitEvent () {
+      this.submitStatus = true
+      console.log('submit!')
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        // eslint-disable-next-line no-useless-return
+        return
+      } else {
+        console.log('Submit ok')
+      }
     }
   }
-
 }
 </script>
 
@@ -76,31 +83,27 @@ export default {
     margin-left: 140px;
     .title-login{
       h5{
-        font-size: 35px;
+        font-size: 50px;
         font-weight: bolder;
         color: white;
       }
     }
-    form{
-      .form-group{
-        label{
-          color: white;
-        }
-        .error-password{
-          p{
-            color: white;
-            font-size: 12px;
-            padding: 5px 0;
-          }
-        }
-      }
-      button{
-        color: white;
-      }
+    label {
+      font-size: 1.5rem;
+    }
+    .star {
+      color: #f1c40f;
+    }
+    .is-invalid {
+      border-color: red !important;
+    }
+    .invalid-feedback {
+      color: red;
     }
     .account{
-      padding: 20px 0;
-      color: white;
+      p{
+        margin: 20px 0;
+      }
     }
   }
 }
