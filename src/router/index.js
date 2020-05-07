@@ -11,6 +11,7 @@ import AdminOrganizerList from '../views/AdminOrganizerList.vue'
 import EventStatistic from '../views/EventStatistic.vue'
 import AddEvent from '../views/AddEvent.vue'
 import Logout from '../views/Logout.vue'
+import Payment from '../views/Payment.vue'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,11 @@ const routes = [
     path: '/logout',
     name: 'Logout',
     component: Logout
+  },
+  {
+    path: '/payment',
+    name: 'Payment',
+    component: Payment
   }
 ]
 
