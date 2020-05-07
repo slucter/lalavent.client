@@ -14,18 +14,30 @@
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          <li class="nav-item mr-4">
-            <i class="fas fa-calendar-alt mr-2"></i>
+          <li class="nav-item mr-3">
+            <i class="fas fa-calendar-plus mr-1"></i>
+            <router-link to="/event" class="nav-link">Tambah Event</router-link>
+          </li>
+          <li class="nav-item mr-3">
+            <i class="fas fa-calendar-alt mr-1"></i>
             <router-link to="/event" class="nav-link">Semua Event</router-link>
           </li>
           <li class="nav-item mr-4 dropdown" v-if="this.user.length !== 0">
-            <img :src="this.user.image" alt="profile-img" class="profile-img">
+            <img :src="this.user.image" alt="profile-img" class="profile-img mr-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ this.user.name }}</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">
                 <i class="fas fa-user-cog mr-1"></i>
                 Edit Profile
               </a>
+              <router-link to="/" class="dropdown-item" v-if="this.user.role_id == 1">
+                <i class="fas fa-history mr-1 mt-1"></i>
+                History Event
+              </router-link>
+              <router-link to="/" class="dropdown-item" v-if="this.user.role_id == 2">
+                <i class="fas fa-chart-bar mr-1 mt-1"></i>
+                Statistik Event
+              </router-link>
               <div class="dropdown-divider"></div>
               <router-link to="/logout" class="dropdown-item">
                 <i class="fas fa-sign-out-alt mr-1"></i>
