@@ -1,10 +1,11 @@
 <template>
   <div id="app" class="evn-primary">
-    <navbar />
-    <div class="container">
+    <navbar v-if="dontDisplay" />
+    <div class="container" v-if="dontDisplay">
       <router-view/>
     </div>
-    <small-footer />
+    <small-footer v-if="dontDisplay" />
+      <router-view  v-if="!dontDisplay" />
   </div>
 </template>
 
@@ -17,8 +18,21 @@ export default {
   components: {
     navbar,
     'small-footer': SmallFooter
+  },
+  data () {
+    return {
+      login: '/login',
+      register: '/register',
+      register2: '/register-organizer'
+    }
+  },
+  computed: {
+    dontDisplay () {
+      return this.$route.path !== this.login && this.$route.path !== this.register && this.$route.path !== this.register2
+    }
   }
 }
+
 </script>
 
 <style lang="scss">
