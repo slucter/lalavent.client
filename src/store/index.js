@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Axios from 'axios'
 import organizer from './organizer'
 import event from './event/'
+import user from './user'
 
 Vue.use(Vuex)
 
@@ -25,6 +26,7 @@ export default new Vuex.Store({
   },
   modules: {
     organizer,
-    event
+    event,
+    user
   }
 })

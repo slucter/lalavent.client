@@ -12,7 +12,7 @@ export default ({
   mutations: {
     events (state, data) {
       state.events = data
-      console.log(state.events)
+      // console.log(state.events)
     }
   },
   actions: {
@@ -21,7 +21,7 @@ export default ({
       axios
         .get(process.env.VUE_APP_BASE_URL + 'event')
         .then(res => {
-          console.log(res)
+          // console.log(res)
           context.commit('events', res.data.events.rows)
         })
     }

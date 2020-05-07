@@ -16,11 +16,11 @@
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
           <li class="nav-item mr-4">
             <i class="fas fa-calendar-alt mr-2"></i>
-            <a class="nav-link" href="#">Semua Event</a>
+            <router-link to="/event" class="nav-link">Semua Event</router-link>
           </li>
-          <li class="nav-item mr-4 dropdown" v-if="isLogin == true">
-            <img src="https://vectorified.com/images/default-image-icon-7.jpg" alt="profile-img" class="profile-img">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
+          <li class="nav-item mr-4 dropdown" v-if="this.user.length !== 0">
+            <img :src="this.user.image" alt="profile-img" class="profile-img">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ this.user.name }}</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">
                 <i class="fas fa-user-cog mr-1"></i>
@@ -36,7 +36,6 @@
           <li class="nav-item mr-4" v-else>
             <i class="fas fa-sign-in-alt mr-2"></i>
             <a class="nav-link"> <router-link to="/login">Login</router-link> </a>
-            <router-link to="/login" class="nav-link">Login</router-link>
           </li>
         </ul>
       </div>
@@ -45,12 +44,23 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
   name: 'Navbar',
   data () {
     return {
-      isLogin: true
+      isLogin: false
     }
+  },
+  methods: {
+    ...mapActions('user', ['getUserById'])
+  },
+  mounted () {
+    this.getUserById()
+  },
+  computed: {
+    ...mapState('user', ['user'])
   }
 }
 </script>
