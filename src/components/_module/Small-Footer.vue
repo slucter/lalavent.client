@@ -28,6 +28,7 @@ export default {
 .container-footer{
   display: flex;
   justify-content: center;
+  width: 100%;
   .body-footer{
     display: flex;
     justify-content: center;
