@@ -149,14 +149,14 @@ export default {
         formData.append('image', this.image)
         formData.append('title', this.title)
         // formData.append('user_id', 1)
-        // formData.append('date', this.date)
+        formData.append('date', this.date)
         // formData.append('time_start', this.timeStart)
         // formData.append('time_end', this.timeEnd)
         // formData.append('category_id', this.selectedCategory)
         // formData.append('type', this.selectedType)
-        // formData.append('location', this.location)
+        formData.append('location', this.location)
         // formData.append('price', this.price)
-        // formData.append('quota', this.quota)
+        formData.append('quota', this.quota)
         formData.append('description', this.description)
         axios
           .post(`${process.env.VUE_APP_BASE_URL}event`, formData, {
