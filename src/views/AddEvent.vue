@@ -48,8 +48,8 @@
             <div class="form-group">
               <label for="type" class="evn-title">Tipe<span class="star">*</span></label>
               <select :class="$v.selectedType.$error ? 'form-control custom-select is-invalid' : 'form-control custom-select'" v-model="selectedType">
-                <option value="Online">Online</option>
-                <option value="Offline">Offline</option>
+                <option :value="true">Online</option>
+                <option :value="false">Offline</option>
               </select>
               <p v-if="$v.selectedType.$error" class="invalid-feedback">Tipe event harus diisi!</p>
             </div>
@@ -64,7 +64,7 @@
           <div class="col">
             <div class="form-group">
               <label for="price" class="evn-title">Harga</label>
-              <input type="number" class="form-control">
+              <input type="number" class="form-control" v-model="price">
               <p class="mt-2 text-warning">Jika harga tidak dimasukkan maka event ini akan dianggap event gratis</p>
             </div>
           </div>
@@ -108,12 +108,14 @@ export default {
       date: '',
       timeStart: '',
       timeEnd: '',
-      selectedCategory: null,
-      selectedType: '',
+      selectedCategory: [],
+      selectedType: null,
       location: '',
       image: null,
       quota: null,
+      price: 0,
       description: '',
+      status: 0,
       submitStatus: false
     }
   },
@@ -146,17 +148,18 @@ export default {
         console.log('Submit ok')
         console.log(this.local.token)
         const formData = new FormData()
+        formData.append('user_id', this.local.id)
         formData.append('image', this.image)
         formData.append('title', this.title)
-        // formData.append('user_id', 1)
-        // formData.append('date', this.date)
-        // formData.append('time_start', this.timeStart)
-        // formData.append('time_end', this.timeEnd)
-        // formData.append('category_id', this.selectedCategory)
-        // formData.append('type', this.selectedType)
-        // formData.append('location', this.location)
-        // formData.append('price', this.price)
-        // formData.append('quota', this.quota)
+        formData.append('date', this.date)
+        formData.append('time_start', this.timeStart)
+        formData.append('time_end', this.timeEnd)
+        formData.append('category_id', this.selectedCategory)
+        formData.append('type', this.selectedType)
+        formData.append('location', this.location)
+        formData.append('price', this.price)
+        formData.append('quota', this.quota)
+        formData.append('status', this.status)
         formData.append('description', this.description)
         axios
           .post(`${process.env.VUE_APP_BASE_URL}event`, formData, {
