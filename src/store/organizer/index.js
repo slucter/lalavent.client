@@ -8,15 +8,19 @@ export default ({
   namespaced: true,
   state: {
     organizer: {},
-    events: []
+    events: [],
+    category: []
   },
   mutations: {
     organizer (state, data) {
       state.organizer = data
-      console.log(data.user)
     },
     events (state, data) {
       state.events = data
+    },
+    category (state, data) {
+      state.category = data
+      // console.log(data.category)
     }
   },
   actions: {
@@ -24,7 +28,7 @@ export default ({
       axios
         .get(process.env.VUE_APP_BASE_URL + 'user/' + organizerId)
         .then(res => {
-          console.log(res.data.user)
+          // console.log(res.data.user)
           commit('organizer', res.data.user)
         })
     },
@@ -33,6 +37,22 @@ export default ({
         .get(process.env.VUE_APP_BASE_URL + 'event')
         .then(res => {
           context.commit('events', res.data.events.rows)
+        })
+    },
+    getCategory (context) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'category')
+        .then(res => {
+          console.log(res.data.Categories.rows[0].name)
+          context.commit('category', res.data.Categories.rows)
+        })
+    },
+    addEvent (context) {
+      axios
+        .post(process.env.VUE_APP_BASE_URL + 'event')
+        .then(res => {
+          console.log(res.data.Categories.rows[0].name)
+          context.commit('category', res.data.Categories.rows)
         })
     }
   }

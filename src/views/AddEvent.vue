@@ -4,7 +4,7 @@
       <div class="col">
         <div class="form-group">
           <label for="photo" class="evn-title text-white">Foto / Poster<span class="star">*</span></label>
-          <input type="file" class="form-control-file bg-light p-2 rounded-lg">
+          <input type="file" ref="file" class="form-control-file bg-light p-2 rounded-lg">
         </div>
       </div>
     </div>
@@ -38,22 +38,20 @@
           <div class="col">
             <div class="form-group">
               <label for="category" class="evn-title">Kategori<span class="star">*</span></label>
-              <select :class="$v.selected.$error ? 'form-control custom-select is-invalid' : 'form-control custom-select'" v-model="selected">
-                <option>Kategori</option>
-                <option>Kategori</option>
-                <option>Kategori</option>
+              <select :class="$v.selectedCategory.$error ? 'form-control custom-select is-invalid' : 'form-control custom-select'" v-model="selectedCategory">
+                <option v-for="data in category" :key="data.id" :value="data.id">{{ data.name }}</option>
               </select>
-              <p v-if="$v.selected.$error" class="invalid-feedback">Kategori event harus diisi!</p>
+              <p v-if="$v.selectedCategory.$error" class="invalid-feedback">Kategori event harus diisi!</p>
             </div>
           </div>
           <div class="col">
             <div class="form-group">
               <label for="type" class="evn-title">Tipe<span class="star">*</span></label>
-              <select :class="$v.selected.$error ? 'form-control custom-select is-invalid' : 'form-control custom-select'" v-model="selected">
-                <option>Online</option>
-                <option>Offline</option>
+              <select :class="$v.selectedType.$error ? 'form-control custom-select is-invalid' : 'form-control custom-select'" v-model="selectedType">
+                <option value="Online">Online</option>
+                <option value="Offline">Offline</option>
               </select>
-              <p v-if="$v.selected.$error" class="invalid-feedback">Tipe event harus diisi!</p>
+              <p v-if="$v.selectedType.$error" class="invalid-feedback">Tipe event harus diisi!</p>
             </div>
           </div>
         </div>
@@ -66,7 +64,7 @@
           <div class="col">
             <div class="form-group">
               <label for="price" class="evn-title">Harga</label>
-              <input type="number" class="form-control" v-model="price">
+              <input type="number" class="form-control">
               <p class="mt-2 text-warning">Jika harga tidak dimasukkan maka event ini akan dianggap event gratis</p>
             </div>
           </div>
@@ -97,6 +95,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapActions, mapState } from 'vuex'
 import { required } from 'vuelidate/lib/validators'
 
 import Button from '@/components/Button'
@@ -109,10 +109,11 @@ export default {
       date: '',
       timeStart: '',
       timeEnd: '',
-      selected: '',
+      selectedCategory: null,
+      selectedType: '',
       location: '',
-      price: '',
-      quota: '',
+      // price: null,
+      quota: null,
       description: '',
       submitStatus: false
     }
@@ -121,7 +122,8 @@ export default {
     title: { required },
     date: { required },
     timeStart: { required },
-    selected: { required },
+    selectedCategory: { required },
+    selectedType: { required },
     location: { required },
     description: { required }
   },
@@ -130,6 +132,7 @@ export default {
   },
   methods: {
     submitEvent () {
+      console.log(this.$refs.file.files[0])
       this.submitStatus = true
       console.log('submit!')
       this.$v.$touch()
@@ -138,8 +141,44 @@ export default {
         return
       } else {
         console.log('Submit ok')
+        const formData = new FormData()
+        formData.append('image', this.$refs.file.files[0])
+        formData.append('title', this.title)
+        formData.append('user_id', 1)
+        formData.append('date', this.date)
+        formData.append('time_start', this.timeStart)
+        // formData.append('time_end', this.timeEnd)
+        formData.append('category_id', this.selectedCategory)
+        formData.append('type', this.selectedType)
+        formData.append('location', this.location)
+        // formData.append('price', this.price)
+        // formData.append('quota', this.quota)
+        formData.append('description', this.description)
+        axios
+          .post(`${process.env.VUE_APP_BASE_URL}event`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'baca-bismillah': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg4NzE5NTgyfQ.tEr_2db0YEzWSr45qDr9mZKGfxSY17ZK-7r6drJQjQI'
+            }
+          })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((err) => {
+            console.log(err + 'error')
+          })
+        for (var pair of formData.entries()) {
+          console.log(pair[0] + ', ' + pair[1])
+        }
       }
-    }
+    },
+    ...mapActions('organizer', ['getCategory'])
+  },
+  mounted () {
+    this.getCategory()
+  },
+  computed: {
+    ...mapState('organizer', ['category'])
   }
 }
 </script>
