@@ -6,7 +6,7 @@
       <div class="title-login">
         <h5 class="evn-title">Masuk</h5>
       </div>
-      <form class="mt-2 text-white">
+      <form @submit="submitEvent" class="mt-2 text-white">
         <div class="form-group">
           <label for="email" class="evn-title">Email<span class="star">*</span></label>
           <input type="email" placeholder="event@lalavent.com" :class="$v.email.$error ? 'form-control is-invalid' : 'form-control'" v-model="email">
@@ -18,7 +18,7 @@
           <p v-if="$v.password.$error" class="invalid-feedback">Kata Sandi harus diisi!</p>
         </div>
         <div class="mt-4">
-          <Button @btn-click="submitEvent">Masuk</Button>
+          <Button type="submit">Masuk</Button>
         </div>
       </form>
       <div class="account evn-title">
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { required } from 'vuelidate/lib/validators'
 import Button from '../components/Button.vue'
 
@@ -39,27 +40,58 @@ export default {
   },
   data () {
     return {
-      title: '',
+      // title: '',
       email: '',
       password: '',
-      submitStatus: false
+      submitStatus: false,
+      local: {
+        id: null,
+        token: null,
+        role: null
+      }
     }
   },
   validations: {
-    title: { required },
+    // title: { required },
     email: { required },
     password: { required }
   },
   methods: {
-    submitEvent () {
+    localData () {
+      const parsed = JSON.stringify({
+        id: this.local.id,
+        token: this.local.token,
+        role: this.local.role
+      })
+      localStorage.setItem('items', parsed)
+    },
+    submitEvent (e) {
+      e.preventDefault()
       this.submitStatus = true
-      console.log('submit!')
+      console.log('hello')
+      // console.log('submit!')
       this.$v.$touch()
       if (this.$v.$invalid) {
         // eslint-disable-next-line no-useless-return
         return
       } else {
         console.log('Submit ok')
+        axios
+          .post(process.env.VUE_APP_BASE_URL + 'auth/signin', {
+            email: this.email,
+            password: this.password
+          })
+          .then(res => {
+            console.log(res)
+            const parsed = JSON.stringify({
+              id: res.data.id,
+              token: res.data.token,
+              role: res.data.role
+            })
+            localStorage.setItem('items', parsed)
+            console.log(parsed)
+            this.$router.push('/')
+          })
       }
     }
   }

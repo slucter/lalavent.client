@@ -2,12 +2,12 @@
   <section class="admin-event-list mt-4">
     <nav class="d-flex justify-content-center mb-2">
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-secondary">
+        <label class="btn btn-1 evn-secondary pl-4">
           <router-link to="/admin/admin-organizer-list">
             <input type="radio" name="options" id="option1" checked> Daftar Penyelenggara
           </router-link>
         </label>
-        <label class="btn evn-secondary active">
+        <label class="btn btn-2 btn-secondary active pr-4">
           <router-link to="/admin/admin-event-list">
             <input type="radio" name="options" id="option2"> Daftar Acara
           </router-link>
@@ -25,9 +25,9 @@
     >
     <tbody>
       <tr v-for="data in events" :key="data.id">
-        <td>1</td>
+        <td>{{ data.id }}</td>
         <td>{{ data.title }}</td>
-        <td>{{ data.date }}</td>
+        <td>{{ data.category }}</td>
         <td>{{ data.location }}</td>
         <td class="d-flex">
           <div class="btn btn-sm btn-outline-light approved mr-2" data-toggle="modal" data-target="#event-agree">
@@ -81,5 +81,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .btn-1, .btn-2{
+    border-radius: 20px;
+  }
 </style>

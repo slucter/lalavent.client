@@ -3,11 +3,11 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-2">
-          <img src="https://pbs.twimg.com/profile_images/1215680634615627778/Z7LARlZd_400x400.jpg" class="org-icon evn-shadow" alt="">
+          <img :src="organizerImage" class="org-icon evn-shadow" alt="">
         </div>
         <div class="col-md-10 d-flex flex-column">
           <div class="pt-3">
-            <h3 class="evn-title">Excision</h3>
+            <h3 class="evn-title">{{ organizerName }}</h3>
             <p class="evn-desc">Total Events: 666</p>
           </div>
           <p class="evn-desc">Member sejak 17 Agustus 1945</p>
@@ -19,7 +19,11 @@
 
 <script>
 export default {
-  name: 'OrganizerCard'
+  name: 'OrganizerCard',
+  props: [
+    'organizerImage',
+    'organizerName'
+  ]
 }
 </script>
 
