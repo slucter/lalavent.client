@@ -7,22 +7,32 @@ Vue.use(Vuex)
 export default ({
   namespaced: true,
   state: {
-    organizers: []
+    organizer: {},
+    events: []
   },
   mutations: {
-    organizers (state, data) {
-      state.organizers = data
-      console.log(state.organizers)
+    organizer (state, data) {
+      state.organizer = data
+      console.log(data.user)
+    },
+    events (state, data) {
+      state.events = data
     }
   },
   actions: {
-    getAllOrganizers (context) {
-      console.log(process.env.VUE_APP_BASE_URL)
+    getOrganizer ({ commit }, organizerId = 1) {
       axios
-        .get(process.env.VUE_APP_BASE_URL + 'user/role/2')
+        .get(process.env.VUE_APP_BASE_URL + 'user/' + organizerId)
         .then(res => {
-          console.log(res)
-          context.commit('organizers', res.data.user.rows)
+          console.log(res.data.user)
+          commit('organizer', res.data.user)
+        })
+    },
+    getEvents (context) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event')
+        .then(res => {
+          context.commit('events', res.data.events.rows)
         })
     }
   }

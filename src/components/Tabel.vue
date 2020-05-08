@@ -3,7 +3,7 @@
     <div class="container py-3">
       <div class="card evn-secondary px-3">
         <div class="card-body">
-          <h1 class="text-center text-light evn-title">{{ title }}</h1>
+          <h2 class="text-center text-light evn-title mb-4">{{ title }}</h2>
           <div class="d-flex justify-content-between">
             <div class="search">
               <form class="form-inline mb-2">

@@ -2,12 +2,12 @@
   <section class="admin-org-list mt-4">
     <nav class="d-flex justify-content-center mb-2">
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn evn-secondary active">
+        <label class="btn btn-1 btn-secondary active pl-4">
           <router-link to="/admin/admin-organizer-list">
             <input type="radio" name="options" id="option1" checked> Daftar Penyelenggara
           </router-link>
         </label>
-        <label class="btn btn-secondary">
+        <label class="btn btn-2 evn-secondary pr-4">
           <router-link to="/admin/admin-event-list">
             <input type="radio" name="options" id="option2"> Daftar Acara
           </router-link>
@@ -69,17 +69,19 @@ export default {
     }
   },
   methods: {
-    ...mapActions('organizer', ['getAllOrganizers'])
+    ...mapActions('admin', ['getAllOrganizers'])
   },
   mounted () {
     this.getAllOrganizers()
   },
   computed: {
-    ...mapState('organizer', ['organizers'])
+    ...mapState('admin', ['organizers'])
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
+  .btn-1, .btn-2{
+    border-radius: 20px;
+  }
 </style>

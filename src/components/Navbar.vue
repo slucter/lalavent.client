@@ -14,18 +14,30 @@
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          <li class="nav-item mr-4">
-            <i class="fas fa-calendar-alt mr-2"></i>
-            <a class="nav-link" href="#">Semua Event</a>
+          <li class="nav-item mr-3">
+            <i class="fas fa-calendar-plus mr-1"></i>
+            <router-link to="/event" class="nav-link">Tambah Event</router-link>
           </li>
-          <li class="nav-item mr-4 dropdown" v-if="isLogin == true">
-            <img src="https://vectorified.com/images/default-image-icon-7.jpg" alt="profile-img" class="profile-img">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
+          <li class="nav-item mr-3">
+            <i class="fas fa-calendar-alt mr-1"></i>
+            <router-link to="/event" class="nav-link">Semua Event</router-link>
+          </li>
+          <li class="nav-item mr-4 dropdown" v-if="this.user.length !== 0">
+            <img :src="this.user.image" alt="profile-img" class="profile-img mr-1">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ this.user.name }}</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">
                 <i class="fas fa-user-cog mr-1"></i>
                 Edit Profile
               </a>
+              <router-link to="/" class="dropdown-item" v-if="this.user.role_id == 1">
+                <i class="fas fa-history mr-1 mt-1"></i>
+                History Event
+              </router-link>
+              <router-link to="/" class="dropdown-item" v-if="this.user.role_id == 2">
+                <i class="fas fa-chart-bar mr-1 mt-1"></i>
+                Statistik Event
+              </router-link>
               <div class="dropdown-divider"></div>
               <router-link to="/logout" class="dropdown-item">
                 <i class="fas fa-sign-out-alt mr-1"></i>
@@ -36,7 +48,6 @@
           <li class="nav-item mr-4" v-else>
             <i class="fas fa-sign-in-alt mr-2"></i>
             <a class="nav-link"> <router-link to="/login">Login</router-link> </a>
-            <router-link to="/login" class="nav-link">Login</router-link>
           </li>
         </ul>
       </div>
@@ -45,12 +56,23 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
   name: 'Navbar',
   data () {
     return {
-      isLogin: true
+      isLogin: false
     }
+  },
+  methods: {
+    ...mapActions('user', ['getUserById'])
+  },
+  mounted () {
+    this.getUserById()
+  },
+  computed: {
+    ...mapState('user', ['user'])
   }
 }
 </script>
