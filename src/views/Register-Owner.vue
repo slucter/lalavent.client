@@ -7,25 +7,16 @@
     </div>
     <div class="container mt-5">
       <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label for="photo" class="evn-title text-white">Foto<span class="star">*</span></label>
-            <input type="file" class="form-control-file bg-light p-2 rounded-lg">
-          </div>
-        </div>
-      </div>
-      <hr class="border-light">
-      <div class="row">
         <div class="col-md-6 text-white">
           <div class="form-group">
             <label for="title" class="evn-title">Nama Penyelenggara<span class="star">*</span></label>
-            <input type="text" placeholder="Lalavent" :class="$v.title.$error ? 'form-control is-invalid' : 'form-control'" v-model="title">
-            <p v-if="$v.title.$error" class="invalid-feedback">Nama Penyelenggara harus diisi!</p>
+            <input type="text" placeholder="Lalavent" :class="$v.name.$error ? 'form-control is-invalid' : 'form-control'" v-model="name">
+            <p v-if="$v.name.$error" class="invalid-feedback">Nama Penyelenggara harus diisi!</p>
           </div>
           <div class="form-group">
             <label for="location" class="evn-title">Alamat<span class="star">*</span></label>
-            <input type="text" placeholder="Jalan Pesona Depok Estate" :class="$v.location.$error ? 'form-control is-invalid' : 'form-control'" v-model="location">
-            <p v-if="$v.location.$error" class="invalid-feedback">Alamat harus diisi!</p>
+            <input type="text" placeholder="Jalan Pesona Depok Estate" :class="$v.address.$error ? 'form-control is-invalid' : 'form-control'" v-model="address">
+            <p v-if="$v.address.$error" class="invalid-feedback">Alamat harus diisi!</p>
           </div>
         </div>
         <div class="col-md-6 text-white">
@@ -61,6 +52,7 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import Button from '../components/Button.vue'
+import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -69,19 +61,19 @@ export default {
   },
   data () {
     return {
-      title: '',
+      name: '',
       email: '',
       password: '',
-      location: '',
+      address: '',
       description: '',
       submitStatus: false
     }
   },
   validations: {
-    title: { required },
+    name: { required },
     email: { required },
     password: { required },
-    location: { required },
+    address: { required },
     description: { required }
   },
   methods: {
@@ -94,6 +86,20 @@ export default {
         return
       } else {
         console.log('Submit ok')
+        axios.post('http://192.168.1.97:5000/api/lalavent/auth/signup', {
+          name: this.name,
+          address: this.address,
+          email: this.email,
+          password: this.password,
+          description: this.description
+        })
+          .then((res) => {
+            console.log(res)
+            this.$router.push('/login')
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     }
   }

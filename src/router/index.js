@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Event from '../views/EventList.vue'
 import Dashboard from '../views/Dashboard.vue'
+import EventActiveUser from '../views/EventActiveUser.vue'
+import EventPastUser from '../views/EventPastUser.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import RegisterOrganizer from '../views/Register-Owner.vue'
@@ -42,6 +44,16 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/event-active',
+    name: 'EventActiveUser',
+    component: EventActiveUser
+  },
+  {
+    path: '/event-past',
+    name: 'EventPastUser',
+    component: EventPastUser
   },
   {
     path: '/register-organizer',
