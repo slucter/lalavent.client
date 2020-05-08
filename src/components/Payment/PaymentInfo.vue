@@ -125,7 +125,7 @@ export default {
 }
 .item-card{
   width: 110px;
-  height: 65px;
+  height: 60px;
   margin-right: 10px;
   margin-bottom: 10px;
   background-color: #fff;
@@ -134,7 +134,7 @@ export default {
   cursor: pointer;
 }
 .item-card img{
-  width: 70px;
+  width: 65px;
   height: 30px;
   margin-top: 15px;
   margin-left: 20px;
