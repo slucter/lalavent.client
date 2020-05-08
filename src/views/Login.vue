@@ -83,10 +83,13 @@ export default {
           })
           .then(res => {
             console.log(res)
-            this.local.id = res.data.id
-            this.local.token = res.data.token
-            this.local.role = res.data.role
-            this.localData()
+            const parsed = JSON.stringify({
+              id: res.data.id,
+              token: res.data.token,
+              role: res.data.role
+            })
+            localStorage.setItem('items', parsed)
+            console.log(parsed)
             this.$router.push('/')
           })
       }
