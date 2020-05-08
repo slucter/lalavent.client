@@ -1,8 +1,8 @@
 <template>
   <div class="container container-fluid my-5">
     <OrganizerCard
-    :organizerImage="organizer.image"
-    :organizerName="organizer.name"/>
+    :organizerImage="user.image"
+    :organizerName="user.name"/>
     <div class="px-3 mt-5 d-flex flex-row justify-content-between align-items-center">
       <h3 class="mb-0 evn-title text-white">Semua Event</h3>
       <Button>
@@ -37,6 +37,13 @@ import Pagination from '@/components/Pagination'
 
 export default {
   name: 'OrganizerEventlist',
+  data () {
+    return {
+      local: {
+        id: null
+      }
+    }
+  },
   props: [
     'organizerId'
   ],
@@ -47,15 +54,24 @@ export default {
     CardEvent,
     Pagination
   },
+  created () {
+    const parsed = JSON.parse(localStorage.getItem('items'))
+    if (parsed) {
+      this.local = parsed
+    }
+  },
   methods: {
-    ...mapActions('organizer', ['getEvents', 'getOrganizer'])
+    ...mapActions('user', ['getUserById', 'getLocalStorage']),
+    ...mapActions('organizer', ['getEvents'])
   },
   mounted () {
     this.getEvents()
-    this.getOrganizer()
+    this.getLocalStorage(this.local)
+    this.getUserById(this.local.id)
   },
   computed: {
-    ...mapState('organizer', ['events', 'organizer'])
+    ...mapState('organizer', ['events']),
+    ...mapState('user', ['user'])
   }
 }
 </script>
