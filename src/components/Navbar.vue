@@ -14,7 +14,7 @@
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          <li class="nav-item mr-3">
+          <li class="nav-item mr-3" v-if="this.user.role_id == 2">
             <i class="fas fa-calendar-plus mr-1"></i>
             <router-link to="/1/add-event" class="nav-link">Tambah Event</router-link>
           </li>
@@ -62,14 +62,22 @@ export default {
   name: 'Navbar',
   data () {
     return {
-      isLogin: false
+      isLogin: false,
+      local: null
     }
   },
+  created () {
+    const parsed = JSON.parse(localStorage.getItem('items'))
+    this.local = parsed
+    // console.log(this.local)
+  },
   methods: {
-    ...mapActions('user', ['getUserById'])
+    ...mapActions('user', ['getUserById']),
+    ...mapActions('user', ['getLocalStorage'])
   },
   mounted () {
-    this.getUserById()
+    this.getUserById(this.local.id)
+    this.getLocalStorage(this.local)
   },
   computed: {
     ...mapState('user', ['user'])

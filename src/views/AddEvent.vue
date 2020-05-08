@@ -4,7 +4,7 @@
       <div class="col">
         <div class="form-group">
           <label for="photo" class="evn-title text-white">Foto / Poster<span class="star">*</span></label>
-          <input type="file" ref="file" class="form-control-file bg-light p-2 rounded-lg">
+          <input type="file" ref="file" @change="upload" class="form-control-file bg-light p-2 rounded-lg">
         </div>
       </div>
     </div>
@@ -98,7 +98,6 @@
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import { required } from 'vuelidate/lib/validators'
-
 import Button from '@/components/Button'
 
 export default {
@@ -112,7 +111,7 @@ export default {
       selectedCategory: null,
       selectedType: '',
       location: '',
-      // price: null,
+      image: null,
       quota: null,
       description: '',
       submitStatus: false
@@ -131,6 +130,10 @@ export default {
     Button
   },
   methods: {
+    upload () {
+      const file = this.$refs.file.files[0]
+      this.image = file
+    },
     submitEvent () {
       console.log(this.$refs.file.files[0])
       this.submitStatus = true
@@ -141,25 +144,23 @@ export default {
         return
       } else {
         console.log('Submit ok')
+        console.log(this.local.token)
         const formData = new FormData()
-        formData.append('image', this.$refs.file.files[0])
+        formData.append('image', this.image)
         formData.append('title', this.title)
-        formData.append('user_id', 1)
-        formData.append('date', this.date)
-        formData.append('time_start', this.timeStart)
+        // formData.append('user_id', 1)
+        // formData.append('date', this.date)
+        // formData.append('time_start', this.timeStart)
         // formData.append('time_end', this.timeEnd)
-        formData.append('category_id', this.selectedCategory)
-        formData.append('type', this.selectedType)
-        formData.append('location', this.location)
+        // formData.append('category_id', this.selectedCategory)
+        // formData.append('type', this.selectedType)
+        // formData.append('location', this.location)
         // formData.append('price', this.price)
         // formData.append('quota', this.quota)
         formData.append('description', this.description)
         axios
           .post(`${process.env.VUE_APP_BASE_URL}event`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'baca-bismillah': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg4NzE5NTgyfQ.tEr_2db0YEzWSr45qDr9mZKGfxSY17ZK-7r6drJQjQI'
-            }
+            headers: { 'baca-bismillah': this.local.token }
           })
           .then((res) => {
             console.log(res)
@@ -167,9 +168,9 @@ export default {
           .catch((err) => {
             console.log(err + 'error')
           })
-        for (var pair of formData.entries()) {
-          console.log(pair[0] + ', ' + pair[1])
-        }
+        // for (var pair of formData.entries()) {
+        //   console.log(pair[0] + ', ' + pair[1])
+        // }
       }
     },
     ...mapActions('organizer', ['getCategory'])
@@ -178,7 +179,8 @@ export default {
     this.getCategory()
   },
   computed: {
-    ...mapState('organizer', ['category'])
+    ...mapState('organizer', ['category']),
+    ...mapState('user', ['local'])
   }
 }
 </script>
