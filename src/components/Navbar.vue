@@ -18,7 +18,11 @@
             <i class="fas fa-calendar-plus mr-1"></i>
             <router-link to="/1/add-event" class="nav-link">Tambah Event</router-link>
           </li>
-          <li class="nav-item mr-3">
+          <li class="nav-item mr-3" v-if="this.local.role == 2">
+            <i class="fas fa-calendar-alt mr-1"></i>
+            <router-link :to="`/${this.local.id}/event-list`" class="nav-link">Daftar Event</router-link>
+          </li>
+          <li class="nav-item mr-3" v-if="this.local.role == 1">
             <i class="fas fa-calendar-alt mr-1"></i>
             <router-link to="/event" class="nav-link">Semua Event</router-link>
           </li>

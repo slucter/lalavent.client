@@ -15,6 +15,7 @@ import EventStatistic from '../views/EventStatistic.vue'
 import AddEvent from '../views/AddEvent.vue'
 import Logout from '../views/Logout.vue'
 import Payment from '../views/Payment.vue'
+import DetailOrganizer from '../views/DetailOrganizer.vue'
 
 Vue.use(VueRouter)
 
@@ -83,6 +84,11 @@ const routes = [
     path: '/admin/admin-organizer-list',
     name: 'AdminOrganizerList',
     component: AdminOrganizerList
+  },
+  {
+    path: '/detail-organizer/:id',
+    name: 'DetailOrganizer',
+    component: DetailOrganizer
   },
   {
     path: '/logout',
