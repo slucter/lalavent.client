@@ -1,23 +1,26 @@
 <template>
   <div id="app" class="evn-primary">
-    <navbar />
-    <div class="container">
+    <navbar/>
+    <div class="container" v-if="login==true">
       <router-view/>
     </div>
     <router-view/>
+    <Footer/>
     <small-footer />
   </div>
 </template>
 
 <script>
 import navbar from '@/components/Navbar.vue'
+import Footer from '@/components/_module/Footer.vue'
 import SmallFooter from '@/components/_module/Small-Footer.vue'
 
 export default {
   name: 'App',
   components: {
     navbar,
-    'small-footer': SmallFooter
+    'small-footer': SmallFooter,
+    Footer
   }
 }
 </script>
