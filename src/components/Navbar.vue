@@ -16,7 +16,7 @@
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
           <li class="nav-item mr-3">
             <i class="fas fa-calendar-plus mr-1"></i>
-            <router-link to="/event" class="nav-link">Tambah Event</router-link>
+            <router-link to="/1/add-event" class="nav-link">Tambah Event</router-link>
           </li>
           <li class="nav-item mr-3">
             <i class="fas fa-calendar-alt mr-1"></i>
