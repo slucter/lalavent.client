@@ -8,9 +8,9 @@
         <div class="col-md-10 d-flex flex-column">
           <div class="pt-3">
             <h3 class="evn-title">{{ organizerName }}</h3>
-            <p class="evn-desc">Total Events: 666</p>
+            <p class="evn-desc">Total Events: {{ organizerEvents }}</p>
           </div>
-          <p class="evn-desc">Member sejak 17 Agustus 1945</p>
+          <p class="evn-desc">"{{ organizerDesc }}"</p>
         </div>
       </div>
     </div>
@@ -22,7 +22,9 @@ export default {
   name: 'OrganizerCard',
   props: [
     'organizerImage',
-    'organizerName'
+    'organizerName',
+    'organizerEvents',
+    'organizerDesc'
   ]
 }
 </script>
