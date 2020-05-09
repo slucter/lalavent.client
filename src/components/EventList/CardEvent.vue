@@ -1,9 +1,16 @@
 <template>
     <div class="card evn-secondary my-2 mx-2">
-            <img :src="eventImage" class="card-img-top" alt="...">
+            <img src="../../assets/img/banner/1577782470_soEXf3.jpg" style="height: 200px; object-fit: cover; " class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title mb-5 text-light evn-title">{{ eventTitle }}</h5>
-            <h6 class="card-subtitle mb-2 text-warning mb-4">{{ eventCategory }}</h6>
+            <div class="cat-grup mb-4 d-flex justify-content-between">
+                <h6 class="card-subtitle text-warning">{{ eventCategory }}</h6>
+                <h6 class="card-subtitle text-disable">{{ eventStatus }}</h6>
+            </div>
+            <p class="card-text text-light evn-desc">
+                <i class="fas fa-campground mr-2"></i>
+                {{ eventOrganizer }}
+            </p>
             <p class="card-text text-light evn-desc">
                 <i class="far fa-calendar-alt mr-3"></i>
                 {{ eventDate }}
@@ -30,7 +37,9 @@ export default {
     'eventDate',
     'eventStart',
     'eventEnd',
-    'eventLocation'
+    'eventLocation',
+    'eventOrganizer',
+    'eventStatus'
   ]
 }
 </script>
