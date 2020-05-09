@@ -5,7 +5,8 @@
         <div class="card-body d-flex justify-content-start">
           <div class="photo-profil">
             <div class="photo mb-4 d-flex flex-column">
-              <img :src="user.image" alt="" class="mb-2">
+              <img :src="this.image" alt="" class="mb-2" v-if="this.image !== null">
+              <img :src="user.image" alt="" class="mb-2" v-else>
               <div class="upload-btn-wrapper mx-auto">
                 <button class="btn evn-desc">Upload a file</button>
                 <input type="file" ref="file" name="myfile" @change="upload"/>
@@ -73,7 +74,8 @@ export default {
   data () {
     return {
       editData: true,
-      image: null
+      image: null,
+      image1: null
     }
   },
   methods: {
@@ -93,16 +95,24 @@ export default {
       })
       this.editData = true
     },
-    upload () {
-      const file = this.$refs.file.files[0]
+    upload (e) {
+      const file = e.target.files[0]
+      const file1 = this.$refs.file.files[0]
+      this.image1 = file1
+      const fr = new FileReader()
+      fr.onload = f => {
+        this.image = f.target.result
+      }
+      fr.readAsDataURL(file)
       this.image = file
     },
     editUser () {
       const formData = new FormData()
+      console.log(this.image)
       formData.append('name', this.user.name)
       formData.append('email', this.user.email)
       formData.append('password', this.user.password)
-      formData.append('image', this.image || this.user.image)
+      formData.append('image', this.image1)
       formData.append('address', this.user.address)
       formData.append('description', this.user.description)
       axios
