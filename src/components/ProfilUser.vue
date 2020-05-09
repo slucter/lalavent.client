@@ -48,7 +48,7 @@
                     </div>
                   </div>
               </form>
-              <modal title="Update Personal Profil" button="Ok" id="edit-profil" @clicked="coba">
+              <modal title="Update Personal Profil" button="Ok" id="edit-profil" @clicked="coba" dismiss="modal">
                 <p>Data Anda Berhasil Dirubah!</p>
               </modal>
             </div>
