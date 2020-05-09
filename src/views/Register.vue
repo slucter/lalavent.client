@@ -1,6 +1,8 @@
 <template>
   <div class="container-login evn-primary">
     <div class="left-login">
+      <h1 class="evn-title">Rayakan Eventmu<br>
+        di <span class="env-desc">#LalaventAja</span></h1>
     </div>
     <div class="right-login">
       <div class="title-login">
@@ -27,7 +29,8 @@
         </div>
       </form>
       <div class="account evn-title">
-        <p>Sudah punya akun? <router-link to="/register">Masuk</router-link></p>
+        <p>Sudah punya akun? <router-link to="/login" class="sign">Masuk</router-link></p>
+        <p class="event">Atau buat eventmu sendiri <router-link to="/register-organizer" class="sign"> sekarang! </router-link></p>
       </div>
     </div>
   </div>
@@ -92,6 +95,15 @@ export default {
     background-size: cover;
     width: 60%;
     height: 100vh;
+    h1{
+      margin: 80px;
+      color: white;
+      font-weight: bold;
+      font-size: 60px;
+      span{
+        color: #f1c40f;
+      }
+    }
   }
   .right-login{
     display: flex;
@@ -118,8 +130,15 @@ export default {
       color: red;
     }
     .account{
+      .event{
+        margin: 0 0;
+      }
       p{
-        margin: 20px 0;
+        margin: 15px 0 0;
+        color: white;
+        .sign{
+          color: #f1c40f;
+        }
       }
     }
   }

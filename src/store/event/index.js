@@ -13,11 +13,15 @@ export default ({
   mutations: {
     events (state, data) {
       state.events = data
+<<<<<<< HEAD
+      console.log(state.events)
+=======
       // console.log(state.events)
     },
     organizerEvents (state, data) {
       state.organizerEvents = data
       // console.log(state.events)
+>>>>>>> aa6a918435c37cfeaac72d17103c733926e9172c
     }
   },
   actions: {

@@ -1,6 +1,10 @@
 <template>
   <div class="container-register evn-primary">
     <div class="up-register">
+      <div class="brands">
+        <i class="fas fa-campground mr-2"></i>
+        <router-link to="/" class="brand evn-title">Lalavent</router-link>
+      </div>
       <div class="title-register">
         <h5 class="evn-title">Daftar sebagai Penyelenggara</h5>
       </div>
@@ -44,6 +48,9 @@
       </div>
       <div class="mt-4 d-flex flex-row-reverse">
         <Button @btn-click="submitEvent">Daftar</Button>
+      </div>
+      <div class="account evn-title">
+        <p>Sudah punya akun? <router-link to="/login" class="sign">Masuk</router-link></p>
       </div>
     </div>
   </div>
@@ -119,13 +126,25 @@ export default {
     justify-content: center;
     align-items: center;
     .title-register{
-      margin: 200px 0 0 115px;
+      margin: 20px 0 0 115px;
       h5{
         font-size: 55px;
         font-weight: bolder;
         color: white;
       }
     }
+    .brands{
+    color: #eeeeee;
+    margin: 140px 115px 0;
+    .fas{
+      font-size: 35px;
+    }
+    .brand{
+      color: white;
+      font-size: 35px;
+      font-weight: bold;
+    }
+  }
   }
   label {
   font-size: 1.5rem;
@@ -138,6 +157,20 @@ export default {
   }
   .invalid-feedback {
   color: red;
+  }
+  .mt-4 Button{
+    margin-bottom: 10px;
+  }
+  .account{
+    display: flex;
+    flex-direction: row-reverse;
+    p{
+      margin: 10px 0 20px;
+      color: white;
+      .sign{
+        color: #f1c40f;
+      }
+    }
   }
 }
 </style>
