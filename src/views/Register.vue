@@ -9,8 +9,8 @@
       <form class="mt-2 text-white">
         <div class="form-group">
           <label for="title" class="evn-title">Nama<span class="star">*</span></label>
-          <input type="text" placeholder="Lalavent" :class="$v.title.$error ? 'form-control is-invalid' : 'form-control'" v-model="title">
-          <p v-if="$v.title.$error" class="invalid-feedback">Nama harus diisi!</p>
+          <input type="text" placeholder="Lalavent" :class="$v.name.$error ? 'form-control is-invalid' : 'form-control'" v-model="name">
+          <p v-if="$v.name.$error" class="invalid-feedback">Nama harus diisi!</p>
         </div>
         <div class="form-group">
           <label for="email" class="evn-title">Email<span class="star">*</span></label>
@@ -36,6 +36,7 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import Button from '../components/Button.vue'
+import axios from 'axios'
 
 export default {
   name: 'Register',
@@ -44,19 +45,20 @@ export default {
   },
   data () {
     return {
-      title: '',
+      name: '',
       email: '',
       password: '',
       submitStatus: false
     }
   },
   validations: {
-    title: { required },
+    name: { required },
     email: { required },
     password: { required }
   },
   methods: {
     submitEvent () {
+      // e.preventDefault()
       this.submitStatus = true
       console.log('submit!')
       this.$v.$touch()
@@ -65,6 +67,16 @@ export default {
         return
       } else {
         console.log('Submit ok')
+        axios.post('http://192.168.1.97:5000/api/lalavent/auth/signup', {
+          name: this.name, email: this.email, password: this.password
+        })
+          .then((res) => {
+            console.log(res)
+            this.$router.push('/login')
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     }
   }

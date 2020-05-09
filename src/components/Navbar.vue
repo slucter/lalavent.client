@@ -14,15 +14,19 @@
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          <li class="nav-item mr-3">
+          <li class="nav-item mr-3" v-if="this.local.role == 2">
             <i class="fas fa-calendar-plus mr-1"></i>
-            <router-link to="/event" class="nav-link">Tambah Event</router-link>
+            <router-link to="/1/add-event" class="nav-link">Tambah Event</router-link>
           </li>
-          <li class="nav-item mr-3">
+          <li class="nav-item mr-3" v-if="this.local.role == 2">
+            <i class="fas fa-calendar-alt mr-1"></i>
+            <router-link :to="`/${this.local.id}/event-list`" class="nav-link">Daftar Event</router-link>
+          </li>
+          <li class="nav-item mr-3" v-if="this.local.role == 1">
             <i class="fas fa-calendar-alt mr-1"></i>
             <router-link to="/event" class="nav-link">Semua Event</router-link>
           </li>
-          <li class="nav-item mr-4 dropdown" v-if="this.user.length !== 0">
+          <li class="nav-item mr-4 dropdown" v-if="this.user !== undefined">
             <img :src="this.user.image" alt="profile-img" class="profile-img mr-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ this.user.name }}</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -30,11 +34,11 @@
                 <i class="fas fa-user-cog mr-1"></i>
                 Edit Profile
               </a>
-              <router-link to="/" class="dropdown-item" v-if="this.user.role_id == 1">
+              <router-link to="/" class="dropdown-item" v-if="this.local.role == 1">
                 <i class="fas fa-history mr-1 mt-1"></i>
                 History Event
               </router-link>
-              <router-link to="/" class="dropdown-item" v-if="this.user.role_id == 2">
+              <router-link to="/" class="dropdown-item" v-if="this.local.role == 2">
                 <i class="fas fa-chart-bar mr-1 mt-1"></i>
                 Statistik Event
               </router-link>
@@ -62,14 +66,27 @@ export default {
   name: 'Navbar',
   data () {
     return {
-      isLogin: false
+      isLogin: false,
+      local: {
+        id: null,
+        role: 1
+      }
+    }
+  },
+  created () {
+    const parsed = JSON.parse(localStorage.getItem('items'))
+    if (parsed) {
+      this.local = parsed
     }
   },
   methods: {
-    ...mapActions('user', ['getUserById'])
+    ...mapActions('user', ['getUserById']),
+    ...mapActions('user', ['getLocalStorage'])
   },
   mounted () {
-    this.getUserById()
+    // console.log(this.local.role)
+    this.getLocalStorage(this.local)
+    this.getUserById(this.local.id)
   },
   computed: {
     ...mapState('user', ['user'])

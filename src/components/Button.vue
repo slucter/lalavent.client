@@ -1,12 +1,15 @@
 <template>
-  <button @click.prevent="$emit('btn-click')" class="evn-desc evn-btn evn-shadow btn-custom">
+  <button @click="$emit('btn-click')" class="evn-desc evn-btn evn-shadow btn-custom" :type="type">
     <slot></slot>
   </button>
 </template>
 
 <script>
 export default {
-  name: 'Button'
+  name: 'Button',
+  props: [
+    'type'
+  ]
 }
 </script>
 
