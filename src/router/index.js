@@ -115,7 +115,7 @@ const routes = [
     component: Payment
   },
   {
-    path: '/profil',
+    path: '/profile',
     name: 'Profil',
     component: Profil
   },

@@ -12,7 +12,7 @@
           <slot></slot>
         </div>
         <div class="modal-footer">
-          <Button @btn-click="klikme">{{ button }}</Button>
+          <Button type="button" @btn-click="$emit('clicked')" :data-dismiss="dismiss">{{ button }}</Button>
         </div>
       </div>
     </div>
@@ -30,13 +30,9 @@ export default {
   props: [
     'title',
     'button',
-    'id'
-  ],
-  methods: {
-    klikme () {
-      this.$router.go('/')
-    }
-  }
+    'id',
+    'dismiss'
+  ]
 }
 </script>
 
