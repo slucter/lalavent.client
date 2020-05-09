@@ -9,6 +9,15 @@
         <h5 class="evn-title">Masuk</h5>
       </div>
       <form @submit="submitEvent" class="mt-2 text-white">
+        <div v-if="code === 1" class="alertdiv color-red">
+          <i class="material-icons evn-desc" style="color:red">Silakan aktivasi email terlebih dahulu.</i>
+        </div>
+        <div v-if="code === 2" class="alertdiv wrong color-orange">
+          <i class="material-icons evn-desc" style="color:orange">Kata Sandi salah.</i>
+        </div>
+        <div v-if="code === 3" class="alertdiv color-orange">
+          <i class="material-icons evn-desc" style="color:orange">Email belum terdaftar.</i>
+        </div>
         <div class="form-group">
           <label for="email" class="evn-title">Email<span class="star">*</span></label>
           <input type="email" placeholder="event@lalavent.com" :class="$v.email.$error ? 'form-control is-invalid' : 'form-control'" v-model="email">
@@ -44,6 +53,7 @@ export default {
     return {
       email: '',
       password: '',
+      code: 0,
       submitStatus: false,
       local: {
         id: null,
@@ -55,6 +65,15 @@ export default {
   validations: {
     email: { required },
     password: { required }
+  },
+  beforeCreate () {
+    axios.patch(`http://192.168.1.97:5000/api/lalavent/user/activation?token=${this.$route.query.token}`)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   },
   methods: {
     localData () {
@@ -68,7 +87,7 @@ export default {
     submitEvent (e) {
       e.preventDefault()
       this.submitStatus = true
-      console.log('hello')
+      console.log('Fill this form!')
       // console.log('submit!')
       this.$v.$touch()
       if (this.$v.$invalid) {
@@ -76,21 +95,30 @@ export default {
         return
       } else {
         console.log('Submit ok')
-        axios
-          .post(process.env.VUE_APP_BASE_URL + 'auth/signin', {
-            email: this.email,
-            password: this.password
-          })
+        axios.post(process.env.VUE_APP_BASE_URL + 'auth/signin', {
+          email: this.email,
+          password: this.password
+        })
           .then(res => {
             console.log(res)
-            const parsed = JSON.stringify({
-              id: res.data.id,
-              token: res.data.token,
-              role: res.data.role
-            })
-            localStorage.setItem('items', parsed)
-            console.log(parsed)
-            this.$router.push('/')
+            if (res.data.status === 0) {
+              // this.error = res.data.message
+              this.code = 1
+            } else if (res.data.password === 0) {
+              // this.error = res.data.message
+              this.code = 2
+            } else if (res.data.id === 0) {
+              this.code = 3
+            } else {
+              const parsed = JSON.stringify({
+                id: res.data.id,
+                token: res.data.token,
+                role: res.data.role
+              })
+              localStorage.setItem('items', parsed)
+              console.log(parsed)
+              this.$router.push('/')
+            }
           })
       }
     }
@@ -151,5 +179,33 @@ export default {
       }
     }
   }
+}
+.material-icons{
+    position: absolute;
+    margin-top: 7px;
+    margin-left: 10px;
+}
+.alertdiv{
+    background-color: #fff7f7;
+    border-radius: 5px;
+    width: 205px;
+    height: 40px;
+}
+.color-red{
+    border: 1px solid #f1c40f;
+    position: absolute;
+    top: 525px;
+    width: 325px;
+}
+.color-orange{
+    border: 1px solid #f1c40f;
+    position: absolute;
+    top: 525px;
+}
+.wrong{
+    border: 1px solid #f1c40f;
+    position: absolute;
+    top: 525px;
+    width:170px;
 }
 </style>
