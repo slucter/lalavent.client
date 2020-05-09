@@ -2,9 +2,17 @@
   <div class="container my-5">
     <div class="row">
       <div class="col">
+        <div class="my-3 text-white d-flex justify-content-center align-items-center evn-title">
+          <h1>Data Event Baru</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <div class="form-group">
           <label for="photo" class="evn-title text-white">Foto / Poster<span class="star">*</span></label>
-          <input type="file" ref="file" @change="upload" class="form-control-file bg-light p-2 rounded-lg">
+          <input type="file" ref="file" @change="upload" :class="$v.image.$error ? 'form-control-file border-danger bg-light p-2 rounded-lg is-invalid' : 'form-control-file bg-light p-2 rounded-lg'" class="">
+          <p v-if="$v.image.$error" class="invalid-feedback">Foto event harus diisi!</p>
         </div>
       </div>
     </div>
@@ -108,18 +116,19 @@ export default {
       date: '',
       timeStart: '',
       timeEnd: '',
-      selectedCategory: [],
-      selectedType: null,
+      selectedCategory: '',
+      selectedType: '',
       location: '',
-      image: null,
-      quota: null,
-      price: 0,
+      image: '',
+      quota: '',
+      price: '',
       description: '',
       status: 0,
       submitStatus: false
     }
   },
   validations: {
+    image: { required },
     title: { required },
     date: { required },
     timeStart: { required },
