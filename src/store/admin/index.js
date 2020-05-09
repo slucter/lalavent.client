@@ -12,16 +12,16 @@ export default ({
   mutations: {
     organizers (state, data) {
       state.organizers = data
-      console.log(state.organizers)
+      // console.log(state.organizers)
     }
   },
   actions: {
     getAllOrganizers (context) {
-      console.log(process.env.VUE_APP_BASE_URL)
+      // console.log(process.env.VUE_APP_BASE_URL)
       axios
         .get(process.env.VUE_APP_BASE_URL + 'user/role/2')
         .then(res => {
-          console.log(res)
+          // console.log(res)
           context.commit('organizers', res.data.user.rows)
         })
     }

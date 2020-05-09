@@ -13,11 +13,11 @@ export default ({
   mutations: {
     user (state, data) {
       state.user = data
-      // console.log(state.user)
+      console.log(state.user)
     },
     local (state, data) {
       state.local = data
-      console.log(state.local)
+      // console.log(state.local)
     }
   },
   actions: {
