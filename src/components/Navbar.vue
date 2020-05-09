@@ -9,7 +9,7 @@
       </button>
       <div class="brands">
         <i class="fas fa-campground mr-2"></i>
-        <router-link to="/" class="navbar-brand">Lalavent</router-link>
+        <router-link to="/" class="navbar-brand">LALAVENT</router-link>
       </div>
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
@@ -122,5 +122,8 @@ export default {
   }
   .dropdown-item{
     color: #2c3e50;
+  }
+  .navbar-brand{
+    font-weight: bold;
   }
 </style>
