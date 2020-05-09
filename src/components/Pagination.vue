@@ -2,11 +2,11 @@
   <nav aria-label="Page navigation example">
     <ul class="mb-4 pagination justify-content-center">
       <div class="pagination-container evn-desc evn-shadow d-flex flex-row">
-        <li class="page-item"><a class="page-link text-white evn-secondary" href="#">Sebelumnya</a></li>
-        <li class="page-item"><a class="page-link text-white evn-secondary" href="#">1</a></li>
+        <li class="page-item"><div class="page-link text-white evn-secondary" @click="$emit('prev')">Sebelumnya</div></li>
+        <!-- <li class="page-item"><a class="page-link text-white evn-secondary" href="#">1</a></li>
         <li class="page-item"><a class="page-link text-white evn-secondary" href="#">2</a></li>
-        <li class="page-item"><a class="page-link text-white evn-secondary" href="#">3</a></li>
-        <li class="page-item"><a class="page-link text-white evn-secondary" href="#">Selanjutnya</a></li>
+        <li class="page-item"><a class="page-link text-white evn-secondary" href="#">3</a></li> -->
+        <li class="page-item"><div class="page-link text-white evn-secondary" @click="$emit('next')">Selanjutnya</div></li>
       </div>
     </ul>
   </nav>
@@ -19,6 +19,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-link{
+  cursor: pointer;
+}
 .pagination {
   .pagination-container {
     border-radius: 25px;

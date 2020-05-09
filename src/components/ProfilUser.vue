@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile-user">
     <div class="container mt-5 mb-5">
       <div class="card evn-secondary">
         <div class="card-body d-flex justify-content-start">
@@ -22,7 +22,7 @@
               <h4 class="text-light evn-title text-center">Informasi Pribadi</h4>
             </div>
             <div class="user-detail">
-              <form>
+              <form @submit="editUser">
                   <div class="form-group">
                     <label for="staticname" class="col-sm-4 col-form-label evn-desc">Nama</label>
                     <div class="col-sm-12">
@@ -48,7 +48,7 @@
                     </div>
                   </div>
               </form>
-              <modal title="Update Personal Profil" button="Ok" id="edit-profil">
+              <modal title="Update Personal Profil" button="Ok" id="edit-profil" @clicked="coba">
                 <p>Data Anda Berhasil Dirubah!</p>
               </modal>
             </div>
@@ -64,6 +64,7 @@ import { mapActions, mapState } from 'vuex'
 import Button from '@/components/Button'
 import modal from '@/components/Modal.vue'
 import axios from 'axios'
+
 export default {
   name: 'Profil-User',
   components: {
@@ -77,6 +78,9 @@ export default {
     }
   },
   methods: {
+    coba () {
+      console.log('hello')
+    },
     editInput () {
       const listInput = document.querySelectorAll('.form-control-plaintext')
       listInput.forEach((e) => {

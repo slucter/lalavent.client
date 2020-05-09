@@ -20,7 +20,7 @@ export default ({
     },
     category (state, data) {
       state.category = data
-      // console.log(data.category)
+      console.log(data.category)
     }
   },
   actions: {
