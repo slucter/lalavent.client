@@ -17,6 +17,7 @@ import Logout from '../views/Logout.vue'
 import Payment from '../views/Payment.vue'
 import Profil from '../views/Profil.vue'
 import DetailOrganizer from '../views/DetailOrganizer.vue'
+import HistoryEvent from '../views/History.vue'
 
 Vue.use(VueRouter)
 
@@ -105,6 +106,11 @@ const routes = [
     path: '/profil',
     name: 'Profil',
     component: Profil
+  },
+  {
+    path: '/history',
+    name: 'HistoryEvent',
+    component: HistoryEvent
   }
 ]
 

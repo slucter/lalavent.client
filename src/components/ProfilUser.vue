@@ -5,16 +5,16 @@
         <div class="card-body d-flex justify-content-start">
           <div class="photo-profil">
             <div class="photo mb-4 d-flex flex-column">
-              <img :src="myProfil.image" alt="" class="mb-2">
+              <img :src="user.image" alt="" class="mb-2">
               <div class="upload-btn-wrapper mx-auto">
                 <button class="btn evn-desc">Upload a file</button>
-                <input type="file" ref="file" name="myfile" />
+                <input type="file" ref="file" name="myfile" @change="upload"/>
               </div>
             </div>
             <div class="action-button d-flex flex-column">
               <Button class="mb-4" @btn-click="editInput" v-if="this.editData">Edit Profil</Button>
               <Button class="mb-4" @btn-click="cancelEdit" v-else>Cancel</Button>
-              <Button @btn-click="editUser">Save</Button>
+              <Button @btn-click="editUser" data-toggle="modal" data-target="#edit-profil">Save</Button>
             </div>
           </div>
           <div class="profil-user">
@@ -26,25 +26,25 @@
                   <div class="form-group">
                     <label for="staticname" class="col-sm-4 col-form-label evn-desc">Nama</label>
                     <div class="col-sm-12">
-                      <input type="text" readonly class="form-control-plaintext evn-desc" id="staticname" v-model="myProfil.name">
+                      <input type="text" readonly class="form-control-plaintext evn-desc" id="staticname" v-model="user.name">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="staticEmail" class="col-sm-4 col-form-label evn-desc">Email</label>
                     <div class="col-sm-12">
-                      <input type="text" readonly class="form-control-plaintext evn-desc" id="staticEmail" v-model="myProfil.email">
+                      <input type="text" readonly class="form-control-plaintext evn-desc" id="staticEmail" v-model="user.email">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="staticalamat" class="col-sm-6 col-form-label evn-desc">Alamat</label>
                     <div class="col-sm-12">
-                      <input type="text" readonly class="form-control-plaintext evn-desc" id="staticalamat" v-model="myProfil.address">
+                      <input type="text" readonly class="form-control-plaintext evn-desc" id="staticalamat" v-model="user.address">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="deskripsi" class="col-sm-6 col-form-label evn-desc">Deskripsi</label>
                     <div class="col-sm-12">
-                      <input type="text" readonly class="form-control-plaintext evn-desc" id="deskripsi" v-model="myProfil.description">
+                      <input type="text" readonly class="form-control-plaintext evn-desc" id="deskripsi" v-model="user.description">
                     </div>
                   </div>
               </form>
@@ -73,10 +73,7 @@ export default {
   data () {
     return {
       editData: true,
-      id: 1,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg4OTM5Mzk1fQ.S3QFwxeFPTibayKdnzUzKkrPQTqvpbvz_MvVMx0BKe0',
-      myData: [],
-      password: 12345
+      image: null
     }
   },
   methods: {
@@ -96,35 +93,34 @@ export default {
       })
       this.editData = true
     },
+    upload () {
+      const file = this.$refs.file.files[0]
+      this.image = file
+    },
     editUser () {
-      console.log('ok')
       const formData = new FormData()
-      formData.append('name', this.myProfil.name)
-      formData.append('email', this.myProfil.email)
-      formData.append('password', this.password)
-      formData.append('image', this.$refs.file.files[0])
-      formData.append('address', this.myProfil.address)
-      formData.append('description', this.myProfil.description)
+      formData.append('name', this.user.name)
+      formData.append('email', this.user.email)
+      formData.append('password', this.user.password)
+      formData.append('image', this.image)
+      formData.append('address', this.user.address)
+      formData.append('description', this.user.description)
       axios
-        .put('http://192.168.1.97:5000/api/lalavent/user/1', formData, {
-          header: { 'baca-bismillah': this.token }
-        })
-      // this.$store.dispatch('editProfil', formData)
-        .then(res => {
+        .put(process.env.VUE_APP_BASE_URL + 'user/' + this.local.id, formData, {
+          headers: { 'baca-bismillah': this.local.token }
+        }).then(res => {
+          this.cancelEdit()
           console.log(res)
         })
-        .catch(error => {
-          console.log(error)
-        })
     },
-    ...mapActions('profil', ['profilUser'])
+    ...mapActions('user', ['getUserById'])
   },
   mounted () {
-    this.profilUser()
-    console.log(this.token)
+    this.getUserById()
   },
   computed: {
-    ...mapState('profil', ['myProfil'])
+    ...mapState('user', ['user']),
+    ...mapState('user', ['local'])
   }
 }
 </script>

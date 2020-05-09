@@ -7,8 +7,7 @@ Vue.use(Vuex)
 export default ({
   namespaced: true,
   state: {
-    myProfil: [],
-    myHistory: []
+    myProfil: []
   },
   mutations: {
     getProfil (state, data) {
@@ -30,20 +29,13 @@ export default ({
     editProfil (id = 1, data) {
       axios
         .put(process.env.VUE_APP_BASE_URL + 'user/' + id, data, {
-          header: { 'baca-bismillah': this.token }
+          headers: { 'baca-bismillah': this.token }
         })
         .then(res => {
           console.log(res)
         })
         .catch(error => {
           console.log(error)
-        })
-    },
-    historyEvent (context) {
-      axios
-        .get('http://192.168.1.97:5000/api/lalavent/event/user/2')
-        .then(res => {
-          context.commit('getEvent', res.data.event.rows)
         })
     }
   }
