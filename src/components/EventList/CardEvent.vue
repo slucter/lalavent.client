@@ -1,6 +1,6 @@
 <template>
     <div class="card evn-secondary my-2 mx-2">
-            <img src="../../assets/img/banner/1577782470_soEXf3.jpg" style="height: 200px; object-fit: cover; " class="card-img-top" alt="...">
+            <img :src="eventImage" style="height: 200px; object-fit: cover; " class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title mb-5 text-light evn-title">{{ eventTitle }}</h5>
             <div class="cat-grup mb-4 d-flex justify-content-between">
