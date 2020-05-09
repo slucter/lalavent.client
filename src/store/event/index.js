@@ -9,7 +9,7 @@ export default ({
   state: {
     events: [],
     organizerEvents: [],
-    totalEvent: []
+    totalEvents: []
   },
   mutations: {
     events (state, data) {
@@ -25,15 +25,38 @@ export default ({
       // console.log(data)
     },
     totalEvent (state, data) {
-      state.totalEvent = data
-      console.log(state.totalEvent)
+      state.totalEvents = data
+      console.log(state.totalEvents)
     }
   },
   actions: {
     getAllEvents (context) {
-      // console.log(process.env.VUE_APP_BASE_URL)
       axios
         .get(process.env.VUE_APP_BASE_URL + 'event')
+        .then(res => {
+          // console.log(res)
+          context.commit('events', res.data.events.rows)
+        })
+    },
+    getAllPages (context, page) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event?page=' + page)
+        .then(res => {
+          // console.log(res)
+          context.commit('events', res.data.events.rows)
+        })
+    },
+    eventNewest (context) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event?time=DESC')
+        .then(res => {
+          // console.log(res)
+          context.commit('events', res.data.events.rows)
+        })
+    },
+    eventOldest (context) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event?time=ASC')
         .then(res => {
           // console.log(res)
           context.commit('events', res.data.events.rows)

@@ -15,17 +15,10 @@
                 </div>
               </form>
             </div>
-            <div class="sort">
-              <form class="form-inline">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1" class="text-light mr-4 evn-title">Sort By</label>
-                  <select class="form-control" id="exampleFormControlSelect1">
-                    <option>All</option>
-                    <option value="0">Event Terbaru</option>
-                    <option value="1">Event Terlama</option>
-                  </select>
-                </div>
-              </form>
+            <button class="btn btn-sm py-0 evn-btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Semua Waktu</button>
+            <div class="dropdown-menu">
+              <div class="dropdown-item" @click="$emit('newest')">Terbaru</div>
+              <div class="dropdown-item" @click="$emit('oldest')">Terlama</div>
             </div>
           </div>
           <div class="row table-responsive">
@@ -86,4 +79,7 @@ export default {
 .hide{
   display: none;
 }
-</style>>
+.dropdown-item{
+  cursor: pointer;
+}
+</style>

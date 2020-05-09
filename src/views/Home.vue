@@ -39,7 +39,11 @@ export default {
     sEasy,
     Jumbotron
     // SmallFooter
-
+  },
+  data () {
+    return {
+      datas: 8
+    }
   }
 }
 </script>

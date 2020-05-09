@@ -25,6 +25,8 @@
       @search="searchValue"
       @next="nextPage"
       @prev="prevPage"
+      @newest="newest"
+      @oldest="oldest"
     >
     <tbody>
       <tr v-for="data in events" :key="data.id">
@@ -75,7 +77,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('event', ['getAllEvents', 'searchEvent']),
+    ...mapActions('event', ['getAllEvents', 'searchEvent', 'totalEvent', 'getAllPages', 'eventNewest', 'eventOldest']),
     ...mapActions('admin', ['approveEvent', 'deleteEvent']),
     setuju (id) {
       // console.log(this.local.token)
@@ -88,26 +90,46 @@ export default {
     searchValue (data) {
       this.searchEvent(data)
     },
+    newest () {
+      console.log('newest')
+      this.eventNewest()
+    },
+    oldest () {
+      console.log('oldest')
+      this.eventOldest()
+    },
     nextPage () {
-      this.page += 1
-      console.log('next page')
+      this.total()
+      if (this.page < this.totalPage && this.page !== this.totalPage) {
+        this.page = this.page + 1
+      } else {
+        this.page = this.totalPage
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
     },
     prevPage () {
-      console.log('prev page')
+      this.total()
+      if (this.page > 0 && this.page !== 1) {
+        this.page -= 1
+      } else {
+        this.page = 1
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
     },
     total () {
-      // console.log(this.totalEvent)
-      // this.totalPage = Math.ceil(this.totalEvent / 10)
-      console.log(this.totalPage)
+      // console.log(this.totalEvents)
+      this.totalPage = Math.ceil(this.totalEvents / 10)
+      // console.log(this.totalPage)
     }
   },
   mounted () {
     this.getAllEvents()
-    // this.totalEvent()
-    this.total()
+    this.totalEvent()
   },
   computed: {
-    ...mapState('event', ['events']),
+    ...mapState('event', ['events', 'totalEvents']),
     ...mapState('user', ['local'])
   }
 }

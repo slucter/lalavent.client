@@ -22,10 +22,15 @@
       th3="Alamat"
       th4="Tindakan"
       title="Daftar Penyelenggara"
+      @search="searchValue"
+      @next="nextPage"
+      @prev="prevPage"
+      @newest="newest"
+      @oldest="oldest"
     >
     <tbody>
       <tr v-for="data in organizers" :key="data.id">
-        <td>1</td>
+        <td>{{ data.id }}</td>
         <td>{{ data.name }}</td>
         <td>{{ data.email }}</td>
         <td>{{ data.address }}</td>
@@ -66,11 +71,13 @@ export default {
   data () {
     return {
       datas: 5,
-      no: 0
+      search: null,
+      page: 1,
+      totalPage: 0
     }
   },
   methods: {
-    ...mapActions('admin', ['getAllOrganizers', 'deleteOrganizer', 'approveOrganizer']),
+    ...mapActions('admin', ['getAllOrganizers', 'deleteOrganizer', 'approveOrganizer', 'searchOrganizer']),
     setuju (id) {
       console.log('Setuju' + id)
       this.approveOrganizer(id)
@@ -78,6 +85,43 @@ export default {
     hapus (id) {
       // console.log(id)
       this.deleteOrganizer({ id: id, token: this.local.token })
+    },
+    searchValue (data) {
+      // console.log(data)
+      this.searchOrganizer(data)
+    },
+    newest () {
+      console.log('newest')
+      this.organizerNewest()
+    },
+    oldest () {
+      console.log('oldest')
+      this.organizerOldest()
+    },
+    nextPage () {
+      this.total()
+      if (this.page < this.totalPage && this.page !== this.totalPage) {
+        this.page = this.page + 1
+      } else {
+        this.page = this.totalPage
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
+    },
+    prevPage () {
+      this.total()
+      if (this.page > 0 && this.page !== 1) {
+        this.page -= 1
+      } else {
+        this.page = 1
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
+    },
+    total () {
+      // console.log(this.totalEvents)
+      this.totalPage = Math.ceil(this.totalEvents / 10)
+      // console.log(this.totalPage)
     }
   },
   mounted () {
