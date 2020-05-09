@@ -36,6 +36,13 @@ export default ({
         .then(res => {
           // console.log(res)
           context.commit('organizerEvents', res.data)
+    getEventsByOrganizer (context, organizerId) {
+      console.log(process.env.VUE_APP_BASE_URL)
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event/user/' + organizerId)
+        .then(res => {
+          // console.log(res)
+          context.commit('organizerEvents', res.data.event.rows)
         })
     }
   }
