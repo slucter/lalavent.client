@@ -176,6 +176,7 @@ export default {
           })
           .then((res) => {
             console.log(res)
+            this.$router.push(`/${this.local.id}/event-list`)
           })
           .catch((err) => {
             console.log(err + 'error')
