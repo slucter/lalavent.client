@@ -13,6 +13,7 @@ export default ({
   mutations: {
     getProfil (state, data) {
       state.myProfil = data
+      console.log(state.myProfil)
     },
     getEvent (state, data) {
       state.myHistory = data
@@ -26,7 +27,7 @@ export default ({
           commit('getProfil', res.data.user)
         })
     },
-    editProfil (context, id = 1, data) {
+    editProfil (id = 1, data) {
       axios
         .put(process.env.VUE_APP_BASE_URL + 'user/' + id, data, {
           header: { 'baca-bismillah': this.token }

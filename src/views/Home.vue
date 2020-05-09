@@ -1,6 +1,5 @@
 <template>
   <div class="home evn-primary">
-    <ProfilUser />
     <Table
       hash="#"
       th1="Nama Event"
@@ -10,7 +9,7 @@
       title="History Event"
     >
     <tbody>
-      <tr v-for="event in historyEvent" :key="event.id">
+      <tr v-for="event in myHistory" :key="event.id">
         <td>{{event.id}}</td>
         <td>{{event.title}}</td>
         <td>{{event.date}}</td>
@@ -26,7 +25,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import ProfilUser from '../components/ProfilUser'
 import Footer from '../components/_module/Footer.vue'
 import Table from '../components/Tabel'
 // import SmallFooter from '../components/_module/Small-Footer.vue'
@@ -39,18 +37,17 @@ export default {
     }
   },
   components: {
-    ProfilUser,
     Footer,
     Table
   },
   methods: {
-    ...mapActions('profil', 'historyEvent')
+    ...mapActions('profil', ['historyEvent'])
   },
   mounted () {
     this.historyEvent()
   },
   computed: {
-    ...mapState('profil', 'myHistory')
+    ...mapState('profil', ['myHistory'])
   }
 }
 </script>

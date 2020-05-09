@@ -14,7 +14,7 @@
             <div class="action-button d-flex flex-column">
               <Button class="mb-4" @btn-click="editInput" v-if="this.editData">Edit Profil</Button>
               <Button class="mb-4" @btn-click="cancelEdit" v-else>Cancel</Button>
-              <Button @btn-click="editUser" data-toggle="modal" data-target="#edit-profil">Save</Button>
+              <Button @btn-click="editUser">Save</Button>
             </div>
           </div>
           <div class="profil-user">
@@ -63,6 +63,7 @@
 import { mapActions, mapState } from 'vuex'
 import Button from '@/components/Button'
 import modal from '@/components/Modal.vue'
+import axios from 'axios'
 export default {
   name: 'Profil-User',
   components: {
@@ -74,8 +75,8 @@ export default {
       editData: true,
       id: 1,
       token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg4OTM5Mzk1fQ.S3QFwxeFPTibayKdnzUzKkrPQTqvpbvz_MvVMx0BKe0',
-      password: 12345,
-      myData: []
+      myData: [],
+      password: 12345
     }
   },
   methods: {
@@ -96,14 +97,19 @@ export default {
       this.editData = true
     },
     editUser () {
+      console.log('ok')
       const formData = new FormData()
       formData.append('name', this.myProfil.name)
       formData.append('email', this.myProfil.email)
-      formData.append('password', this.myProfil.password)
-      formData.append('image', this.$refs.file.files[0] || this.myProfil.image)
+      formData.append('password', this.password)
+      formData.append('image', this.$refs.file.files[0])
       formData.append('address', this.myProfil.address)
       formData.append('description', this.myProfil.description)
-      this.$store.dispatch('editProfil', formData)
+      axios
+        .put('http://192.168.1.97:5000/api/lalavent/user/1', formData, {
+          header: { 'baca-bismillah': this.token }
+        })
+      // this.$store.dispatch('editProfil', formData)
         .then(res => {
           console.log(res)
         })
@@ -111,10 +117,11 @@ export default {
           console.log(error)
         })
     },
-    ...mapActions('profil', ['profilUser', 'editProfil'])
+    ...mapActions('profil', ['profilUser'])
   },
   mounted () {
     this.profilUser()
+    console.log(this.token)
   },
   computed: {
     ...mapState('profil', ['myProfil'])

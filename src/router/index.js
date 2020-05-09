@@ -13,6 +13,7 @@ import EventStatistic from '../views/EventStatistic.vue'
 import AddEvent from '../views/AddEvent.vue'
 import Logout from '../views/Logout.vue'
 import Payment from '../views/Payment.vue'
+import Profil from '../views/Profil.vue'
 
 Vue.use(VueRouter)
 
@@ -81,6 +82,11 @@ const routes = [
     path: '/payment',
     name: 'Payment',
     component: Payment
+  },
+  {
+    path: '/profil',
+    name: 'Profil',
+    component: Profil
   }
 ]
 
