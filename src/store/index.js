@@ -4,7 +4,8 @@ import admin from './admin'
 import event from './event/'
 import organizer from './organizer/'
 import user from './user'
-import profil from './profil/index'
+// import axios from 'axios'
+// import profil from './profil/'
 
 Vue.use(Vuex)
 
@@ -19,7 +20,7 @@ export default new Vuex.Store({
     admin,
     organizer,
     event,
-    user,
-    profil
+    user
+    // profil
   }
 })

@@ -12,7 +12,7 @@
           <slot></slot>
         </div>
         <div class="modal-footer">
-          <Button>{{ button }}</Button>
+          <Button @btn-click="klikme">{{ button }}</Button>
         </div>
       </div>
     </div>
@@ -31,7 +31,12 @@ export default {
     'title',
     'button',
     'id'
-  ]
+  ],
+  methods: {
+    klikme () {
+      this.$router.go('/')
+    }
+  }
 }
 </script>
 
