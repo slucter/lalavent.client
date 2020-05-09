@@ -9,10 +9,17 @@
         <router-link class="link-anchor" to="/:organizerId/add-event">Buat Event</router-link>
       </Button>
     </div>
-    <SearchSort class="mt-5 px-5"/>
+    <div v-if="organizerEvents.length === 0" class="my-5 d-flex flex-row justify-content-center align-items-center text-white">
+      <i class="far fa-frown fa-6x"></i>
+      <div class="ml-md-5 d-flex flex-column">
+        <h1 class="display-2 evn-title">Oops...</h1>
+        <h4 class="evn-desc">Kamu belum buat event sama sekali nih</h4>
+      </div>
+    </div>
+    <SearchSort v-if="organizerEvents.length !== 0" class="mt-5 px-5"/>
     <div class="mt-3 d-flex flex-wrap justify-content-center">
       <CardEvent
-      v-for="data in events" :key="data.id"
+      v-for="data in organizerEvents" :key="data.id"
       :eventImage="data.image"
       :eventTitle="data.title"
       :eventCategory="data.category.name"
@@ -22,7 +29,7 @@
       :eventLocation="data.location"
       class="evn-shadow"/>
     </div>
-    <Pagination class="mt-5"/>
+    <Pagination v-if="organizerEvents.length !== 0" class="mt-5"/>
   </div>
 </template>
 
@@ -62,15 +69,15 @@ export default {
   },
   methods: {
     ...mapActions('user', ['getUserById', 'getLocalStorage']),
-    ...mapActions('organizer', ['getEvents'])
+    ...mapActions('event', ['getEventsByOrganizer'])
   },
   mounted () {
-    this.getEvents()
+    this.getEventsByOrganizer(this.local.id)
     this.getLocalStorage(this.local)
     this.getUserById(this.local.id)
   },
   computed: {
-    ...mapState('organizer', ['events']),
+    ...mapState('event', ['organizerEvents']),
     ...mapState('user', ['user'])
   }
 }
