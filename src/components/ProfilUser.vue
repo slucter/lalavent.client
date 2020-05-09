@@ -56,7 +56,7 @@
                     </div>
                   </div>
               </form>
-              <modal title="Update Personal Profil" button="Ok" id="edit-profil">
+              <modal title="Update Personal Profil" button="Ok" id="edit-profil" @clicked="coba">
                 <p>Data Anda Berhasil Dirubah!</p>
               </modal>
             </div>
@@ -82,17 +82,13 @@ export default {
   data () {
     return {
       editData: true,
-<<<<<<< HEAD
-      id: 1,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg4OTM5Mzk1fQ.S3QFwxeFPTibayKdnzUzKkrPQTqvpbvz_MvVMx0BKe0',
-      myData: [],
-      password: 12345,
-=======
->>>>>>> 80abc804838c50ccdc1f2058da2b53f106540350
       image: null
     }
   },
   methods: {
+    coba () {
+      console.log('hello')
+    },
     upload () {
       const file = this.$refs.file.files[0]
       this.image = file
