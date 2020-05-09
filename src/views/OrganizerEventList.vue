@@ -9,7 +9,7 @@
         <router-link class="link-anchor" to="/:organizerId/add-event">Buat Event</router-link>
       </Button>
     </div>
-    <div v-if="organizerEvents.length === 0" class="my-5 d-flex flex-row justify-content-center align-items-center text-white">
+    <div v-if="organizerEvents.length === 0" class="my-5 d-flex flex-column flex-md-row justify-content-center align-items-center text-white">
       <i class="far fa-frown fa-6x"></i>
       <div class="ml-md-5 d-flex flex-column">
         <h1 class="display-2 evn-title">Oops...</h1>
