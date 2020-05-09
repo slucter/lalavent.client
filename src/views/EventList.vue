@@ -1,18 +1,11 @@
 <template>
-    <div>
+    <div class="event-list mt-3">
         <NavCategory />
         <div class="card-lists d-flex flex-wrap justify-content-center">
           <CardEvent
-          v-for="data in dataEvent"
+          v-for="data in this.$store.state.events"
           :key="data.id"
-          cardThumb=""
-          cardTitle=""
-          cardCategory=""
-          cardStatus=""
-          cardSquad=""
-          cardTime=""
-          CardClock=""
-          CardLocation=""/>
+          />
         </div>
 
         <div class="row d-flex justify-content-center mt-3 evn-secondary text-light px-3 py-3">
@@ -20,16 +13,14 @@
             <h3 class="evn-title lead text-warning">Lihat lebih banyak ></h3>
           </div>
         </div>
-        <Footer />
-        <SmallFooter />
+        <footers />
     </div>
 </template>
 
 <script>
 import NavCategory from '../components/_module/NavCategory.vue'
 import CardEvent from '../components/EventList/CardEvent.vue'
-import Footer from '../components/_module/Footer.vue'
-import SmallFooter from '../components/_module/Small-Footer.vue'
+import footers from '@/components/_module/Footer'
 
 export default {
   name: 'EventList',
@@ -53,8 +44,7 @@ export default {
   components: {
     NavCategory,
     CardEvent,
-    Footer,
-    SmallFooter
+    footers
   }
 }
 </script>

@@ -1,44 +1,56 @@
 <template>
   <div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 col-sm-12">
-          <div class="profil-user d-flex flex-row flex-wrap col-md-12">
-            <div class="side-profil">
-              <div class="photo-profil">
-                <img src="../assets/profil-sulfikardi.jpg" alt="">
-              </div>
-              <div class="edit-button d-flex flex-column">
-                <a href="#" class="btn btn-outline-light mb-3">Edit Profil</a>
-                <a href="#" class="btn btn-outline-light">Cancel</a>
+    <div class="container mt-5 mb-5">
+      <div class="card evn-secondary">
+        <div class="card-body d-flex justify-content-start">
+          <div class="photo-profil">
+            <div class="photo mb-4 d-flex flex-column">
+              <img :src="myProfil.image" alt="" class="mb-2">
+              <div class="upload-btn-wrapper mx-auto">
+                <button class="btn evn-desc">Upload a file</button>
+                <input type="file" ref="file" name="myfile" />
               </div>
             </div>
-            <div class="edit-profil">
-              <div class="identitas">
-                <h4>Personal Profil</h4>
-                <div class="tittle">
-                  <div class="tittle-name">
-                    <h5>Name</h5>
-                    <h5>Email</h5>
-                    <h5>Address</h5>
-                    <h5>Phone Number</h5>
-                    <h5>Gender</h5>
+            <div class="action-button d-flex flex-column">
+              <Button class="mb-4" @btn-click="editInput" v-if="this.editData">Edit Profil</Button>
+              <Button class="mb-4" @btn-click="cancelEdit" v-else>Cancel</Button>
+              <Button @btn-click="editUser">Save</Button>
+            </div>
+          </div>
+          <div class="profil-user">
+            <div class="info-user">
+              <h4 class="text-light evn-title text-center">Informasi Pribadi</h4>
+            </div>
+            <div class="user-detail">
+              <form>
+                  <div class="form-group">
+                    <label for="staticname" class="col-sm-4 col-form-label evn-desc">Nama</label>
+                    <div class="col-sm-12">
+                      <input type="text" readonly class="form-control-plaintext evn-desc" id="staticname" v-model="myProfil.name">
+                    </div>
                   </div>
-                  <div class="tittle-value">
-                    <h5>Sulfikardi</h5>
-                    <h5>Sulfikardi</h5>
-                    <h5>Sulfikardi</h5>
-                    <h5>Sulfikardi</h5>
-                    <h5>Male</h5>
+                  <div class="form-group">
+                    <label for="staticEmail" class="col-sm-4 col-form-label evn-desc">Email</label>
+                    <div class="col-sm-12">
+                      <input type="text" readonly class="form-control-plaintext evn-desc" id="staticEmail" v-model="myProfil.email">
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="bank">
-                <h4>Bank Account</h4>
-                <h5>Bank</h5>
-                <h5>Account Number</h5>
-                <h5>Account Name</h5>
-              </div>
+                  <div class="form-group">
+                    <label for="staticalamat" class="col-sm-6 col-form-label evn-desc">Alamat</label>
+                    <div class="col-sm-12">
+                      <input type="text" readonly class="form-control-plaintext evn-desc" id="staticalamat" v-model="myProfil.address">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="deskripsi" class="col-sm-6 col-form-label evn-desc">Deskripsi</label>
+                    <div class="col-sm-12">
+                      <input type="text" readonly class="form-control-plaintext evn-desc" id="deskripsi" v-model="myProfil.description">
+                    </div>
+                  </div>
+              </form>
+              <modal title="Update Personal Profil" button="Ok" id="edit-profil">
+                <p>Data Anda Berhasil Dirubah!</p>
+              </modal>
             </div>
           </div>
         </div>
@@ -48,54 +60,121 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+import Button from '@/components/Button'
+import modal from '@/components/Modal.vue'
+import axios from 'axios'
 export default {
-  name: 'Profil-User'
+  name: 'Profil-User',
+  components: {
+    Button,
+    modal
+  },
+  data () {
+    return {
+      editData: true,
+      id: 1,
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg4OTM5Mzk1fQ.S3QFwxeFPTibayKdnzUzKkrPQTqvpbvz_MvVMx0BKe0',
+      myData: [],
+      password: 12345
+    }
+  },
+  methods: {
+    editInput () {
+      const listInput = document.querySelectorAll('.form-control-plaintext')
+      listInput.forEach((e) => {
+        e.removeAttribute('readonly')
+        e.classList.add('inputEdit')
+      })
+      this.editData = false
+    },
+    cancelEdit () {
+      const listInput = document.querySelectorAll('.form-control-plaintext')
+      listInput.forEach((e) => {
+        e.setAttribute('readonly', '')
+        e.classList.remove('inputEdit')
+      })
+      this.editData = true
+    },
+    editUser () {
+      console.log('ok')
+      const formData = new FormData()
+      formData.append('name', this.myProfil.name)
+      formData.append('email', this.myProfil.email)
+      formData.append('password', this.password)
+      formData.append('image', this.$refs.file.files[0])
+      formData.append('address', this.myProfil.address)
+      formData.append('description', this.myProfil.description)
+      axios
+        .put('http://192.168.1.97:5000/api/lalavent/user/1', formData, {
+          header: { 'baca-bismillah': this.token }
+        })
+      // this.$store.dispatch('editProfil', formData)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    ...mapActions('profil', ['profilUser'])
+  },
+  mounted () {
+    this.profilUser()
+    console.log(this.token)
+  },
+  computed: {
+    ...mapState('profil', ['myProfil'])
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-  .profil-user{
-    height: 600px;
-    // width: 100%;
-    margin-top: 70px;
-    margin-bottom: 10px;
-    border: 1px solid #fff;
-    .side-profil{
-      margin-left: 60px;
-      margin-top: 30px;
-      .photo-profil{
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        margin-bottom: 40px;
-        img{
-          width: 250px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-      }
-    }
-    .edit-profil{
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      color: #fff;
-      margin-left: 90px;
-      margin-top: 80px;
-      .identitas{
-        // border-left: 1px solid #fff;
-        .tittle{
-          display: flex;
-          .tittle-name{
-            margin-right: 90px;
-          }
-        }
-      }
-    }
-  }
+ .photo-profil .photo img{
+   width: 250px;
+   height: 250px;
+ }
+ .photo-profil{
+   margin-right: 110px;
+ }
+ .form-group input{
+   width: 400px;
+   outline: none;
+   color: #fff;
+ }
+ .info-user{
+   margin-bottom: 22px;
+ }
+ .form-group label{
+   color: #fff;
+   font-size: 20px;
+ }
+ .inputEdit{
+   border-bottom: 1px solid #fff;
+ }
   .hide{
     display: none;
+  }
+  .upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .btn {
+    border: 2px solid gray;
+    color: gray;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
   }
 </style>

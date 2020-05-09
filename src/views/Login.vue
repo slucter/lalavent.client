@@ -1,44 +1,97 @@
 <template>
   <div class="container-login evn-primary">
     <div class="left-login">
+      <h1 class="evn-title">Rayakan Eventmu<br>
+        di <span class="env-desc">#LalaventAja</span></h1>
     </div>
     <div class="right-login">
       <div class="title-login">
         <h5 class="evn-title">Masuk</h5>
       </div>
-      <form>
+      <form @submit="submitEvent" class="mt-2 text-white">
         <div class="form-group">
-          <label for="exampleInputEmail1" class="evn-title">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <label for="email" class="evn-title">Email<span class="star">*</span></label>
+          <input type="email" placeholder="event@lalavent.com" :class="$v.email.$error ? 'form-control is-invalid' : 'form-control'" v-model="email">
+          <p v-if="$v.email.$error"  class="invalid-feedback">Email belum diisi!</p>
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1" class="evn-title">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+          <label for="password" class="evn-title">Kata Sandi<span class="star">*</span></label>
+          <input type="password" placeholder="Kata Sandi" :class="$v.password.$error ? 'form-control is-invalid' : 'form-control'" v-model="password">
+          <p v-if="$v.password.$error" class="invalid-feedback">Kata Sandi harus diisi!</p>
         </div>
-        <button type="submit" class="btn evn-title evn-btn evn-btn:hover">MASUK</button>
+        <div class="mt-4">
+          <Button type="submit">Masuk</Button>
+        </div>
       </form>
       <div class="account evn-title">
-        <p>Belum punya akun? <router-link to="/register">Daftar</router-link></p>
+        <p>Belum punya akun? <router-link to="/register" class="sign">Daftar</router-link></p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { required, email, minLength } from 'vuelidate/lib/validators'
+import axios from 'axios'
+import { required } from 'vuelidate/lib/validators'
+import Button from '../components/Button.vue'
 
 export default {
-  name: 'Login',
+  name: 'Register',
+  components: {
+    Button
+  },
+  data () {
+    return {
+      email: '',
+      password: '',
+      submitStatus: false,
+      local: {
+        id: null,
+        token: null,
+        role: null
+      }
+    }
+  },
+  validations: {
+    email: { required },
+    password: { required }
+  },
   methods: {
-    validations: {
-      email: {
-        required,
-        email
-      },
-      password: {
-        required,
-        minLength: minLength(6)
+    localData () {
+      const parsed = JSON.stringify({
+        id: this.local.id,
+        token: this.local.token,
+        role: this.local.role
+      })
+      localStorage.setItem('items', parsed)
+    },
+    submitEvent (e) {
+      e.preventDefault()
+      this.submitStatus = true
+      console.log('hello')
+      // console.log('submit!')
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        // eslint-disable-next-line no-useless-return
+        return
+      } else {
+        console.log('Submit ok')
+        axios
+          .post(process.env.VUE_APP_BASE_URL + 'auth/signin', {
+            email: this.email,
+            password: this.password
+          })
+          .then(res => {
+            console.log(res)
+            const parsed = JSON.stringify({
+              id: res.data.id,
+              token: res.data.token,
+              role: res.data.role
+            })
+            localStorage.setItem('items', parsed)
+            console.log(parsed)
+            this.$router.push('/')
+          })
       }
     }
   }
@@ -54,6 +107,15 @@ export default {
     background-size: cover;
     width: 60%;
     height: 100vh;
+    h1{
+      margin: 80px;
+      color: white;
+      font-weight: bold;
+      font-size: 60px;
+      span{
+        color: #f1c40f;
+      }
+    }
   }
   .right-login{
     display: flex;
@@ -62,24 +124,31 @@ export default {
     margin-left: 140px;
     .title-login{
       h5{
-        font-size: 35px;
+        font-size: 50px;
         font-weight: bolder;
         color: white;
       }
     }
-    form{
-      .form-group{
-        label{
-          color: white;
-        }
-      }
-      button{
-        color: white;
-      }
+    label {
+      font-size: 1.5rem;
+    }
+    .star {
+      color: #f1c40f;
+    }
+    .is-invalid {
+      border-color: red !important;
+    }
+    .invalid-feedback {
+      color: red;
     }
     .account{
-      padding: 20px 0;
-      color: white;
+      p{
+        margin: 20px 0;
+        color: white;
+        .sign{
+          color: #f1c40f;
+        }
+      }
     }
   }
 }

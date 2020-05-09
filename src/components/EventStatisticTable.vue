@@ -1,5 +1,6 @@
 <template>
   <div class="card evn-rounded evn-secondary evn-shadow mt-3">
+    <SearchSort class="px-5 mt-4"/>
     <div class="card-body">
       <div class="table-responsive mt-3">
         <table class="table text-white">
@@ -17,66 +18,73 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="text-center evn-desc">
-              <th scope="row">1</th>
-              <td>The Paradox</td>
-              <td>5 Mei 2020</td>
-              <td>20.00 - 00.00</td>
-              <td>Music</td>
-              <td>Offline</td>
-              <td>Jakarta, Indonesia</td>
-              <td>2500</td>
-              <td>1250</td>
+            <tr v-for="data in organizerEvents" :key="data.id" class="text-center evn-desc">
+              <th scope="row">{{ data.id }}</th>
+              <td>{{ data.title }}</td>
+              <td>{{ data.date }}</td>
+              <td>
+                {{ data.time_start }}
+                 - {{ data.time_end }}
+                <span v-if="data.time_end === null">Selesai</span>
+              </td>
+              <td>{{ data.category.name }}</td>
+              <td>
+                <span v-if="data.type === true">{{ eventType[0] }}</span>
+                <span v-if="data.type === false">{{ eventType[1] }}</span>
+              </td>
+              <td>{{ data.location }}</td>
+              <td>{{ data.quota }}</td>
+              <td>Pengunjung</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <nav aria-label="Page navigation example">
-      <ul class="mb-4 pagination justify-content-center">
-        <div class="pagination-container evn-desc evn-shadow d-flex flex-row">
-          <li class="page-item"><a class="page-link text-white evn-secondary" href="#">Sebelumnya</a></li>
-          <li class="page-item"><a class="page-link text-white evn-secondary" href="#">1</a></li>
-          <li class="page-item"><a class="page-link text-white evn-secondary" href="#">2</a></li>
-          <li class="page-item"><a class="page-link text-white evn-secondary" href="#">3</a></li>
-          <li class="page-item"><a class="page-link text-white evn-secondary" href="#">Selanjutnya</a></li>
-        </div>
-      </ul>
-    </nav>
+    <Pagination/>
   </div>
 </template>
 
 <script>
-export default {
+import { mapActions, mapState } from 'vuex'
 
+import SearchSort from '@/components/SearchSort'
+import Pagination from '@/components/Pagination'
+export default {
+  name: 'EventStatisticTable',
+  data () {
+    return {
+      local: {
+        id: null
+      },
+      eventType: ['Online', 'Offline']
+    }
+  },
+  components: {
+    SearchSort,
+    Pagination
+  },
+  created () {
+    const parsed = JSON.parse(localStorage.getItem('items'))
+    if (parsed) {
+      this.local = parsed
+    }
+  },
+  methods: {
+    ...mapActions('user', ['getUserById', 'getLocalStorage']),
+    ...mapActions('event', ['getEventsByOrganizer'])
+  },
+  mounted () {
+    this.getEventsByOrganizer(this.local.id)
+    this.getLocalStorage(this.local)
+    this.getUserById(this.local.id)
+  },
+  computed: {
+    ...mapState('event', ['organizerEvents']),
+    ...mapState('user', ['user'])
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.pagination {
-  .pagination-container {
-    border-radius: 25px;
-  }
-  .page-item {
-    .page-link {
-      border: 1px solid transparent;
-    }
-    .page-link:hover {
-      color: black !important;
-      background-color: lightgray;
-    }
-  }
-  .page-item:first-child {
-    .page-link {
-      border-top-left-radius: 25px !important;
-      border-bottom-left-radius: 25px !important;
-    }
-  }
-  .page-item:last-child {
-    .page-link {
-      border-top-right-radius: 25px !important;
-      border-bottom-right-radius: 25px !important;
-    }
-  }
-}
+
 </style>
