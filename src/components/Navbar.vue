@@ -30,7 +30,7 @@
             <img :src="this.user.image" alt="profile-img" class="profile-img mr-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ this.user.name }}</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <router-link to="/profil" class="dropdown-item">
+              <router-link to="/profil" class="dropdown-item" v-if="this.local.role == 1">
                 <i class="fas fa-user-cog mr-1"></i>
                 Edit Profile
               </router-link>

@@ -8,8 +8,8 @@
       th4="Location"
       title="History Event"
     >
-    <tbody>
-      <tr v-for="event in organizerEvents" :key="event.id">
+    <tbody v-for="event in organizerEvents" :key="event.id">
+      <tr v-if="event.date > new Date().toISOString().slice(0, 10).toString()">
         <td>{{event.id}}</td>
         <td>{{event.title}}</td>
         <td>{{event.date}}</td>
@@ -26,6 +26,11 @@ import { mapActions, mapState } from 'vuex'
 import Table from '../components/Tabel'
 export default {
   name: 'HistoryEvent',
+  data () {
+    return {
+      // tanggal: new Date().toISOString().slice(0, 10).toString()
+    }
+  },
   components: {
     Table
   },

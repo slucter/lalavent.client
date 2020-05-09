@@ -13,9 +13,6 @@ export default ({
     getProfil (state, data) {
       state.myProfil = data
       console.log(state.myProfil)
-    },
-    getEvent (state, data) {
-      state.myHistory = data
     }
   },
   actions: {

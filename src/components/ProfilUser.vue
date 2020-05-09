@@ -12,7 +12,7 @@
               </div>
             </div>
             <div class="action-button d-flex flex-column">
-              <Button class="mb-4" @btn-click="editInput" v-if="this.editData">Edit Profil</Button>
+              <Button class="mb-4" @btn-click="editInput" v-if="this.editData == true">Edit Profil</Button>
               <Button class="mb-4" @btn-click="cancelEdit" v-else>Cancel</Button>
               <Button @btn-click="editUser" data-toggle="modal" data-target="#edit-profil">Save</Button>
             </div>
@@ -102,7 +102,7 @@ export default {
       formData.append('name', this.user.name)
       formData.append('email', this.user.email)
       formData.append('password', this.user.password)
-      formData.append('image', this.image)
+      formData.append('image', this.image || this.user.image)
       formData.append('address', this.user.address)
       formData.append('description', this.user.description)
       axios
