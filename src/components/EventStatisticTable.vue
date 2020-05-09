@@ -18,16 +18,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="text-center evn-desc">
-              <th scope="row">1</th>
-              <td>The Paradox</td>
-              <td>5 Mei 2020</td>
-              <td>20.00 - 00.00</td>
-              <td>Music</td>
-              <td>Offline</td>
-              <td>Jakarta, Indonesia</td>
-              <td>2500</td>
-              <td>1250</td>
+            <tr v-for="data in organizerEvents" :key="data.id" class="text-center evn-desc">
+              <th scope="row">{{ data.id }}</th>
+              <td>{{ data.title }}</td>
+              <td>{{ data.date }}</td>
+              <td>
+                {{ data.time_start }}
+                 - {{ data.time_end }}
+                <span v-if="data.time_end === null">Selesai</span>
+              </td>
+              <td>{{ data.category.name }}</td>
+              <td>
+                <span v-if="data.type === true">{{ eventType[0] }}</span>
+                <span v-if="data.type === false">{{ eventType[1] }}</span>
+              </td>
+              <td>{{ data.location }}</td>
+              <td>{{ data.quota }}</td>
+              <td>Pengunjung</td>
             </tr>
           </tbody>
         </table>
@@ -38,13 +45,42 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 import SearchSort from '@/components/SearchSort'
 import Pagination from '@/components/Pagination'
 export default {
   name: 'EventStatisticTable',
+  data () {
+    return {
+      local: {
+        id: null
+      },
+      eventType: ['Online', 'Offline']
+    }
+  },
   components: {
     SearchSort,
     Pagination
+  },
+  created () {
+    const parsed = JSON.parse(localStorage.getItem('items'))
+    if (parsed) {
+      this.local = parsed
+    }
+  },
+  methods: {
+    ...mapActions('user', ['getUserById', 'getLocalStorage']),
+    ...mapActions('event', ['getEventsByOrganizer'])
+  },
+  mounted () {
+    this.getEventsByOrganizer(this.local.id)
+    this.getLocalStorage(this.local)
+    this.getUserById(this.local.id)
+  },
+  computed: {
+    ...mapState('event', ['organizerEvents']),
+    ...mapState('user', ['user'])
   }
 }
 </script>

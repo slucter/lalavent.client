@@ -1,15 +1,17 @@
 <template>
-    <div>
+    <div class="event-list mt-3">
         <NavCategory />
-        <div class="card-lists d-flex flex-wrap justify-content-center">
+        <div class="card-lists d-flex flex-wrap justify-content-center mb-5">
           <CardEvent v-for="data in datas" :key="data.id"/>
         </div>
+        <footers/>
     </div>
 </template>
 
 <script>
 import NavCategory from '../components/EventList/NavCategory.vue'
 import CardEvent from '../components/EventList/CardEvent.vue'
+import footers from '@/components/_module/Footer'
 
 export default {
   name: 'EventList',
@@ -20,7 +22,8 @@ export default {
   },
   components: {
     NavCategory,
-    CardEvent
+    CardEvent,
+    footers
   }
 }
 </script>
