@@ -8,21 +8,13 @@
               <img :src="user.image" alt="" class="mb-2">
               <div class="upload-btn-wrapper mx-auto">
                 <button class="btn evn-desc">Upload a file</button>
-<<<<<<< HEAD
-                <input type="file" ref="file" @change="upload" />
-=======
                 <input type="file" ref="file" name="myfile" @change="upload"/>
->>>>>>> 80abc804838c50ccdc1f2058da2b53f106540350
               </div>
             </div>
             <div class="action-button d-flex flex-column">
               <Button class="mb-4" @btn-click="editInput" v-if="this.editData == true">Edit Profil</Button>
               <Button class="mb-4" @btn-click="cancelEdit" v-else>Cancel</Button>
-<<<<<<< HEAD
-              <Button type="button" @btn-click="editUser">Save</Button>
-=======
               <Button @btn-click="editUser" data-toggle="modal" data-target="#edit-profil">Save</Button>
->>>>>>> 80abc804838c50ccdc1f2058da2b53f106540350
             </div>
           </div>
           <div class="profil-user">
@@ -88,11 +80,6 @@ export default {
   methods: {
     coba () {
       console.log('hello')
-    },
-    upload () {
-      const file = this.$refs.file.files[0]
-      this.image = file
-      console.log(this.image)
     },
     editInput () {
       const listInput = document.querySelectorAll('.form-control-plaintext')
