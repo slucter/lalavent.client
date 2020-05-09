@@ -30,9 +30,19 @@ export default {
   props: [
     'title',
     'button',
+<<<<<<< HEAD
     'id',
     'dismiss'
   ]
+=======
+    'id'
+  ],
+  methods: {
+    klikme () {
+      this.$router.go('/')
+    }
+  }
+>>>>>>> 80abc804838c50ccdc1f2058da2b53f106540350
 }
 </script>
 

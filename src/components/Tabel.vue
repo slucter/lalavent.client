@@ -83,4 +83,7 @@ export default {
 .row{
   margin-left: 0;
 }
+.hide{
+  display: none;
+}
 </style>>

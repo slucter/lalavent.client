@@ -11,6 +11,7 @@
 
 <script>
 import navbar from '@/components/Navbar.vue'
+// import Footer from '@/components/_module/Footer.vue'
 import SmallFooter from '@/components/_module/Small-Footer.vue'
 
 export default {
