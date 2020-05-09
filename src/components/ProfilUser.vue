@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile-user">
     <div class="container mt-5 mb-5">
       <div class="card evn-secondary">
         <div class="card-body d-flex justify-content-start">
@@ -8,13 +8,13 @@
               <img :src="myProfil.image" alt="" class="mb-2">
               <div class="upload-btn-wrapper mx-auto">
                 <button class="btn evn-desc">Upload a file</button>
-                <input type="file" ref="file" name="myfile" />
+                <input type="file" ref="file" @change="upload" />
               </div>
             </div>
             <div class="action-button d-flex flex-column">
               <Button class="mb-4" @btn-click="editInput" v-if="this.editData">Edit Profil</Button>
               <Button class="mb-4" @btn-click="cancelEdit" v-else>Cancel</Button>
-              <Button @btn-click="editUser">Save</Button>
+              <Button type="button" @btn-click="editUser">Save</Button>
             </div>
           </div>
           <div class="profil-user">
@@ -22,7 +22,7 @@
               <h4 class="text-light evn-title text-center">Informasi Pribadi</h4>
             </div>
             <div class="user-detail">
-              <form>
+              <form @submit="editUser">
                   <div class="form-group">
                     <label for="staticname" class="col-sm-4 col-form-label evn-desc">Nama</label>
                     <div class="col-sm-12">
@@ -64,6 +64,7 @@ import { mapActions, mapState } from 'vuex'
 import Button from '@/components/Button'
 import modal from '@/components/Modal.vue'
 import axios from 'axios'
+
 export default {
   name: 'Profil-User',
   components: {
@@ -76,10 +77,16 @@ export default {
       id: 1,
       token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTg4OTM5Mzk1fQ.S3QFwxeFPTibayKdnzUzKkrPQTqvpbvz_MvVMx0BKe0',
       myData: [],
-      password: 12345
+      password: 12345,
+      image: null
     }
   },
   methods: {
+    upload () {
+      const file = this.$refs.file.files[0]
+      this.image = file
+      console.log(this.image)
+    },
     editInput () {
       const listInput = document.querySelectorAll('.form-control-plaintext')
       listInput.forEach((e) => {
@@ -98,30 +105,29 @@ export default {
     },
     editUser () {
       console.log('ok')
+      console.log(this.myProfil)
       const formData = new FormData()
-      formData.append('name', this.myProfil.name)
-      formData.append('email', this.myProfil.email)
+      // formData.append('name', this.myProfil.name)
+      // formData.append('email', this.myProfil.email)
+      console.log(this.image)
+      console.log(this.password)
       formData.append('password', this.password)
-      formData.append('image', this.$refs.file.files[0])
-      formData.append('address', this.myProfil.address)
-      formData.append('description', this.myProfil.description)
+      formData.append('image', this.image)
+      // formData.append('address', this.myProfil.address)
+      // formData.append('description', this.myProfil.description)
       axios
-        .put('http://192.168.1.97:5000/api/lalavent/user/1', formData, {
+        .put(process.env.VUE_APP_BASE_URL + 'user/' + 1, formData, {
           header: { 'baca-bismillah': this.token }
         })
-      // this.$store.dispatch('editProfil', formData)
         .then(res => {
           console.log(res)
-        })
-        .catch(error => {
-          console.log(error)
         })
     },
     ...mapActions('profil', ['profilUser'])
   },
   mounted () {
     this.profilUser()
-    console.log(this.token)
+    // console.log(this.token)
   },
   computed: {
     ...mapState('profil', ['myProfil'])

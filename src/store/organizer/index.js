@@ -14,13 +14,13 @@ export default ({
   mutations: {
     organizer (state, data) {
       state.organizer = data
-      console.log(state.organizer)
     },
     events (state, data) {
       state.events = data
     },
     category (state, data) {
       state.category = data
+      console.log(data.category)
     }
   },
   actions: {
@@ -43,7 +43,7 @@ export default ({
       axios
         .get(process.env.VUE_APP_BASE_URL + 'category')
         .then(res => {
-          // console.log(res.data.Categories.rows[0].name)
+          console.log(res.data.Categories.rows[0].name)
           context.commit('category', res.data.Categories.rows)
         })
     },
@@ -51,7 +51,7 @@ export default ({
       axios
         .post(process.env.VUE_APP_BASE_URL + 'event')
         .then(res => {
-          // console.log(res.data.Categories.rows[0].name)
+          console.log(res.data.Categories.rows[0].name)
           context.commit('category', res.data.Categories.rows)
         })
     }

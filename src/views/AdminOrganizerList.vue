@@ -1,6 +1,6 @@
 <template>
   <section class="admin-org-list mt-4">
-    <nav class="d-flex justify-content-center mb-2">
+    <nav class="d-flex justify-content-center mb-2 mt-4">
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-1 btn-secondary active pl-4">
           <router-link to="/admin/admin-organizer-list">
@@ -30,10 +30,10 @@
         <td>{{ data.email }}</td>
         <td>{{ data.address }}</td>
         <td class="d-flex">
-          <div class="btn btn-sm btn-outline-light approved mr-2" data-toggle="modal" data-target="#organizer-agree">
+          <div class="btn btn-sm btn-outline-light approved mr-2" @click="setuju(data.id)">
             <i class="fas fa-user-check mr-2"></i>Setujui
           </div>
-          <div class="btn btn-sm btn-outline-light delete" data-toggle="modal" data-target="#organizer-delete">
+          <div class="btn btn-sm btn-outline-light delete" @click="hapus(data.id)">
             <i class="fas fa-trash mr-2"></i>Hapus
           </div>
         </td>
@@ -41,12 +41,12 @@
     </tbody>
     </tables>
     <footers />
-    <modal title="Daftar Penyelenggara" button="Setuju" id="organizer-agree">
+    <!-- <modal title="Daftar Penyelenggara" button="Setuju" type="button" dismiss="modal" @clicked="setuju" id="organizer-agree">
       <p>Yakin ingin menyetujui penyelenggara ini?</p>
-    </modal>
-    <modal title="Hapus Penyelenggara" button="Hapus" id="organizer-delete">
+    </modal> -->
+    <!-- <modal title="Hapus Penyelenggara" button="Hapus" type="button" dismiss="modal" @clicked="hapus(this.data.id)" id="organizer-delete">
       <p>Yakin ingin menghapus penyelenggara ini?</p>
-    </modal>
+    </modal> -->
   </section>
 </template>
 
@@ -54,28 +54,40 @@
 import { mapActions, mapState } from 'vuex'
 import tables from '@/components/Tabel.vue'
 import footers from '@/components/_module/Footer.vue'
-import modal from '@/components/Modal.vue'
+// import modal from '@/components/Modal.vue'
 
 export default {
   name: 'AdminOrganizerList',
   components: {
     tables,
-    footers,
-    modal
+    footers
+    // modal
   },
   data () {
     return {
-      datas: 5
+      datas: 5,
+      no: 0
     }
   },
   methods: {
-    ...mapActions('admin', ['getAllOrganizers'])
+    ...mapActions('admin', ['getAllOrganizers', 'deleteOrganizer', 'approveOrganizer']),
+    setuju (id) {
+      console.log('Setuju' + id)
+      this.approveOrganizer(id)
+    },
+    hapus (id) {
+      // console.log(id)
+      this.deleteOrganizer({ id: id, token: this.local.token })
+    }
   },
   mounted () {
+    // console.log(this.id)
     this.getAllOrganizers()
   },
   computed: {
-    ...mapState('admin', ['organizers'])
+    ...mapState('admin', ['organizers']),
+    ...mapState('event', ['organizerEvents']),
+    ...mapState('user', ['user', 'local'])
   }
 }
 </script>
