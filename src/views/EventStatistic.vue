@@ -2,7 +2,9 @@
   <div class="container my-5">
     <OrganizerCard
     :organizerImage="user.image"
-    :organizerName="user.name"/>
+    :organizerName="user.name"
+    :organizerEvents="organizerEvents.length"
+    :organizerDesc="user.description"/>
     <div class="px-3 mt-5 d-flex flex-row justify-content-between">
       <h3 class="evn-title text-white">Statistik Semua Event</h3>
     </div>
