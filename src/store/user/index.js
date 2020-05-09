@@ -17,7 +17,7 @@ export default ({
     },
     local (state, data) {
       state.local = data
-      console.log(state.local)
+      // console.log(state.local)
     }
   },
   actions: {

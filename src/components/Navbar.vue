@@ -30,11 +30,11 @@
             <img :src="this.user.image" alt="profile-img" class="profile-img mr-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ this.user.name }}</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">
+              <router-link to="/profile" class="dropdown-item" v-if="this.local.role == 1">
                 <i class="fas fa-user-cog mr-1"></i>
                 Edit Profile
-              </a>
-              <router-link to="/" class="dropdown-item" v-if="this.local.role == 1">
+              </router-link>
+              <router-link to="/history" class="dropdown-item" v-if="this.local.role == 1">
                 <i class="fas fa-history mr-1 mt-1"></i>
                 History Event
               </router-link>
