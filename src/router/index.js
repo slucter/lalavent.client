@@ -13,6 +13,8 @@ import AdminEventList from '../views/AdminEventList.vue'
 import AdminOrganizerList from '../views/AdminOrganizerList.vue'
 import EventStatistic from '../views/EventStatistic.vue'
 import AddEvent from '../views/AddEvent.vue'
+import EventDetail from '../views/EventDetail.vue'
+import Penyelenggara from '../views/Penyelenggara.vue'
 import Logout from '../views/Logout.vue'
 import Payment from '../views/Payment.vue'
 import Profil from '../views/Profil.vue'
@@ -30,6 +32,16 @@ const routes = [
     path: '/event',
     name: 'Event',
     component: Event
+  },
+  {
+    path: '/event/detail',
+    name: 'EventDetail',
+    component: EventDetail
+  },
+  {
+    path: '/event/squad',
+    name: 'Penyelenggara',
+    component: Penyelenggara
   },
   {
     path: '/login',
