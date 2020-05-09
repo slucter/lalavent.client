@@ -7,6 +7,8 @@ import Register from '../views/Register.vue'
 import OrganizerEventList from '../views/OrganizerEventList.vue'
 import EventStatistic from '../views/EventStatistic.vue'
 import AddEvent from '../views/AddEvent.vue'
+import EventDetail from '../views/EventDetail.vue'
+import Penyelenggara from '../views/Penyelenggara.vue'
 
 Vue.use(VueRouter)
 
@@ -20,6 +22,16 @@ const routes = [
     path: '/event',
     name: 'Event',
     component: Event
+  },
+  {
+    path: '/event/detail',
+    name: 'EventDetail',
+    component: EventDetail
+  },
+  {
+    path: '/event/squad',
+    name: 'Penyelenggara',
+    component: Penyelenggara
   },
   {
     path: '/login',
