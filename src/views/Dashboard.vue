@@ -12,7 +12,7 @@
           </div>
         </div>
         <hr class="border-light">
-        <h1 class="card-title">0 <span class="star">Event</span></h1>
+        <h1 class="card-title"> {{this.events.length}} <span class="star">Event</span></h1>
       </div>
     </div>
     <div class="card evn-shadow evn-rounded evn-secondary text-white" style="width: 21rem;">
@@ -45,8 +45,19 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
-  name: 'Dashboard'
+  name: 'Dashboard',
+  computed: {
+    ...mapState('event', ['events'])
+  },
+  methods: {
+    ...mapActions('event', ['getAllEvents'])
+  },
+  mounted () {
+    this.getAllEvents()
+  }
 }
 </script>
 

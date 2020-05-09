@@ -12,7 +12,7 @@ export default ({
   mutations: {
     events (state, data) {
       state.events = data
-      // console.log(state.events)
+      console.log(state.events)
     }
   },
   actions: {
