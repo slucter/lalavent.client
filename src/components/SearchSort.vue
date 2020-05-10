@@ -3,12 +3,12 @@
     <div>
       <div class="search-container py-2 px-3 evn-secondary evn-shadow evn-rounded d-flex flex-row align-items-center">
         <i class="fas fa-search"></i>
-        <input type="text" class="search-input evn-desc ml-3 text-white" placeholder="Cari event...">
+        <input type="text" @input="search" v-model="value" @change="$emit('cari')" class="search-input evn-desc ml-3 text-white" placeholder="Cari event...">
       </div>
     </div>
     <div class="d-flex flex-row align-items-center">
       <span :class="sortDesc ? 'd-none d-md-flex evn-desc text-muted' : 'd-none d-md-flex evn-desc'">Terbaru</span>
-      <div @click="sortDesc = !sortDesc" class="sort px-2 mx-2 evn-shadow d-flex flex-row justify-content-around align-items-center">
+      <div @click="sortDesc = !sortDesc, $emit('sort')" class="sort px-2 mx-2 evn-shadow d-flex flex-row justify-content-around align-items-center">
         <i :class="sortDesc ? 'fas fa-long-arrow-alt-up fa-2x text-warning' : 'fas fa-long-arrow-alt-up fa-2x'" class=""></i>
         <i :class="sortDesc ? 'fas fa-long-arrow-alt-down fa-2x' : 'fas fa-long-arrow-alt-down fa-2x text-warning'"></i>
       </div>
@@ -18,12 +18,25 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'SearchSort',
   data () {
     return {
-      sortDesc: false
+      sortDesc: false,
+      value: null
     }
+  },
+  methods: {
+    ...mapActions('general', ['searchInput']),
+    search () {
+      // console.log(this.value)
+      this.searchInput(this.value)
+    }
+  },
+  mounted () {
+    this.searchInput('')
   }
 }
 </script>
