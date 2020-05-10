@@ -4,30 +4,7 @@
       <div class="card evn-secondary px-3">
         <div class="card-body">
           <h2 class="text-center text-light evn-title mb-4">{{ title }}</h2>
-          <div class="d-flex justify-content-between">
-            <div class="search">
-              <form class="form-inline mb-2">
-                <div class="form-group">
-                  <input type="text" class="form-control mr-2" placeholder="Cari Data">
-                </div>
-                <div class="form-group">
-                  <button type="button" class="form-control evn-btn text-light"><i class="fas fa-search"></i></button>
-                </div>
-              </form>
-            </div>
-            <div class="sort">
-              <form class="form-inline">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1" class="text-light mr-4 evn-title">Sort By</label>
-                  <select class="form-control" id="exampleFormControlSelect1">
-                    <option>All</option>
-                    <option>Event Terbaru</option>
-                    <option>Dalam Waktu Dekat</option>
-                  </select>
-                </div>
-              </form>
-            </div>
-          </div>
+          <SearchSort @cari="$emit('clicked')" @sort="$emit('sort')" />
           <div class="row table-responsive">
             <table class="table my-3 text-light">
               <thead class="evn-title">
@@ -52,21 +29,16 @@
             </table>
           </div>
         </div>
-            <!-- <nav aria-label="Page navigation example">
-            <ul class="pagination d-flex justify-content-center">
-              <li class="page-item "><a class="page-link evn-secondary text-light" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link evn-secondary text-light" href="#">1</a></li>
-              <li class="page-item"><a class="page-link evn-secondary text-light" href="#">2</a></li>
-              <li class="page-item"><a class="page-link evn-secondary text-light" href="#">3</a></li>
-              <li class="page-item"><a class="page-link evn-secondary text-light" href="#">Next</a></li>
-            </ul>
-          </nav> -->
+        <pagination @next="$emit('next')" @prev="$emit('prev')" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import pagination from '@/components/Pagination'
+import SearchSort from '@/components/SearchSort'
+
 export default {
   name: 'Tabel',
   props: ['hash', 'th1', 'th2', 'th3', 'th4', 'title'],
@@ -74,6 +46,10 @@ export default {
     return {
       datas: 10
     }
+  },
+  components: {
+    pagination,
+    SearchSort
   }
 }
 </script>
@@ -86,4 +62,10 @@ export default {
 .row{
   margin-left: 0;
 }
-</style>>
+.hide{
+  display: none;
+}
+.dropdown-item{
+  cursor: pointer;
+}
+</style>

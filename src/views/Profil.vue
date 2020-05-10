@@ -6,6 +6,7 @@
 </template>
 
 <script>
+// import { mapActions, mapState } from 'vuex'
 import ProfilUser from '../components/ProfilUser'
 import Footer from '../components/_module/Footer.vue'
 export default {
@@ -13,6 +14,14 @@ export default {
   components: {
     ProfilUser,
     Footer
+  },
+  methods: {
+  },
+  mounted () {
+    // this.historyEvent()
+  },
+  computed: {
+    // ...mapState('profil', ['myHistory'])
   }
 
 }

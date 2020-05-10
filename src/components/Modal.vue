@@ -12,7 +12,7 @@
           <slot></slot>
         </div>
         <div class="modal-footer">
-          <Button>{{ button }}</Button>
+          <Button type="button" @btn-click="$emit('clicked')" :data-dismiss="dismiss">{{ button }}</Button>
         </div>
       </div>
     </div>
@@ -30,7 +30,8 @@ export default {
   props: [
     'title',
     'button',
-    'id'
+    'id',
+    'dismiss'
   ]
 }
 </script>

@@ -10,13 +10,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="nama" class="evn-title">Nama Lengkap<span class="star">*</span></label>
-                <input type="text" class="form-control-plaintext evn-desc pl-2" id="nama" placeholder="Nama Lengkap">
+                <input type="text" class="form-control-plaintext evn-desc pl-2" id="nama" placeholder="Nama Lengkap" v-model="user.name">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="email" class="evn-title">Alamat Email<span class="star">*</span></label>
-                <input type="text" class="form-control-plaintext evn-desc pl-2" id="email" placeholder="Masukkan Email">
+                <input type="text" class="form-control-plaintext evn-desc pl-2" id="email" placeholder="Masukkan Email" v-model="user.email">
               </div>
             </div>
           </div>
@@ -27,8 +27,19 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
-  name: 'PersonalUser'
+  name: 'PersonalUser',
+  methods: {
+    ...mapActions('user', ['getUserById'])
+  },
+  mounted () {
+    this.getUserById()
+  },
+  computed: {
+    ...mapState('user', ['user']),
+    ...mapState('user', ['local'])
+  }
 }
 </script>
 
