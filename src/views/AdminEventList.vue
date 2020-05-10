@@ -22,18 +22,23 @@
       th3="Tempat"
       th4="Tindakan"
       title="Daftar Acara"
+      @search="searchValue"
+      @next="nextPage"
+      @prev="prevPage"
+      @newest="newest"
+      @oldest="oldest"
     >
     <tbody>
       <tr v-for="data in events" :key="data.id">
         <td>{{ data.id }}</td>
         <td>{{ data.title }}</td>
-        <td>{{ data.category }}</td>
+        <td>{{ data.date }}</td>
         <td>{{ data.location }}</td>
         <td class="d-flex">
-          <div class="btn btn-sm btn-outline-light approved mr-2" data-toggle="modal" data-target="#event-agree">
+          <div class="btn btn-sm btn-outline-light approved mr-2" @click="setuju(data.id)">
             <i class="fas fa-user-check mr-2"></i>Setujui
           </div>
-          <div class="btn btn-sm btn-outline-light delete" data-toggle="modal" data-target="#event-delete">
+          <div class="btn btn-sm btn-outline-light delete" @click="hapus(data.id)">
             <i class="fas fa-trash mr-2"></i>Hapus
           </div>
         </td>
@@ -41,12 +46,12 @@
     </tbody>
     </tables>
     <footers />
-    <modal title="Daftar Acara" button="Setuju" id="event-agree">
+    <!-- <modal title="Daftar Acara" button="Setuju" id="event-agree">
       <p>Yakin ingin menyetujui acara ini?</p>
     </modal>
     <modal title="Hapus Acara" button="Hapus" id="event-delete">
       <p>Yakin ingin menghapus acara ini?</p>
-    </modal>
+    </modal> -->
   </section>
 </template>
 
@@ -54,28 +59,78 @@
 import { mapActions, mapState } from 'vuex'
 import tables from '@/components/Tabel.vue'
 import footers from '@/components/_module/Footer.vue'
-import modal from '@/components/Modal.vue'
+// import modal from '@/components/Modal.vue'
 
 export default {
   name: 'AdminEventList',
   components: {
     tables,
-    footers,
-    modal
+    footers
+    // modal
   },
   data () {
     return {
-      datas: 5
+      datas: 5,
+      search: null,
+      page: 1,
+      totalPage: 0
     }
   },
   methods: {
-    ...mapActions('event', ['getAllEvents'])
+    ...mapActions('event', ['getAllEvents', 'searchEvent', 'totalEvent', 'getAllPages', 'eventNewest', 'eventOldest']),
+    ...mapActions('admin', ['approveEvent', 'deleteEvent']),
+    setuju (id) {
+      // console.log(this.local.token)
+      this.approveEvent({ id: id, token: this.local.token })
+    },
+    hapus (id) {
+      console.log('hapus')
+      this.deleteEvent({ id: id, token: this.local.token })
+    },
+    searchValue (data) {
+      this.searchEvent(data)
+    },
+    newest () {
+      console.log('newest')
+      this.eventNewest()
+    },
+    oldest () {
+      console.log('oldest')
+      this.eventOldest()
+    },
+    nextPage () {
+      this.total()
+      if (this.page < this.totalPage && this.page !== this.totalPage) {
+        this.page = this.page + 1
+      } else {
+        this.page = this.totalPage
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
+    },
+    prevPage () {
+      this.total()
+      if (this.page > 0 && this.page !== 1) {
+        this.page -= 1
+      } else {
+        this.page = 1
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
+    },
+    total () {
+      // console.log(this.totalEvents)
+      this.totalPage = Math.ceil(this.totalEvents / 10)
+      // console.log(this.totalPage)
+    }
   },
   mounted () {
     this.getAllEvents()
+    this.totalEvent()
   },
   computed: {
-    ...mapState('event', ['events'])
+    ...mapState('event', ['events', 'totalEvents']),
+    ...mapState('user', ['local'])
   }
 }
 </script>

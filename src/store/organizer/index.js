@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default ({
   namespaced: true,
   state: {
-    organizer: {},
+    organizer: [],
     events: [],
     category: []
   },
@@ -20,16 +20,16 @@ export default ({
     },
     category (state, data) {
       state.category = data
-      // console.log(data.category)
+      console.log(data.category)
     }
   },
   actions: {
-    getOrganizer ({ commit }, organizerId = 1) {
+    getOrganizer (context, organizerId) {
       axios
         .get(process.env.VUE_APP_BASE_URL + 'user/' + organizerId)
         .then(res => {
           // console.log(res.data.user)
-          commit('organizer', res.data.user)
+          context.commit('organizer', res.data.user)
         })
     },
     getEvents (context) {

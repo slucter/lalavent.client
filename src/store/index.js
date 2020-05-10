@@ -5,7 +5,9 @@ import event from './event/'
 import organizer from './organizer/'
 import user from './user'
 import profil from './profil/index'
-import ticket from './ticket'
+import ticket from './ticket',
+// import axios from 'axios'
+// import profil from './profil/'
 
 Vue.use(Vuex)
 
@@ -22,6 +24,8 @@ export default new Vuex.Store({
     event,
     user,
     profil,
-    ticket
+    ticket,
+    user
+    // profil
   }
 })

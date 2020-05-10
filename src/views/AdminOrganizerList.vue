@@ -1,6 +1,6 @@
 <template>
   <section class="admin-org-list mt-4">
-    <nav class="d-flex justify-content-center mb-2">
+    <nav class="d-flex justify-content-center mb-2 mt-4">
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-1 btn-secondary active pl-4">
           <router-link to="/admin/admin-organizer-list">
@@ -22,18 +22,23 @@
       th3="Alamat"
       th4="Tindakan"
       title="Daftar Penyelenggara"
+      @search="searchValue"
+      @next="nextPage"
+      @prev="prevPage"
+      @newest="newest"
+      @oldest="oldest"
     >
     <tbody>
       <tr v-for="data in organizers" :key="data.id">
-        <td>1</td>
+        <td>{{ data.id }}</td>
         <td>{{ data.name }}</td>
         <td>{{ data.email }}</td>
         <td>{{ data.address }}</td>
         <td class="d-flex">
-          <div class="btn btn-sm btn-outline-light approved mr-2" data-toggle="modal" data-target="#organizer-agree">
+          <div class="btn btn-sm btn-outline-light approved mr-2" @click="setuju(data.id)">
             <i class="fas fa-user-check mr-2"></i>Setujui
           </div>
-          <div class="btn btn-sm btn-outline-light delete" data-toggle="modal" data-target="#organizer-delete">
+          <div class="btn btn-sm btn-outline-light delete" @click="hapus(data.id)">
             <i class="fas fa-trash mr-2"></i>Hapus
           </div>
         </td>
@@ -41,12 +46,12 @@
     </tbody>
     </tables>
     <footers />
-    <modal title="Daftar Penyelenggara" button="Setuju" id="organizer-agree">
+    <!-- <modal title="Daftar Penyelenggara" button="Setuju" type="button" dismiss="modal" @clicked="setuju" id="organizer-agree">
       <p>Yakin ingin menyetujui penyelenggara ini?</p>
-    </modal>
-    <modal title="Hapus Penyelenggara" button="Hapus" id="organizer-delete">
+    </modal> -->
+    <!-- <modal title="Hapus Penyelenggara" button="Hapus" type="button" dismiss="modal" @clicked="hapus(this.data.id)" id="organizer-delete">
       <p>Yakin ingin menghapus penyelenggara ini?</p>
-    </modal>
+    </modal> -->
   </section>
 </template>
 
@@ -54,28 +59,79 @@
 import { mapActions, mapState } from 'vuex'
 import tables from '@/components/Tabel.vue'
 import footers from '@/components/_module/Footer.vue'
-import modal from '@/components/Modal.vue'
+// import modal from '@/components/Modal.vue'
 
 export default {
   name: 'AdminOrganizerList',
   components: {
     tables,
-    footers,
-    modal
+    footers
+    // modal
   },
   data () {
     return {
-      datas: 5
+      datas: 5,
+      search: null,
+      page: 1,
+      totalPage: 0
     }
   },
   methods: {
-    ...mapActions('admin', ['getAllOrganizers'])
+    ...mapActions('admin', ['getAllOrganizers', 'deleteOrganizer', 'approveOrganizer', 'searchOrganizer']),
+    setuju (id) {
+      console.log('Setuju' + id)
+      this.approveOrganizer(id)
+    },
+    hapus (id) {
+      // console.log(id)
+      this.deleteOrganizer({ id: id, token: this.local.token })
+    },
+    searchValue (data) {
+      // console.log(data)
+      this.searchOrganizer(data)
+    },
+    newest () {
+      console.log('newest')
+      this.organizerNewest()
+    },
+    oldest () {
+      console.log('oldest')
+      this.organizerOldest()
+    },
+    nextPage () {
+      this.total()
+      if (this.page < this.totalPage && this.page !== this.totalPage) {
+        this.page = this.page + 1
+      } else {
+        this.page = this.totalPage
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
+    },
+    prevPage () {
+      this.total()
+      if (this.page > 0 && this.page !== 1) {
+        this.page -= 1
+      } else {
+        this.page = 1
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
+    },
+    total () {
+      // console.log(this.totalEvents)
+      this.totalPage = Math.ceil(this.totalEvents / 10)
+      // console.log(this.totalPage)
+    }
   },
   mounted () {
+    // console.log(this.id)
     this.getAllOrganizers()
   },
   computed: {
-    ...mapState('admin', ['organizers'])
+    ...mapState('admin', ['organizers']),
+    ...mapState('event', ['organizerEvents']),
+    ...mapState('user', ['user', 'local'])
   }
 }
 </script>
