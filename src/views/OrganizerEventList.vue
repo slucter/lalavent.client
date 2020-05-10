@@ -3,7 +3,7 @@
     <OrganizerCard
     :organizerImage="user.image"
     :organizerName="user.name"
-    :organizerEvents="organizerEvents.length"
+    :organizerEvents="organizerLimitEvents"
     :organizerDesc="user.description"/>
     <div class="px-3 mt-5 d-flex flex-row justify-content-between align-items-center">
       <h3 class="mb-0 evn-title text-white">Semua Event</h3>
@@ -24,21 +24,25 @@
       </div>
     </div>
     <SearchSort v-if="organizerEvents.length !== 0" class="mt-5 px-5"/>
-    <div class="mt-3 d-flex flex-wrap">
+    <div class="mt-3 d-flex justify-content-center flex-wrap">
       <CardEvent
       v-for="data in organizerEvents" :key="data.id"
       :linkDetail="'/event/detail/' + data.id"
       :eventImage="data.image"
       :eventTitle="data.title"
-      :eventStatus="data.status === 1 ? 'Disetujui' : data.status === 2 ? 'Selesai' : data.status === 3 ? 'Tidak Disetujui' : 'Menunggu'"
       :eventCategory="data.category.name"
+      :eventStatus="data.status === 1 ? 'Disetujui' : data.status === 2 ? 'Selesai' : data.status === 3 ? 'Tidak Disetujui' : 'Menunggu'"
       :eventDate="data.date"
       :eventStart="data.time_start"
       :eventEnd="data.time_end === '' ? timeEnd : data.time_end"
       :eventLocation="data.location"
       class="evn-shadow"/>
     </div>
-    <Pagination v-if="organizerEvents.length !== 0" class="mt-5"/>
+    <Pagination
+    v-if="organizerEvents.length !== 0"
+    @prev="prevPage"
+    @next="nextPage"
+    class="mt-5"/>
   </div>
 </template>
 
@@ -59,7 +63,9 @@ export default {
         id: null
       },
       timeEnd: 'Selesai',
-      eventStatus: ['Waiting', 'Approved', 'Finished', 'Not Approved']
+      eventStatus: ['Waiting', 'Approved', 'Finished', 'Not Approved'],
+      page: 1,
+      totalPage: 0
     }
   },
   components: {
@@ -77,16 +83,45 @@ export default {
   },
   methods: {
     ...mapActions('user', ['getUserById', 'getLocalStorage']),
-    ...mapActions('event', ['getEventsByOrganizer', 'getOrganizerOngoingEvent'])
+    ...mapActions('event', ['getEventsByOrganizer', 'getOrganizerOngoingEvent', 'getLimitEventsByOrganizer', 'getAllEventsByOrganizer']),
+    nextPage () {
+      this.total()
+      if (this.page < this.totalPage && this.page !== this.totalPage) {
+        this.page = this.page + 1
+      } else {
+        this.page = this.totalPage
+      }
+      this.getLimitEventsByOrganizer({ organizerId: this.local.id, page: this.page })
+      // console.log(this.page)
+      console.log(this.local.id)
+    },
+    prevPage () {
+      this.total()
+      if (this.page > 0 && this.page !== 1) {
+        this.page -= 1
+      } else {
+        this.page = 1
+      }
+      this.getLimitEventsByOrganizer({ organizerId: this.local.id, page: this.page })
+      // console.log(this.page)
+    },
+    total () {
+      // console.log(this.organizerLimitEvents)
+      this.totalPage = Math.ceil(this.organizerLimitEvents / 8)
+      // console.log(this.totalPage)
+    }
   },
   mounted () {
     this.getLocalStorage(this.local)
     this.getUserById(this.local.id)
     this.getEventsByOrganizer(this.local.id)
     this.getOrganizerOngoingEvent(this.local.id)
+    // this.getAllEventsByOrganizer(this.local.id)
+    this.getLimitEventsByOrganizer({ organizerId: this.local.id, page: this.page })
+    // this.getLimitEventsByOrganizer(this.local.id)
   },
   computed: {
-    ...mapState('event', ['organizerEvents', 'ongoingEvent']),
+    ...mapState('event', ['organizerEvents', 'organizerLimitEvents', 'ongoingEvent']),
     ...mapState('user', ['user'])
   }
 }
