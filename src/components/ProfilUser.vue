@@ -85,20 +85,20 @@ export default {
       console.log('hello')
     },
     editInput () {
+      this.editData = false
       const listInput = document.querySelectorAll('.form-control-plaintext')
       listInput.forEach((e) => {
         e.removeAttribute('readonly')
         e.classList.add('inputEdit')
       })
-      this.editData = false
     },
     cancelEdit () {
+      this.editData = true
       const listInput = document.querySelectorAll('.form-control-plaintext')
       listInput.forEach((e) => {
         e.setAttribute('readonly', '')
         e.classList.remove('inputEdit')
       })
-      this.editData = true
     },
     upload (e) {
       const file = e.target.files[0]
@@ -130,7 +130,7 @@ export default {
     ...mapActions('user', ['getUserById'])
   },
   mounted () {
-    this.getUserById()
+    this.getUserById(this.local.id)
   },
   computed: {
     ...mapState('user', ['user']),
