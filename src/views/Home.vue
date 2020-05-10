@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     getAllEvent () {
-      axios.get('http://192.168.1.97:5000/api/lalavent/event')
+      axios.get(process.env.VUE_APP_BASE_URL + 'event')
         .then((result) => {
           this.eventsKuy = result.data.events.rows
           // console.log(vs)
