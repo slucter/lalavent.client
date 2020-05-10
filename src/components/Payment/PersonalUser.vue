@@ -10,13 +10,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="nama" class="evn-title">Nama Lengkap<span class="star">*</span></label>
-                <input type="text" class="form-control-plaintext evn-desc pl-2" id="nama" placeholder="Nama Lengkap" readonly v-model="users.user.name">
+                <input type="text" class="form-control-plaintext evn-desc pl-2" id="nama" placeholder="Nama Lengkap" readonly v-model="users.name">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="email" class="evn-title">Alamat Email<span class="star">*</span></label>
-                <input type="text" class="form-control-plaintext evn-desc pl-2" id="email" placeholder="Masukkan Email" readonly v-model="users.user.email">
+                <input type="text" class="form-control-plaintext evn-desc pl-2" id="email" placeholder="Masukkan Email" readonly v-model="users.email">
               </div>
             </div>
           </div>

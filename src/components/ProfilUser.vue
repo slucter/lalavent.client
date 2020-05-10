@@ -49,7 +49,7 @@
                     </div>
                   </div>
               </form>
-              <modal title="Update Personal Profil" button="Ok" id="edit-profil" @clicked="coba" dismiss="modal">
+              <modal title="Update Personal Profil" button="Ok" id="edit-profil" dismiss="modal">
                 <p>Data Anda Berhasil Dirubah!</p>
               </modal>
             </div>
@@ -76,7 +76,8 @@ export default {
     return {
       editData: true,
       image: null,
-      image1: null
+      image1: null,
+      users: []
     }
   },
   methods: {
@@ -112,7 +113,6 @@ export default {
     },
     editUser () {
       const formData = new FormData()
-      console.log(this.image)
       formData.append('name', this.user.name)
       formData.append('email', this.user.email)
       formData.append('password', this.user.password)

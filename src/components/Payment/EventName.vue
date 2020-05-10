@@ -8,7 +8,7 @@
               <h2>{{event.event.title}}</h2>
             </div>
             <div class="type">
-              <span class="evn-desc">Music</span>
+              <span class="evn-desc">{{event.event.category.name}}</span>
             </div>
           </div>
           <hr class="text-light">
@@ -20,7 +20,7 @@
                   <img src="../../assets/img/icon-orgz.jpg" alt="">
                 </div>
                 <div class="name-orgnz">
-                  <p class="evn-desc">Kanji</p>
+                  <p class="evn-desc">{{event.event.user.name}}</p>
                 </div>
               </div>
             </div>

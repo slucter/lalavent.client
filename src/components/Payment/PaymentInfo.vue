@@ -80,7 +80,7 @@
                 <tr>
                   <td>Tiket Donasi 2</td>
                   <td class="text-center">{{this.qty}}</td>
-                  <td>Rp {{this.harga}}</td>
+                  <td>Rp {{events.event.price * this.qty}}</td>
                 </tr>
                 <tr>
                   <td colspan="2">Convenience fee</td>

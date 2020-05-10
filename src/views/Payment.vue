@@ -2,13 +2,14 @@
   <div>
     <div class="container">
       <EventName v-bind:event="myEvent"/>
-      <PersonalUser v-bind:users="myEvent"/>
+      <PersonalUser v-bind:users="user"/>
       <PaymentInfo v-bind:events="myEvent"/>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import EventName from '../components/Payment/EventName'
 import PersonalUser from '../components/Payment/PersonalUser'
 import PaymentInfo from '../components/Payment/PaymentInfo'
@@ -27,17 +28,23 @@ export default {
   },
   methods: {
     getEvent () {
-      axios.get('http://192.168.1.97:5000/api/lalavent/ticket/2')
+      axios.get('http://192.168.1.97:5000/api/lalavent/event/11')
         .then((res) => {
-          this.myEvent = res.data.ticket
+          this.myEvent = res.data
         })
         .catch((error) => {
           console.log(error)
         })
-    }
+    },
+    ...mapActions('user', ['getUserById'])
   },
   mounted () {
     this.getEvent()
+    this.getUserById()
+  },
+  computed: {
+    ...mapState('user', ['user']),
+    ...mapState('user', ['local'])
   }
 }
 </script>
