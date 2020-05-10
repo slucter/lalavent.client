@@ -1,9 +1,11 @@
 <template>
     <div class="card evn-secondary my-2 mx-2">
+            <router-link :to="linkDetail">
             <img :src="eventImage" style="height: 200px; object-fit: cover; " class="card-img-top" alt="...">
+            </router-link>
         <div class="card-body">
-            <h5 class="card-title mb-5 text-light evn-title">{{ eventTitle }}</h5>
-            <div class="cat-grup mb-4 d-flex justify-content-between">
+            <router-link :to="linkDetail" class="card-title mb-5 text-light evn-title" style="font-size: 20px;">{{ eventTitle }}</router-link>
+            <div class="cat-grup mb-4 d-flex justify-content-between mt-3">
                 <h6 class="card-subtitle text-warning">{{ eventCategory }}</h6>
                 <h6 class="card-subtitle text-disable">{{ eventStatus }}</h6>
             </div>
@@ -39,7 +41,8 @@ export default {
     'eventEnd',
     'eventLocation',
     'eventOrganizer',
-    'eventStatus'
+    'eventStatus',
+    'linkDetail'
   ]
 }
 </script>
