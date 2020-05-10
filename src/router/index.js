@@ -45,7 +45,7 @@ const routes = [
     component: EventDetail
   },
   {
-    path: '/event/squad',
+    path: '/event/squad/:id',
     name: 'Penyelenggara',
     component: Penyelenggara
   },

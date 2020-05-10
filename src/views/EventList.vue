@@ -7,12 +7,13 @@
           :key="data.id"
           :eventImage="data.image"
           :eventTitle="data.title"
+          :linkDetail="'/event/detail/' + data.id"
           :eventCategory="data.category.name"
           :eventDate="data.date"
           :eventStart="data.time_start"
           :eventEnd="data.time_end"
           :eventLocation="data.location"
-          :eventOrganizer="'Arkademy'"
+          :eventOrganizer="data.user.name"
           :eventStatus="data.status === 1 ? 'Status online' : 'offline'"
           />
         </div>
@@ -36,9 +37,9 @@ export default {
   name: 'EventList',
   data () {
     return {
-      local: {
-        id: null
-      },
+      // local: {
+      //   id: null
+      // },
       eventsKuy: []
     }
   },

@@ -11,7 +11,11 @@
         </div>
         <div class="col-md-6 evn-secondary">
            <div class="card-title evn-title text-light py-3" style="font-size: 25px;">{{ dataDetail[0].title }}</div>
-           <div class="card-text text-warning">Diselenggarakan oleh: {{ dataDetail[0].user.name }}</div>
+           <div class="card-text text-warning">Diselenggarakan oleh:
+               <router-link :to="`/event/squad/${dataDetail[0].user.id}`">
+               {{ dataDetail[0].user.name }}
+               </router-link>
+               </div>
         </div>
        <div class="col-md-3 evn-secondary d-flex justify-content-start" style="border-bottom-right-radius: 30px">
             <ul class="list-group w-100 my-2 mx-2">
@@ -42,7 +46,7 @@
        <div class="col-md-4 evn-secondary px-4 py-3" style="border-top-right-radius: 30px">
            <ul class="list-group w-100 my-4 mx-2">
                 <li class="list-group-item border-0 bg-transparent px-3 py-3">
-                    <button @click.prevent="$emit('btn-click')" class="text-light evn-title w-100  bg-warning evn-shadow btn-custom">
+                    <button @click.prevent="daftarEvent" class="text-light evn-title w-100  bg-warning evn-shadow btn-custom">
                         <slot>DAFTAR</slot>
                     </button>
                 </li>
@@ -95,11 +99,20 @@ export default {
         .catch((eror) => {
           console.log(eror)
         })
+    },
+    daftarEvent (e) {
+      e.preventDefault()
+      const lc = localStorage.getItem('items')
+      if (lc !== null) {
+        this.$router.push(`/payment/${this.dataDetail[0].id}`)
+      } else {
+        this.$router.push('/login')
+      }
     }
   },
   created () {
     this.getDetailevent()
-    console.log(this.dataDetail)
+    // console.log(this.dataDetail)
   }
 
 }
