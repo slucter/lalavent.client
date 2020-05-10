@@ -5,10 +5,10 @@
         <div class="banner">
           <div class="event-name">
             <div class="info-event evn-title">
-              <h2>{{eventd.event.title}}</h2>
+              <h2>{{eventd.title}}</h2>
             </div>
             <div class="type">
-              <span class="evn-desc">{{eventd.event.category.name}}</span>
+              <span class="evn-desc">{{eventd.category.name}}</span>
             </div>
           </div>
           <hr class="text-light">
@@ -20,7 +20,7 @@
                   <img src="../../assets/img/icon-orgz.jpg" alt="">
                 </div>
                 <div class="name-orgnz">
-                  <p class="evn-desc">{{eventd.event.user.name}}</p>
+                  <p class="evn-desc">{{eventd.user.name}}</p>
                 </div>
               </div>
             </div>
@@ -28,18 +28,18 @@
               <p class="evn-title">Tanggal & Waktu</p>
               <div class="tgl-mulai mb-3">
                 <i class="far fa-calendar-alt fa-2x mr-2"></i>
-                <span class="evn-desc">{{eventd.event.date}}</span>
+                <span class="evn-desc">{{eventd.date}}</span>
               </div>
               <div class="jam-mulai mb-4">
                 <i class="far fa-clock fa-2x mr-2"></i>
-                <span class="evn-desc">{{eventd.event.time_start}} WIB -{{eventd.event.time_end}} WIB</span>
+                <span class="evn-desc">{{eventd.time_start}} WIB -{{eventd.time_end}} WIB</span>
               </div>
             </div>
             <div class="lokasi">
               <p class="evn-title">Lokasi</p>
               <div class="lokasi-event">
                 <i class="fas fa-map-marker-alt fa-2x mr-2"></i>
-                <span class="evn-desc">{{eventd.event.location}}</span>
+                <span class="evn-desc">{{eventd.location}}</span>
               </div>
             </div>
           </div>

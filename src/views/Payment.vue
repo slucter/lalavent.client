@@ -31,7 +31,7 @@ export default {
     getEvent () {
       axios.get(`http://192.168.1.97:5000/api/lalavent/event/${this.$route.params.idEvent}`)
         .then((res) => {
-          this.myEvent = res.data
+          this.myEvent = res.data.event
         })
         .catch((error) => {
           console.log(error)

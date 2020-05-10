@@ -77,7 +77,7 @@
               <tbody class="evn-desc">
                 <tr>
                   <td colspan="2">Harga Tiket</td>
-                  <td class="text-center">Rp {{events.event.price}}</td>
+                  <td class="text-center">Rp {{events.price}}</td>
                 </tr>
                 <tr>
                   <td colspan="2">Admin fee</td>
@@ -85,7 +85,7 @@
                 </tr>
                 <tr>
                   <td colspan="2">Total Pembayaran</td>
-                  <td class="text-center">Rp {{this.adminFee + events.event.price}}</td>
+                  <td class="text-center">Rp {{this.adminFee + events.price}}</td>
                 </tr>
               </tbody>
             </table>
@@ -131,7 +131,7 @@ export default {
         .post('http://192.168.1.97:5000/api/lalavent/ticket', {
           event_id: this.events.event.event_id,
           user_id: this.local.id,
-          price: this.events.event.price
+          price: this.events.price
         },
         {
           headers: { 'baca-bismillah': this.local.token }
