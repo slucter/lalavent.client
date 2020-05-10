@@ -111,7 +111,7 @@ const routes = [
     component: Logout
   },
   {
-    path: '/payment',
+    path: '/payment/:idEvent',
     name: 'Payment',
     component: Payment
   },
