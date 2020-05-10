@@ -8,11 +8,11 @@
               <h3 class="evn-title">Metode Pembayaran</h3>
             </div>
             <div class="card-name d-flex flex-wrap">
-              <div class="item-card">
+              <div class="one item-card" @click="applyPayment">
                 <span>
                   <img src="../../assets/img/payment/gopay_v2.png" alt="">
                 </span>
-                <div class="checked">
+                <div class="checked hide">
                   <i class="far fa-check-circle"></i>
                 </div>
               </div>
@@ -71,25 +71,21 @@
             <table class="table mb-5 text-light">
               <thead class="evn-title">
                 <tr>
-                  <th scope="col">Tiket Yang Dipilih</th>
-                  <th scope="col">Jumlah</th>
-                  <th scope="col">Harga</th>
+                  <th scope="col" colspan="3" class="text-center">Rincian Pembayaran</th>
                 </tr>
               </thead>
               <tbody class="evn-desc">
                 <tr>
-                  <td>Tiket Donasi 2</td>
-                  <td class="text-center">1</td>
-                  <td>Rp 20.000</td>
+                  <td colspan="2">Harga Tiket</td>
+                  <td class="text-center">Rp {{events.event.price}}</td>
                 </tr>
                 <tr>
-                  <td>Convenience fee</td>
-                  <td class="text-center">Rp 20.000</td>
-                  <td>Rp 20.000</td>
+                  <td colspan="2">Admin fee</td>
+                  <td class="text-center">Rp {{this.adminFee}}</td>
                 </tr>
                 <tr>
                   <td colspan="2">Total Pembayaran</td>
-                  <td>Rp 40.000</td>
+                  <td class="text-center">Rp {{this.adminFee + events.event.price}}</td>
                 </tr>
               </tbody>
             </table>
@@ -102,19 +98,40 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Button from '@/components/Button'
 export default {
   name: 'PaymentInfo',
+  props: ['events'],
+  data () {
+    return {
+      adminFee: 5000,
+      price: 25000,
+      qty: 2
+    }
+  },
   components: {
     Button
   },
   methods: {
-    // applyPayment (e) {
-    //   const cardName = document.querySelectorAll('.item-card')
-    //   console.log(cardName)
-    //   console.log(e.target)
-    //   // cardName.classList.toggle('.border-check')
-    // }
+    applyPayment () {
+      const cardName = document.querySelector('.one')
+      const check = document.querySelector('.checked')
+      cardName.classList.toggle('border-check')
+      check.classList.toggle('hide')
+    },
+    CreateTiket () {
+      axios
+        .post('http://192.168.1.97:5000/api/lalavent/ticket')
+    }
+  },
+  computed: {
+    total () {
+      return this.adminFee + this.harga
+    },
+    harga () {
+      return this.qty * this.price
+    }
   }
 }
 </script>
@@ -152,6 +169,8 @@ export default {
   color: #f39c12;
   font-weight: bold;
   font-size: 18px;
+}
+.hide{
   display: none;
 }
 @media screen and (max-width: 414px) {
