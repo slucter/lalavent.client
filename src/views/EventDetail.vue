@@ -11,7 +11,11 @@
         </div>
         <div class="col-md-6 evn-secondary">
            <div class="card-title evn-title text-light py-3" style="font-size: 25px;">{{ dataDetail[0].title }}</div>
-           <div class="card-text text-warning">Diselenggarakan oleh: {{ dataDetail[0].user.name }}</div>
+           <div class="card-text text-warning">Diselenggarakan oleh:
+               <router-link :to="`/event/squad/${dataDetail[0].user.id}`">
+               {{ dataDetail[0].user.name }}
+               </router-link>
+               </div>
         </div>
        <div class="col-md-3 evn-secondary d-flex justify-content-start" style="border-bottom-right-radius: 30px">
             <ul class="list-group w-100 my-2 mx-2">
@@ -99,7 +103,11 @@ export default {
     daftarEvent (e) {
       e.preventDefault()
       const lc = localStorage.getItem('items')
-      console.log(lc)
+      if (lc !== null) {
+        this.$router.push(`/payment/${this.dataDetail[0].id}`)
+      } else {
+        this.$router.push('/login')
+      }
     }
   },
   created () {

@@ -16,7 +16,7 @@
           :eventStart="data.time_start"
           :eventEnd="data.time_end"
           :eventLocation="data.location"
-          :eventOrganizer="'Arkademy'"
+          :eventOrganizer="data.user.name"
           :eventStatus="data.status === 1 ? 'Status online' : 'offline'"
           />
     </div>
