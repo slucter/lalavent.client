@@ -9,7 +9,8 @@ export default ({
   state: {
     events: [],
     organizerEvents: [],
-    totalEvents: []
+    totalEvents: [],
+    search: null
   },
   mutations: {
     events (state, data) {
@@ -26,7 +27,11 @@ export default ({
     },
     totalEvent (state, data) {
       state.totalEvents = data
-      console.log(state.totalEvents)
+      // console.log(state.totalEvents)
+    },
+    searchInput (state, data) {
+      state.search = data
+      console.log(state.search)
     }
   },
   actions: {
@@ -70,6 +75,9 @@ export default ({
           // console.log(res)
           context.commit('totalEvent', res.data.events.count)
         })
+    },
+    searchInput (context, data) {
+      context.commit('searchInput', data)
     },
     searchEvent (context, data) {
       // console.log(data)

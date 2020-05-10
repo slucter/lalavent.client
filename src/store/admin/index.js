@@ -13,7 +13,7 @@ export default ({
   mutations: {
     organizers (state, data) {
       state.organizers = data
-      console.log(state.organizers)
+      // console.log(state.organizers)
     },
     search (state, data) {
       state.organizers = data
@@ -29,7 +29,7 @@ export default ({
       axios
         .get(process.env.VUE_APP_BASE_URL + 'user/role/2')
         .then(res => {
-          context.commit('organizers', res.data.user.rows)
+          context.commit('organizers', res.data.users.rows)
         })
     },
     getAllPages (context, page) {
@@ -45,7 +45,7 @@ export default ({
         .get(process.env.VUE_APP_BASE_URL + 'user/role/2?time=DESC')
         .then(res => {
           // console.log(res)
-          context.commit('organizers', res)
+          context.commit('organizers', res.data.users.rows)
         })
     },
     organizerOldest (context) {
@@ -53,7 +53,7 @@ export default ({
         .get(process.env.VUE_APP_BASE_URL + 'user/role/2?time=ASC')
         .then(res => {
           // console.log(res)
-          context.commit('organizers', res)
+          context.commit('organizers', res.data.users.rows)
         })
     },
     totalOrganizer (context) {

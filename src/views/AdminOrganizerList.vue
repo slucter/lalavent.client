@@ -22,11 +22,10 @@
       th3="Alamat"
       th4="Tindakan"
       title="Daftar Penyelenggara"
-      @search="searchValue"
       @next="nextPage"
       @prev="prevPage"
-      @newest="newest"
-      @oldest="oldest"
+      @sort="sortBy"
+      @clicked="searchValue"
     >
     <tbody>
       <tr v-for="data in organizers" :key="data.id">
@@ -70,14 +69,13 @@ export default {
   },
   data () {
     return {
-      datas: 5,
-      search: null,
       page: 1,
-      totalPage: 0
+      totalPage: 0,
+      sort: 0
     }
   },
   methods: {
-    ...mapActions('admin', ['getAllOrganizers', 'deleteOrganizer', 'approveOrganizer', 'searchOrganizer']),
+    ...mapActions('admin', ['getAllOrganizers', 'deleteOrganizer', 'approveOrganizer', 'searchOrganizer', 'organizerOldest', 'organizerNewest']),
     setuju (id) {
       console.log('Setuju' + id)
       this.approveOrganizer(id)
@@ -86,17 +84,20 @@ export default {
       // console.log(id)
       this.deleteOrganizer({ id: id, token: this.local.token })
     },
-    searchValue (data) {
-      // console.log(data)
-      this.searchOrganizer(data)
+    searchValue () {
+      // console.log(this.search)
+      this.searchOrganizer(this.search)
     },
-    newest () {
-      console.log('newest')
-      this.organizerNewest()
-    },
-    oldest () {
-      console.log('oldest')
-      this.organizerOldest()
+    sortBy () {
+      if (this.sort === 0) {
+        this.sort = 1
+        console.log(this.sort)
+        this.organizerOldest()
+      } else {
+        this.sort = 0
+        console.log(this.sort)
+        this.organizerNewest()
+      }
     },
     nextPage () {
       this.total()
@@ -131,7 +132,8 @@ export default {
   computed: {
     ...mapState('admin', ['organizers']),
     ...mapState('event', ['organizerEvents']),
-    ...mapState('user', ['user', 'local'])
+    ...mapState('user', ['user', 'local']),
+    ...mapState('general', ['search'])
   }
 }
 </script>

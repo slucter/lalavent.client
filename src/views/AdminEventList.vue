@@ -22,11 +22,10 @@
       th3="Tempat"
       th4="Tindakan"
       title="Daftar Acara"
-      @search="searchValue"
       @next="nextPage"
       @prev="prevPage"
-      @newest="newest"
-      @oldest="oldest"
+      @sort="sortBy"
+      @clicked="searchValue"
     >
     <tbody>
       <tr v-for="data in events" :key="data.id">
@@ -70,10 +69,9 @@ export default {
   },
   data () {
     return {
-      datas: 5,
-      search: null,
       page: 1,
-      totalPage: 0
+      totalPage: 0,
+      sort: 0
     }
   },
   methods: {
@@ -87,16 +85,20 @@ export default {
       console.log('hapus')
       this.deleteEvent({ id: id, token: this.local.token })
     },
-    searchValue (data) {
-      this.searchEvent(data)
+    searchValue () {
+      console.log(this.search)
+      this.searchEvent(this.search)
     },
-    newest () {
-      console.log('newest')
-      this.eventNewest()
-    },
-    oldest () {
-      console.log('oldest')
-      this.eventOldest()
+    sortBy () {
+      if (this.sort === 0) {
+        this.sort = 1
+        console.log(this.sort)
+        this.eventOldest()
+      } else {
+        this.sort = 0
+        console.log(this.sort)
+        this.eventNewest()
+      }
     },
     nextPage () {
       this.total()
@@ -130,7 +132,8 @@ export default {
   },
   computed: {
     ...mapState('event', ['events', 'totalEvents']),
-    ...mapState('user', ['local'])
+    ...mapState('user', ['local']),
+    ...mapState('general', ['search'])
   }
 }
 </script>
