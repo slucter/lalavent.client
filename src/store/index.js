@@ -4,6 +4,8 @@ import admin from './admin'
 import event from './event'
 import organizer from './organizer'
 import user from './user'
+import profil from './profil/index'
+import ticket from './ticket'
 // import axios from 'axios'
 // import profil from './profil/'
 import general from './general'
@@ -22,7 +24,9 @@ export default new Vuex.Store({
     organizer,
     event,
     user,
-    general
+    general,
+    profil,
+    ticket
     // profil
   }
 })

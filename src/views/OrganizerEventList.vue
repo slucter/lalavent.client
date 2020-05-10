@@ -7,9 +7,14 @@
     :organizerDesc="user.description"/>
     <div class="px-3 mt-5 d-flex flex-row justify-content-between align-items-center">
       <h3 class="mb-0 evn-title text-white">Semua Event</h3>
-      <Button>
-        <router-link class="link-anchor" to="/:organizerId/add-event">Buat Event</router-link>
-      </Button>
+      <div class="d-flex flex-row align-items-center">
+        <Button>
+          <router-link class="link-anchor" to="/:organizerId/add-event">Buat Event</router-link>
+        </Button>
+        <Button v-if="ongoingEvent.length !== 0" class="ml-3">
+          <router-link class="link-anchor" to="/:organizerId/ongoing-event">Ongoing Event</router-link>
+        </Button>
+      </div>
     </div>
     <div v-if="organizerEvents.length === 0" class="my-5 d-flex flex-column flex-md-row justify-content-center align-items-center text-white">
       <i class="far fa-frown fa-6x"></i>
@@ -71,15 +76,16 @@ export default {
   },
   methods: {
     ...mapActions('user', ['getUserById', 'getLocalStorage']),
-    ...mapActions('event', ['getEventsByOrganizer'])
+    ...mapActions('event', ['getEventsByOrganizer', 'getOrganizerOngoingEvent'])
   },
   mounted () {
-    this.getEventsByOrganizer(this.local.id)
     this.getLocalStorage(this.local)
     this.getUserById(this.local.id)
+    this.getEventsByOrganizer(this.local.id)
+    this.getOrganizerOngoingEvent(this.local.id)
   },
   computed: {
-    ...mapState('event', ['organizerEvents']),
+    ...mapState('event', ['organizerEvents', 'ongoingEvent']),
     ...mapState('user', ['user'])
   }
 }
