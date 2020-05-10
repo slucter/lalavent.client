@@ -75,42 +75,45 @@ export default ({
         })
     },
     deleteOrganizer (context, { id, token }) {
-      // console.log('delete')
+      console.log('delete organizer')
       axios
-        .delete(process.env.VUE_APP_BASE_URL + 'user/' + id, {
-          headers: { 'baca-bismillah': token }
-        })
+        .patch(process.env.VUE_APP_BASE_URL + 'user/approve/' + id, {
+          status: 3
+        },
+        { headers: { 'baca-bismillah': token } })
         .then(res => {
-          console.log(res)
+          console.log(res.data.message)
         })
     },
-    approveOrganizer (context, id) {
-      // console.log(process.env.VUE_APP_BASE_URL + 'user/approve/' + id)
+    approveOrganizer (context, { id, token }) {
+      // console.log(id, token)
       axios
-        .patch(process.env.VUE_APP_BASE_URL + 'user/approve/' + id)
+        .patch(process.env.VUE_APP_BASE_URL + 'user/approve/' + id, {
+          status: 2
+        },
+        { headers: { 'baca-bismillah': token } })
         .then(res => {
           console.log(res.data.message)
         })
     },
     deleteEvent (context, { id, token }) {
-      // console.log('delete event', +id)
+      // console.log(id, token)
       axios
-        .delete(process.env.VUE_APP_BASE_URL + 'event/' + id, {
-          headers: { 'baca-bismillah': token }
-        })
+        .patch(process.env.VUE_APP_BASE_URL + 'event/approve/' + id, {
+          status: 3
+        },
+        { headers: { 'baca-bismillah': token } })
         .then(res => {
-          console.log(res)
+          console.log(res.data.message)
         })
     },
     approveEvent (context, { id, token }) {
-      console.log(id, token)
+      // console.log(id, token)
       axios
         .patch(process.env.VUE_APP_BASE_URL + 'event/approve/' + id, {
           status: 1
         },
-        {
-          headers: { 'baca-bismillah': token }
-        })
+        { headers: { 'baca-bismillah': token } })
         .then(res => {
           console.log(res.data.message)
         })
