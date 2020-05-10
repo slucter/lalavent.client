@@ -24,15 +24,16 @@
       </div>
     </div>
     <SearchSort v-if="organizerEvents.length !== 0" class="mt-5 px-5"/>
-    <div class="mt-3 d-flex flex-wrap justify-content-center">
+    <div class="mt-3 d-flex flex-wrap">
       <CardEvent
       v-for="data in organizerEvents" :key="data.id"
       :eventImage="data.image"
       :eventTitle="data.title"
+      :eventStatus="data.status === 1 ? 'Disetujui' : data.status === 2 ? 'Selesai' : data.status === 3 ? 'Tidak Disetujui' : 'Menunggu'"
       :eventCategory="data.category.name"
       :eventDate="data.date"
       :eventStart="data.time_start"
-      :eventEnd="data.time_end"
+      :eventEnd="data.time_end === '' ? timeEnd : data.time_end"
       :eventLocation="data.location"
       class="evn-shadow"/>
     </div>
@@ -55,12 +56,11 @@ export default {
     return {
       local: {
         id: null
-      }
+      },
+      timeEnd: 'Selesai',
+      eventStatus: ['Waiting', 'Approved', 'Finished', 'Not Approved']
     }
   },
-  props: [
-    'organizerId'
-  ],
   components: {
     OrganizerCard,
     Button,
