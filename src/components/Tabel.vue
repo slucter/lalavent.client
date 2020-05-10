@@ -4,30 +4,7 @@
       <div class="card evn-secondary px-3">
         <div class="card-body">
           <h2 class="text-center text-light evn-title mb-4">{{ title }}</h2>
-          <div class="d-flex justify-content-between">
-            <div class="search">
-              <form class="form-inline mb-2">
-                <div class="form-group">
-                  <input type="text" class="form-control mr-2" placeholder="Cari Data" @input="$emit('search', $event.target.value)">
-                </div>
-                <div class="form-group">
-                  <button type="button" class="form-control evn-btn text-light"><i class="fas fa-search"></i></button>
-                </div>
-              </form>
-            </div>
-            <div class="sort">
-              <form class="form-inline">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1" class="text-light mr-4 evn-title">Sort By</label>
-                  <select class="form-control" id="exampleFormControlSelect1">
-                    <option>All</option>
-                    <option value="0">Event Terbaru</option>
-                    <option value="1">Event Terlama</option>
-                  </select>
-                </div>
-              </form>
-            </div>
-          </div>
+          <SearchSort @cari="$emit('clicked')" @sort="$emit('sort')" />
           <div class="row table-responsive">
             <table class="table my-3 text-light">
               <thead class="evn-title">
@@ -60,6 +37,7 @@
 
 <script>
 import pagination from '@/components/Pagination'
+import SearchSort from '@/components/SearchSort'
 
 export default {
   name: 'Tabel',
@@ -70,7 +48,8 @@ export default {
     }
   },
   components: {
-    pagination
+    pagination,
+    SearchSort
   }
 }
 </script>
@@ -86,4 +65,7 @@ export default {
 .hide{
   display: none;
 }
-</style>>
+.dropdown-item{
+  cursor: pointer;
+}
+</style>

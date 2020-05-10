@@ -22,9 +22,10 @@
       th3="Tempat"
       th4="Tindakan"
       title="Daftar Acara"
-      @search="searchValue"
       @next="nextPage"
       @prev="prevPage"
+      @sort="sortBy"
+      @clicked="searchValue"
     >
     <tbody>
       <tr v-for="data in events" :key="data.id">
@@ -68,14 +69,13 @@ export default {
   },
   data () {
     return {
-      datas: 5,
-      search: null,
       page: 1,
-      totalPage: 0
+      totalPage: 0,
+      sort: 0
     }
   },
   methods: {
-    ...mapActions('event', ['getAllEvents', 'searchEvent']),
+    ...mapActions('event', ['getAllEvents', 'searchEvent', 'totalEvent', 'getAllPages', 'eventNewest', 'eventOldest']),
     ...mapActions('admin', ['approveEvent', 'deleteEvent']),
     setuju (id) {
       // console.log(this.local.token)
@@ -85,30 +85,55 @@ export default {
       console.log('hapus')
       this.deleteEvent({ id: id, token: this.local.token })
     },
-    searchValue (data) {
-      this.searchEvent(data)
+    searchValue () {
+      console.log(this.search)
+      this.searchEvent(this.search)
+    },
+    sortBy () {
+      if (this.sort === 0) {
+        this.sort = 1
+        console.log(this.sort)
+        this.eventOldest()
+      } else {
+        this.sort = 0
+        console.log(this.sort)
+        this.eventNewest()
+      }
     },
     nextPage () {
-      this.page += 1
-      console.log('next page')
+      this.total()
+      if (this.page < this.totalPage && this.page !== this.totalPage) {
+        this.page = this.page + 1
+      } else {
+        this.page = this.totalPage
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
     },
     prevPage () {
-      console.log('prev page')
+      this.total()
+      if (this.page > 0 && this.page !== 1) {
+        this.page -= 1
+      } else {
+        this.page = 1
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
     },
     total () {
-      // console.log(this.totalEvent)
-      // this.totalPage = Math.ceil(this.totalEvent / 10)
-      console.log(this.totalPage)
+      // console.log(this.totalEvents)
+      this.totalPage = Math.ceil(this.totalEvents / 10)
+      // console.log(this.totalPage)
     }
   },
   mounted () {
     this.getAllEvents()
-    // this.totalEvent()
-    this.total()
+    this.totalEvent()
   },
   computed: {
-    ...mapState('event', ['events']),
-    ...mapState('user', ['local'])
+    ...mapState('event', ['events', 'totalEvents']),
+    ...mapState('user', ['local']),
+    ...mapState('general', ['search'])
   }
 }
 </script>

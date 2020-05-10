@@ -9,7 +9,9 @@ export default ({
   state: {
     events: [],
     organizerEvents: [],
-    totalEvent: []
+    search: null,
+    ongoingEvent: [],
+    totalEvents: []
   },
   mutations: {
     events (state, data) {
@@ -18,6 +20,21 @@ export default ({
     },
     organizerEvents (state, data) {
       state.organizerEvents = data
+      // console.log(state.events)
+    },
+    organizerOngoingEvent (state, data) {
+      const d = new Date()
+      const date = ('0' + d.getDate()).slice(-2)
+      const month = ('0' + (d.getMonth() + 1)).slice(-2)
+      const year = d.getFullYear()
+      const dateStr = year + '-' + month + '-' + date
+      // console.log(dateStr)
+
+      const events = data
+      const ongoingEvent = events.filter(event => event.date === dateStr)
+      state.ongoingEvent = ongoingEvent
+      // console.log(events[0].date)
+      console.log(state.ongoingEvent[0].title)
       console.log(state.organizerEvents)
     },
     search (state, data) {
@@ -25,15 +42,42 @@ export default ({
       // console.log(data)
     },
     totalEvent (state, data) {
-      state.totalEvent = data
-      console.log(state.totalEvent)
+      state.totalEvents = data
+      // console.log(state.totalEvents)
+    },
+    searchInput (state, data) {
+      state.search = data
+      console.log(state.search)
     }
   },
   actions: {
     getAllEvents (context) {
-      // console.log(process.env.VUE_APP_BASE_URL)
       axios
         .get(process.env.VUE_APP_BASE_URL + 'event')
+        .then(res => {
+          // console.log(res)
+          context.commit('events', res.data.events.rows)
+        })
+    },
+    getAllPages (context, page) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event?page=' + page)
+        .then(res => {
+          // console.log(res)
+          context.commit('events', res.data.events.rows)
+        })
+    },
+    eventNewest (context) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event?time=DESC')
+        .then(res => {
+          // console.log(res)
+          context.commit('events', res.data.events.rows)
+        })
+    },
+    eventOldest (context) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event?time=ASC')
         .then(res => {
           // console.log(res)
           context.commit('events', res.data.events.rows)
@@ -47,6 +91,9 @@ export default ({
           // console.log(res)
           context.commit('totalEvent', res.data.events.count)
         })
+    },
+    searchInput (context, data) {
+      context.commit('searchInput', data)
     },
     searchEvent (context, data) {
       // console.log(data)
@@ -64,6 +111,15 @@ export default ({
         .then(res => {
           // console.log(res)
           context.commit('organizerEvents', res.data.event.rows)
+        })
+    },
+    getOrganizerOngoingEvent (context, organizerId) {
+      console.log(process.env.VUE_APP_BASE_URL)
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event/user/' + organizerId)
+        .then(res => {
+          console.log(res)
+          context.commit('organizerOngoingEvent', res.data.event.rows)
         })
     }
   }
