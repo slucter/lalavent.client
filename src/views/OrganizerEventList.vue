@@ -23,7 +23,7 @@
         <h4 class="evn-desc">Kamu belum buat event sama sekali nih</h4>
       </div>
     </div>
-    <SearchSort v-if="organizerEvents.length !== 0" class="mt-5 px-5"/>
+    <SearchSort @sort="sortBy" v-if="organizerEvents.length !== 0" class="mt-5 px-5"/>
     <div class="mt-3 d-flex justify-content-center flex-wrap">
       <CardEvent
       v-for="data in organizerEvents" :key="data.id"
@@ -65,7 +65,8 @@ export default {
       timeEnd: 'Selesai',
       eventStatus: ['Waiting', 'Approved', 'Finished', 'Not Approved'],
       page: 1,
-      totalPage: 0
+      totalPage: 0,
+      sort: 0
     }
   },
   components: {
@@ -83,7 +84,18 @@ export default {
   },
   methods: {
     ...mapActions('user', ['getUserById', 'getLocalStorage']),
-    ...mapActions('event', ['getEventsByOrganizer', 'getOrganizerOngoingEvent', 'getLimitEventsByOrganizer', 'getAllEventsByOrganizer']),
+    ...mapActions('event', ['getEventsByOrganizer', 'getOrganizerOngoingEvent', 'getLimitEventsByOrganizer', 'getAllEventsByOrganizer', 'organizerEventOldest', 'organizerEventNewest']),
+    sortBy () {
+      if (this.sort === 0) {
+        this.sort = 1
+        console.log(this.sort)
+        this.organizerEventOldest(this.local.id)
+      } else {
+        this.sort = 0
+        console.log(this.sort)
+        this.organizerEventNewest(this.local.id)
+      }
+    },
     nextPage () {
       this.total()
       if (this.page < this.totalPage && this.page !== this.totalPage) {

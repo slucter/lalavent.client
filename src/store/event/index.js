@@ -150,6 +150,22 @@ export default ({
           // console.log(res)
           context.commit('organizerEvents', res.data.events.rows)
         })
+    },
+    organizerEventNewest (context, organizerId) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event/user/' + organizerId + '?time=DESC')
+        .then(res => {
+          // console.log(res)
+          context.commit('organizerEvents', res.data.events.rows)
+        })
+    },
+    organizerEventOldest (context, organizerId) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event/user/' + organizerId + '?time=ASC')
+        .then(res => {
+          // console.log(res)
+          context.commit('organizerEvents', res.data.events.rows)
+        })
     }
   }
 })
