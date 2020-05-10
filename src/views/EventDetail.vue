@@ -42,7 +42,7 @@
        <div class="col-md-4 evn-secondary px-4 py-3" style="border-top-right-radius: 30px">
            <ul class="list-group w-100 my-4 mx-2">
                 <li class="list-group-item border-0 bg-transparent px-3 py-3">
-                    <button @click.prevent="$emit('btn-click')" class="text-light evn-title w-100  bg-warning evn-shadow btn-custom">
+                    <button @click.prevent="daftarEvent" class="text-light evn-title w-100  bg-warning evn-shadow btn-custom">
                         <slot>DAFTAR</slot>
                     </button>
                 </li>
@@ -95,11 +95,16 @@ export default {
         .catch((eror) => {
           console.log(eror)
         })
+    },
+    daftarEvent (e) {
+      e.preventDefault()
+      const lc = localStorage.getItem('items')
+      console.log(lc)
     }
   },
   created () {
     this.getDetailevent()
-    console.log(this.dataDetail)
+    // console.log(this.dataDetail)
   }
 
 }
