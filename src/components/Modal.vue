@@ -12,7 +12,7 @@
           <slot></slot>
         </div>
         <div class="modal-footer">
-          <Button type="button" @btn-click="$emit('clicked')" :data-dismiss="dismiss">{{ button }}</Button>
+          <Button type="button" :data-dismiss="dismiss">{{ button }}</Button>
         </div>
       </div>
     </div>

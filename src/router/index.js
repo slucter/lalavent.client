@@ -36,7 +36,7 @@ const routes = [
     component: Event
   },
   {
-    path: '/event/detail',
+    path: '/event/detail/:eventDetail',
     name: 'EventDetail',
     component: EventDetail
   },
@@ -111,7 +111,7 @@ const routes = [
     component: Logout
   },
   {
-    path: '/payment',
+    path: '/payment/:idEvent',
     name: 'Payment',
     component: Payment
   },

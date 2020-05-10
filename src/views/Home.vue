@@ -8,6 +8,7 @@
           <CardEvent
           v-for="data in eventStatus"
           :key="data.id"
+          :linkDetail="'/event/detail/' + data.id"
           :eventImage="data.image"
           :eventTitle="data.title"
           :eventCategory="data.category.name"
@@ -21,7 +22,7 @@
     </div>
     <div class="row d-flex justify-content-center mb-5">
       <div class="col-md-7 d-flex justify-content-center">
-        <h3 class="lead text-warning evn-desc">Event selengkapnya ></h3>
+        <router-link to="/event" class="lead text-warning evn-desc">Event selengkapnya ></router-link>
       </div>
     </div>
     <sEasy />
@@ -47,7 +48,8 @@ export default {
   name: 'Home',
   data () {
     return {
-      eventsKuy: []
+      eventsKuy: [],
+      linkEvent: []
     }
   },
   components: {
@@ -70,6 +72,7 @@ export default {
       axios.get('http://192.168.1.97:5000/api/lalavent/event')
         .then((result) => {
           this.eventsKuy = result.data.events.rows
+          // console.log(vs)
         })
         .catch((error) => {
           console.log(error)
@@ -78,7 +81,7 @@ export default {
   },
   mounted () {
     this.getAllEvent()
-    console.log(this.eventsKuy)
+    // console.log(this.eventsKuy)
   }
 }
 </script>
