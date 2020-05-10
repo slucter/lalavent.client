@@ -9,9 +9,11 @@ export default ({
   state: {
     events: [],
     organizerEvents: [],
+    organizerPageEvents: [],
     search: null,
     ongoingEvent: [],
-    totalEvents: []
+    totalEvents: [],
+    organizerLimitEvents: []
   },
   mutations: {
     events (state, data) {
@@ -47,6 +49,14 @@ export default ({
     },
     searchInput (state, data) {
       state.search = data
+      // console.log(state.search)
+    },
+    organizerLimitEvents (state, data) {
+      state.organizerLimitEvents = data
+    },
+    organizerPageEvents (state, data) {
+      state.organizerPageEvents = data
+      console.log(state.organizerPageEvents)
       console.log(state.search)
     }
   },
@@ -110,7 +120,7 @@ export default ({
         .get(process.env.VUE_APP_BASE_URL + 'event/user/' + organizerId)
         .then(res => {
           // console.log(res)
-          context.commit('organizerEvents', res.data.events.rows)
+          context.commit('organizerLimitEvents', res.data.events.count)
         })
     },
     getOrganizerOngoingEvent (context, organizerId) {
@@ -118,8 +128,27 @@ export default ({
       axios
         .get(process.env.VUE_APP_BASE_URL + 'event/user/' + organizerId)
         .then(res => {
-          console.log(res)
-          context.commit('organizerOngoingEvent', res.data.event.rows)
+        // console.log(res)
+          context.commit('organizerOngoingEvent', res.data.events.rows)
+        })
+    },
+    getAllEventsByOrganizer (context, organizerId) {
+      // console.log(process.env.VUE_APP_BASE_URL)
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event/user/' + organizerId)
+        .then(res => {
+          // console.log(res)
+          context.commit('organizerEvents', res.data.events.rows)
+        })
+    },
+    getLimitEventsByOrganizer (context, { organizerId, page }) {
+      console.log(organizerId)
+      console.log(page)
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'event/user/' + organizerId + '?page=' + page)
+        .then(res => {
+          // console.log(res)
+          context.commit('organizerEvents', res.data.events.rows)
         })
     }
   }
