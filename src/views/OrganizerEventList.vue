@@ -27,6 +27,7 @@
     <div class="mt-3 d-flex flex-wrap">
       <CardEvent
       v-for="data in organizerEvents" :key="data.id"
+      :linkDetail="'/event/detail/' + data.id"
       :eventImage="data.image"
       :eventTitle="data.title"
       :eventStatus="data.status === 1 ? 'Disetujui' : data.status === 2 ? 'Selesai' : data.status === 3 ? 'Tidak Disetujui' : 'Menunggu'"

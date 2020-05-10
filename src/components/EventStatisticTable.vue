@@ -25,7 +25,7 @@
               <td>
                 {{ data.time_start }}
                  - {{ data.time_end }}
-                <span v-if="data.time_end === null">Selesai</span>
+                <span v-if="data.time_end === ''">Selesai</span>
               </td>
               <td>{{ data.category.name }}</td>
               <td>
@@ -34,7 +34,7 @@
               </td>
               <td>{{ data.location }}</td>
               <td>{{ data.quota }}</td>
-              <td>Pengunjung</td>
+              <td>{{ data.attend === null ? '-' : 'Pengunjung' }}</td>
             </tr>
           </tbody>
         </table>
