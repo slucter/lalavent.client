@@ -21,8 +21,8 @@
               <td>{{ data.user.email }}</td>
               <td><input type="text" v-model="ticketId" @keyup.enter="changeStatus" placeholder="Masukkan ID Ticket..." class="text-white ticket-id"></td>
               <td>
-                <span v-if="data.status === true">Approved</span>
-                <span v-if="data.status === false">Waiting</span>
+                <span v-if="checkTicket === true">Approved</span>
+                <span v-if="checkTicket === false">Waiting</span>
               </td>
             </tr>
           </tbody>
@@ -46,8 +46,8 @@ export default {
       local: {
         id: null
       },
-      status: 'Waiting',
-      ticketId: []
+      checkTicket: false,
+      ticketId: ''
     }
   },
   components: {
@@ -62,14 +62,18 @@ export default {
   },
   methods: {
     changeStatus () {
-      if (this.tickets[0].id === this.ticketId) {
-        this.tickets[0].status = !this.tickets[0].status
-      } else {
+      // console.log(this.eventTickets[0].id)
+      // console.log(this.ticketId)
+      // console.log(this.eventTickets[0].status)
+      // console.log(this.checkTicket)
+      if (this.eventTickets[0].id !== this.ticketId) {
+        // this.checkTicket = false
         console.log('wrong')
-        console.log(this.ticketId)
-        console.log(this.tickets[0].id)
+        // console.log(this.ticketId)
+      } else if (this.eventTickets[0].id === this.ticketId) {
+        // this.checkTicket = true
+        console.log('true')
       }
-      console.log(this.tickets[0].status)
     },
     ...mapActions('user', ['getUserById', 'getLocalStorage']),
     ...mapActions('event', ['getOrganizerOngoingEvent']),

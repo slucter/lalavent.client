@@ -11,8 +11,8 @@
         <Button>
           <router-link class="link-anchor" to="/:organizerId/add-event">Buat Event</router-link>
         </Button>
-        <Button class="ml-3">
-          <router-link class="link-anchor" to="/:organizerId/ongoing-event">Orgoing Event</router-link>
+        <Button v-if="ongoingEvent.length !== 0" class="ml-3">
+          <router-link class="link-anchor" to="/:organizerId/ongoing-event">Ongoing Event</router-link>
         </Button>
       </div>
     </div>
@@ -76,15 +76,16 @@ export default {
   },
   methods: {
     ...mapActions('user', ['getUserById', 'getLocalStorage']),
-    ...mapActions('event', ['getEventsByOrganizer'])
+    ...mapActions('event', ['getEventsByOrganizer', 'getOrganizerOngoingEvent'])
   },
   mounted () {
-    this.getEventsByOrganizer(this.local.id)
     this.getLocalStorage(this.local)
     this.getUserById(this.local.id)
+    this.getEventsByOrganizer(this.local.id)
+    this.getOrganizerOngoingEvent(this.local.id)
   },
   computed: {
-    ...mapState('event', ['organizerEvents']),
+    ...mapState('event', ['organizerEvents', 'ongoingEvent']),
     ...mapState('user', ['user'])
   }
 }
