@@ -8,7 +8,7 @@
       <div class="title-login">
         <h5 class="evn-title">Daftar</h5>
       </div>
-      <form class="mt-2 text-white">
+      <div class="mt-2 text-white">
         <div class="form-group">
           <label for="title" class="evn-title">Nama<span class="star">*</span></label>
           <input type="text" placeholder="Lalavent" :class="$v.name.$error ? 'form-control is-invalid' : 'form-control'" v-model="name">
@@ -27,7 +27,7 @@
         <div class="mt-4">
           <Button @btn-click="submitEvent">Daftar</Button>
         </div>
-      </form>
+      </div>
       <div class="account evn-title">
         <p>Sudah punya akun? <router-link to="/login" class="sign">Masuk</router-link></p>
         <p class="event">Atau buat eventmu sendiri <router-link to="/register-organizer" class="sign"> sekarang! </router-link></p>

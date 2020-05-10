@@ -66,6 +66,11 @@ export default {
     email: { required },
     password: { required }
   },
+  created () {
+    if (localStorage.getItems('id')) {
+      this.$router.push('/')
+    }
+  },
   beforeCreate () {
     axios.patch(`http://192.168.1.97:5000/api/lalavent/user/activation?token=${this.$route.query.token}`)
       .then((res) => {
@@ -102,10 +107,8 @@ export default {
           .then(res => {
             console.log(res)
             if (res.data.status === 0) {
-              // this.error = res.data.message
               this.code = 1
             } else if (res.data.password === 0) {
-              // this.error = res.data.message
               this.code = 2
             } else if (res.data.id === 0) {
               this.code = 3
