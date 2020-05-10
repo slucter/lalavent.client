@@ -38,9 +38,17 @@
                 <i class="fas fa-history mr-1 mt-1"></i>
                 History Event
               </router-link>
-              <router-link to="/" class="dropdown-item" v-if="this.local.role == 2">
+              <router-link :to="`/${this.local.id}/event-statistic`" class="dropdown-item" v-if="this.local.role == 2">
                 <i class="fas fa-chart-bar mr-1 mt-1"></i>
                 Statistik Event
+              </router-link>
+              <router-link to="/admin/admin-organizer-list" class="dropdown-item" v-if="this.local.role == 3">
+                <i class="fas fa-users mr-1 mt-1"></i>
+                Organizers
+              </router-link>
+              <router-link to="/admin/admin-event-list" class="dropdown-item" v-if="this.local.role == 3">
+                <i class="fas fa-calendar-alt mr-1 mt-1"></i>
+                Events
               </router-link>
               <div class="dropdown-divider"></div>
               <router-link to="/logout" class="dropdown-item">

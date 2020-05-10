@@ -1,5 +1,5 @@
 <template>
-  <div class="container-footer evn-secondary">
+  <div class="container-footer d-flex flex-wrap evn-secondary">
     <div class="body-footer">
       <p class="evn-title">Tentang Kami</p>
     </div>

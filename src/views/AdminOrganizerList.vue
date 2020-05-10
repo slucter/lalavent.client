@@ -1,25 +1,11 @@
 <template>
-  <section class="admin-org-list mt-4">
-    <nav class="d-flex justify-content-center mb-2 mt-4">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-1 btn-secondary active pl-4">
-          <router-link to="/admin/admin-organizer-list">
-            <input type="radio" name="options" id="option1" checked> Daftar Penyelenggara
-          </router-link>
-        </label>
-        <label class="btn btn-2 evn-secondary pr-4">
-          <router-link to="/admin/admin-event-list">
-            <input type="radio" name="options" id="option2"> Daftar Acara
-          </router-link>
-        </label>
-      </div>
-    </nav>
+  <section class="admin-org-list">
     <!-- Table -->
-    <tables
+    <tables class="my-3"
       hash="#"
       th1="Nama"
       th2="Email"
-      th3="Alamat"
+      th3="Status"
       th4="Tindakan"
       title="Daftar Penyelenggara"
       @next="nextPage"
@@ -32,14 +18,30 @@
         <td>{{ data.id }}</td>
         <td>{{ data.name }}</td>
         <td>{{ data.email }}</td>
-        <td>{{ data.address }}</td>
-        <td class="d-flex">
-          <div class="btn btn-sm btn-outline-light approved mr-2" @click="setuju(data.id)">
-            <i class="fas fa-user-check mr-2"></i>Setujui
-          </div>
-          <div class="btn btn-sm btn-outline-light delete" @click="hapus(data.id)">
-            <i class="fas fa-trash mr-2"></i>Hapus
-          </div>
+        <td>{{ data.status == 2 ? 'Disetujui' : data.status == 3 ? 'Tidak Disetujui' : 'Menunggu' }}</td>
+        <td class="d-flex" v-if="data.status == 2">
+          <button class="btn btn-sm evn-btn approved mr-2" @click="setuju(data.id)">
+            <i class="fas fa-user-check mr-2"></i>Setuju
+          </button>
+          <button class="btn btn-sm btn-outline-light delete" @click="hapus(data.id)">
+            <i class="fas fa-ban mr-2"></i>Batal
+          </button>
+        </td>
+        <td class="d-flex" v-else-if="data.status == 3">
+          <button class="btn btn-sm btn-outline-light approved mr-2" @click="setuju(data.id)">
+            <i class="fas fa-user-check mr-2"></i>Setuju
+          </button>
+          <button class="btn btn-sm evn-btn delete" @click="hapus(data.id)">
+            <i class="fas fa-ban mr-2"></i>Batal
+          </button>
+        </td>
+        <td class="d-flex" v-else>
+          <button class="btn btn-sm btn-outline-light approved mr-2" @click="setuju(data.id)">
+            <i class="fas fa-user-check mr-2"></i>Setuju
+          </button>
+          <button class="btn btn-sm btn-outline-light delete" @click="hapus(data.id)">
+            <i class="fas fa-ban mr-2"></i>Batal
+          </button>
         </td>
       </tr>
     </tbody>
