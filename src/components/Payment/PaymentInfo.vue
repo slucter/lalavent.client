@@ -89,7 +89,7 @@
                 </tr>
               </tbody>
             </table>
-            <Button @btn-click="createTiket" data-toggle="modal" data-target="#success-payment">Bayar Tiket</Button>
+            <Button @btn-click="createTiket" data-toggle="modal" data-target="#success-payment">Beli Tiket</Button>
           </div>
         </div>
       </div>
@@ -112,7 +112,6 @@ export default {
     return {
       adminFee: 5000,
       harga: 0
-      // hargaAwal: this.events.event.price
     }
   },
   components: {
@@ -129,7 +128,7 @@ export default {
     createTiket () {
       axios
         .post('http://192.168.1.97:5000/api/lalavent/ticket', {
-          event_id: this.events.event.event_id,
+          event_id: this.events.id,
           user_id: this.local.id,
           price: this.events.price
         },
@@ -146,16 +145,10 @@ export default {
           console.log(error)
         })
     }
-    // hitung () {
-    //   this.harga = this.adminFee + this.hargaAwal
-    // }
   },
   computed: {
     ...mapState('user', ['local'])
   }
-  // created () {
-  //   this.hitung()
-  // }
 }
 </script>
 
