@@ -8,7 +8,7 @@
       <div class="title-login">
         <h5 class="evn-title">Daftar</h5>
       </div>
-      <form class="mt-2 text-white">
+      <div class="mt-2 text-white">
         <div class="form-group">
           <label for="title" class="evn-title">Nama<span class="star">*</span></label>
           <input type="text" placeholder="Lalavent" :class="$v.name.$error ? 'form-control is-invalid' : 'form-control'" v-model="name">
@@ -27,7 +27,7 @@
         <div class="mt-4">
           <Button @btn-click="submitEvent">Daftar</Button>
         </div>
-      </form>
+      </div>
       <div class="account evn-title">
         <p>Sudah punya akun? <router-link to="/login" class="sign">Masuk</router-link></p>
         <p class="event">Atau buat eventmu sendiri <router-link to="/register-organizer" class="sign"> sekarang! </router-link></p>
@@ -70,7 +70,7 @@ export default {
         return
       } else {
         console.log('Submit ok')
-        axios.post('http://192.168.1.97:5000/api/lalavent/auth/signup', {
+        axios.post(process.env.VUE_APP_BASE_URL + 'auth/signup', {
           name: this.name, email: this.email, password: this.password
         })
           .then((res) => {
@@ -142,5 +142,69 @@ export default {
       }
     }
   }
+}
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+.container-login{
+  display: flex;
+  flex-direction: column;
+  .left-login{
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../assets/img/event.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 150px;
+    h1{
+      margin-left: 40px;
+      margin-top: 50px;
+      margin-bottom: 30px;
+      margin-right: 0;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      span{
+        color: #f1c40f;
+      }
+    }
+  }
+  .right-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 35px;
+    margin: 0;
+    .title-login{
+      h5{
+        font-size: 50px;
+        font-weight: bolder;
+        color: white;
+      }
+    }
+    label {
+      font-size: 1.5rem;
+    }
+    .star {
+      color: #f1c40f;
+    }
+    .is-invalid {
+      border-color: red !important;
+    }
+    .invalid-feedback {
+      color: red;
+    }
+    .account{
+      .event{
+        margin: 0 0;
+      }
+      p{
+        margin: 15px 0 0;
+        color: white;
+        .sign{
+          color: #f1c40f;
+        }
+      }
+    }
+  }
+}
 }
 </style>

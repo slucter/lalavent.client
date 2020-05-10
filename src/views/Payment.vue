@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <EventName v-bind:event="myEvent"/>
+      <EventName v-bind:eventd="myEvent"/>
       <PersonalUser v-bind:users="user"/>
       <PaymentInfo v-bind:events="myEvent"/>
     </div>
@@ -29,9 +29,9 @@ export default {
   },
   methods: {
     getEvent () {
-      axios.get(`http://192.168.1.97:5000/api/lalavent/event/${this.$route.params.idEvent}`)
+      axios.get(process.env.VUE_APP_BASE_URL + `event/${this.$route.params.idEvent}`)
         .then((res) => {
-          this.myEvent = res.data
+          this.myEvent = res.data.event
         })
         .catch((error) => {
           console.log(error)
@@ -41,7 +41,7 @@ export default {
   },
   mounted () {
     this.getEvent()
-    this.getUserById()
+    this.getUserById(this.local.id)
   },
   computed: {
     ...mapState('user', ['user']),

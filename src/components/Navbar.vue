@@ -26,7 +26,7 @@
             <i class="fas fa-calendar-alt mr-1"></i>
             <router-link to="/event" class="nav-link">Semua Event</router-link>
           </li>
-          <li class="nav-item mr-4 dropdown" v-if="this.local">
+          <li class="nav-item mr-4 dropdown" v-if="this.local.id !== null">
             <img :src="this.user.image" alt="profile-img" class="profile-img mr-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ this.user.name }}</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -34,13 +34,21 @@
                 <i class="fas fa-user-cog mr-1"></i>
                 Edit Profile
               </router-link>
-              <router-link to="/history" class="dropdown-item" v-if="this.local.role == 1">
+              <router-link to="/dashboard" class="dropdown-item" v-if="this.local.role == 1">
                 <i class="fas fa-history mr-1 mt-1"></i>
                 History Event
               </router-link>
-              <router-link to="/" class="dropdown-item" v-if="this.local.role == 2">
+              <router-link :to="`/${this.local.id}/event-statistic`" class="dropdown-item" v-if="this.local.role == 2">
                 <i class="fas fa-chart-bar mr-1 mt-1"></i>
                 Statistik Event
+              </router-link>
+              <router-link to="/admin/admin-organizer-list" class="dropdown-item" v-if="this.local.role == 3">
+                <i class="fas fa-users mr-1 mt-1"></i>
+                Organizers
+              </router-link>
+              <router-link to="/admin/admin-event-list" class="dropdown-item" v-if="this.local.role == 3">
+                <i class="fas fa-calendar-alt mr-1 mt-1"></i>
+                Events
               </router-link>
               <div class="dropdown-divider"></div>
               <router-link to="/logout" class="dropdown-item">

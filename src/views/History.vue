@@ -9,7 +9,7 @@
       title="History Event"
     >
     <tbody v-for="event in organizerEvents" :key="event.id">
-      <tr>
+      <tr v-if="event.date < new Date().toISOString().slice(0, 10).toString()">
         <td>{{event.id}}</td>
         <td>{{event.title}}</td>
         <td>{{event.date}}</td>

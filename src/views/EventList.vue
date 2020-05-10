@@ -7,13 +7,13 @@
           :key="data.id"
           :eventImage="data.image"
           :eventTitle="data.title"
+          :linkDetail="'/event/detail/' + data.id"
           :eventCategory="data.category.name"
           :eventDate="data.date"
           :eventStart="data.time_start"
           :eventEnd="data.time_end"
           :eventLocation="data.location"
-          :eventOrganizer="'Arkademy'"
-          :eventStatus="data.status === 1 ? 'Status online' : 'offline'"
+          :eventOrganizer="data.user.name"
           />
         </div>
 
@@ -36,9 +36,9 @@ export default {
   name: 'EventList',
   data () {
     return {
-      local: {
-        id: null
-      },
+      // local: {
+      //   id: null
+      // },
       eventsKuy: []
     }
   },
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     getAllEvent () {
-      axios.get('http://192.168.1.97:5000/api/lalavent/event')
+      axios.get(process.env.VUE_APP_BASE_URL + 'event')
         .then((result) => {
           this.eventsKuy = result.data.events.rows
         })

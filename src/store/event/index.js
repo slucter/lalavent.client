@@ -36,8 +36,8 @@ export default ({
       const ongoingEvent = events.filter(event => event.date === dateStr)
       state.ongoingEvent = ongoingEvent
       // console.log(events[0].date)
-      // console.log(state.ongoingEvent[0].title)
-      // console.log(state.organizerEvents)
+      console.log(state.ongoingEvent[0].title)
+      console.log(state.organizerEvents)
     },
     search (state, data) {
       state.events = data
@@ -57,6 +57,7 @@ export default ({
     organizerPageEvents (state, data) {
       state.organizerPageEvents = data
       console.log(state.organizerPageEvents)
+      console.log(state.search)
     }
   },
   actions: {

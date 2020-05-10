@@ -29,6 +29,10 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+    // props: true,
+    // meta: {
+    //   requiresAuth: true
+    // }
   },
   {
     path: '/event',
@@ -41,7 +45,7 @@ const routes = [
     component: EventDetail
   },
   {
-    path: '/event/squad',
+    path: '/event/squad/:id',
     name: 'Penyelenggara',
     component: Penyelenggara
   },
@@ -49,6 +53,10 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+    // props: true,
+    // meta: {
+    //   requiresVisitor: true
+    // }
   },
   {
     path: '/register',

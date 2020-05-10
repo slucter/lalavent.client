@@ -77,7 +77,7 @@
               <tbody class="evn-desc">
                 <tr>
                   <td colspan="2">Harga Tiket</td>
-                  <td class="text-center">Rp {{events.event.price}}</td>
+                  <td class="text-center">Rp {{events.price}}</td>
                 </tr>
                 <tr>
                   <td colspan="2">Admin fee</td>
@@ -85,53 +85,72 @@
                 </tr>
                 <tr>
                   <td colspan="2">Total Pembayaran</td>
-                  <td class="text-center">Rp {{this.adminFee + events.event.price}}</td>
+                  <td class="text-center">Rp {{this.adminFee + events.price}}</td>
                 </tr>
               </tbody>
             </table>
-            <Button>Bayar Tiket</Button>
+            <Button @btn-click="createTiket" data-toggle="modal" data-target="#success-payment">Beli Tiket</Button>
           </div>
         </div>
       </div>
     </div>
+    <modal title="Update Personal Profil" button="Ok" id="success-payment" dismiss="modal" v-on:ticket="ticket">
+      <p>Tiket Created!</p>
+    </modal>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import axios from 'axios'
 import Button from '@/components/Button'
+import modal from '@/components/Modal.vue'
 export default {
   name: 'PaymentInfo',
   props: ['events'],
   data () {
     return {
       adminFee: 5000,
-      price: 25000,
-      qty: 2
+      harga: 0
     }
   },
   components: {
-    Button
+    Button,
+    modal
   },
   methods: {
+    ticket () {
+      this.$router.push('/dashboard')
+    },
     applyPayment () {
       const cardName = document.querySelector('.one')
       const check = document.querySelector('.checked')
       cardName.classList.toggle('border-check')
       check.classList.toggle('hide')
     },
-    CreateTiket () {
+    createTiket () {
       axios
-        .post('http://192.168.1.97:5000/api/lalavent/ticket')
+        .post(process.env.VUE_APP_BASE_URL + 'ticket', {
+          event_id: this.events.id,
+          user_id: this.local.id,
+          price: this.events.price
+        },
+        {
+          headers: { 'baca-bismillah': this.local.token }
+        })
+        .then(res => {
+          console.log(res)
+          // setTimeout(() => {
+          //   this.$router.push('/dashboard')
+          // }, 2000)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   computed: {
-    total () {
-      return this.adminFee + this.harga
-    },
-    harga () {
-      return this.qty * this.price
-    }
+    ...mapState('user', ['local'])
   }
 }
 </script>
@@ -169,6 +188,7 @@ export default {
   color: #f39c12;
   font-weight: bold;
   font-size: 18px;
+  display: none;
 }
 .hide{
   display: none;
