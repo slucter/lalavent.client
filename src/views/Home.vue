@@ -59,7 +59,6 @@ export default {
     sEasy,
     Jumbotron
     // SmallFooter
-
   },
   computed: {
     eventStatus () {

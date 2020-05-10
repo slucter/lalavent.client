@@ -7,12 +7,21 @@ Vue.use(Vuex)
 export default ({
   namespaced: true,
   state: {
-    organizers: []
+    organizers: [],
+    totalOrganizers: []
   },
   mutations: {
     organizers (state, data) {
       state.organizers = data
-      console.log(state.organizers)
+      // console.log(state.organizers)
+    },
+    search (state, data) {
+      state.organizers = data
+      // console.log(data)
+    },
+    totalEvent (state, data) {
+      state.totalOrganizers = data
+      console.log(state.totalOrganizers)
     }
   },
   actions: {
@@ -20,7 +29,49 @@ export default ({
       axios
         .get(process.env.VUE_APP_BASE_URL + 'user/role/2')
         .then(res => {
-          context.commit('organizers', res.data.user.rows)
+          context.commit('organizers', res.data.users.rows)
+        })
+    },
+    getAllPages (context, page) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'user/role/2?page=' + page)
+        .then(res => {
+          // console.log(res)
+          context.commit('organizers', res)
+        })
+    },
+    organizerNewest (context) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'user/role/2?time=DESC')
+        .then(res => {
+          // console.log(res)
+          context.commit('organizers', res.data.users.rows)
+        })
+    },
+    organizerOldest (context) {
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'user/role/2?time=ASC')
+        .then(res => {
+          // console.log(res)
+          context.commit('organizers', res.data.users.rows)
+        })
+    },
+    totalOrganizer (context) {
+      // console.log(process.env.VUE_APP_BASE_URL)
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'user/role/2')
+        .then(res => {
+          // console.log(res)
+          context.commit('totalEvent', res.data.users.count)
+        })
+    },
+    searchOrganizer (context, data) {
+      // console.log(data)
+      axios
+        .get(process.env.VUE_APP_BASE_URL + 'user/role/2?search=' + data)
+        .then(res => {
+          // console.log(res)
+          context.commit('search', res.data.users.rows)
         })
     },
     deleteOrganizer (context, { id, token }) {

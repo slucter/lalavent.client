@@ -22,10 +22,14 @@
       th3="Alamat"
       th4="Tindakan"
       title="Daftar Penyelenggara"
+      @next="nextPage"
+      @prev="prevPage"
+      @sort="sortBy"
+      @clicked="searchValue"
     >
     <tbody>
       <tr v-for="data in organizers" :key="data.id">
-        <td>1</td>
+        <td>{{ data.id }}</td>
         <td>{{ data.name }}</td>
         <td>{{ data.email }}</td>
         <td>{{ data.address }}</td>
@@ -65,12 +69,13 @@ export default {
   },
   data () {
     return {
-      datas: 5,
-      no: 0
+      page: 1,
+      totalPage: 0,
+      sort: 0
     }
   },
   methods: {
-    ...mapActions('admin', ['getAllOrganizers', 'deleteOrganizer', 'approveOrganizer']),
+    ...mapActions('admin', ['getAllOrganizers', 'deleteOrganizer', 'approveOrganizer', 'searchOrganizer', 'organizerOldest', 'organizerNewest']),
     setuju (id) {
       console.log('Setuju' + id)
       this.approveOrganizer(id)
@@ -78,6 +83,46 @@ export default {
     hapus (id) {
       // console.log(id)
       this.deleteOrganizer({ id: id, token: this.local.token })
+    },
+    searchValue () {
+      // console.log(this.search)
+      this.searchOrganizer(this.search)
+    },
+    sortBy () {
+      if (this.sort === 0) {
+        this.sort = 1
+        console.log(this.sort)
+        this.organizerOldest()
+      } else {
+        this.sort = 0
+        console.log(this.sort)
+        this.organizerNewest()
+      }
+    },
+    nextPage () {
+      this.total()
+      if (this.page < this.totalPage && this.page !== this.totalPage) {
+        this.page = this.page + 1
+      } else {
+        this.page = this.totalPage
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
+    },
+    prevPage () {
+      this.total()
+      if (this.page > 0 && this.page !== 1) {
+        this.page -= 1
+      } else {
+        this.page = 1
+      }
+      this.getAllPages(this.page)
+      // console.log(this.page)
+    },
+    total () {
+      // console.log(this.totalEvents)
+      this.totalPage = Math.ceil(this.totalEvents / 10)
+      // console.log(this.totalPage)
     }
   },
   mounted () {
@@ -87,7 +132,8 @@ export default {
   computed: {
     ...mapState('admin', ['organizers']),
     ...mapState('event', ['organizerEvents']),
-    ...mapState('user', ['user', 'local'])
+    ...mapState('user', ['user', 'local']),
+    ...mapState('general', ['search'])
   }
 }
 </script>
