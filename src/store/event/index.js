@@ -63,7 +63,7 @@ export default ({
         .get(process.env.VUE_APP_BASE_URL + 'event/user/' + organizerId)
         .then(res => {
           // console.log(res)
-          context.commit('organizerEvents', res.data)
+          context.commit('organizerEvents', res.data.event.rows)
         })
     }
   }

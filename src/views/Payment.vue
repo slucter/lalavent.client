@@ -16,6 +16,7 @@ import PaymentInfo from '../components/Payment/PaymentInfo'
 import axios from 'axios'
 export default {
   name: 'Payment',
+  props: ['idEvent'],
   components: {
     EventName,
     PersonalUser,
@@ -28,7 +29,7 @@ export default {
   },
   methods: {
     getEvent () {
-      axios.get('http://192.168.1.97:5000/api/lalavent/event/11')
+      axios.get(`http://192.168.1.97:5000/api/lalavent/event/${this.$route.params.idEvent}`)
         .then((res) => {
           this.myEvent = res.data
         })

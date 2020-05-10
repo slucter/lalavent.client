@@ -9,7 +9,7 @@
       title="History Event"
     >
     <tbody v-for="event in organizerEvents" :key="event.id">
-      <tr v-if="event.date < new Date().toISOString().slice(0, 10).toString()">
+      <tr>
         <td>{{event.id}}</td>
         <td>{{event.title}}</td>
         <td>{{event.date}}</td>
@@ -38,10 +38,11 @@ export default {
     ...mapActions('event', ['getEventsByOrganizer'])
   },
   mounted () {
-    this.getEventsByOrganizer()
+    this.getEventsByOrganizer(this.local.id)
   },
   computed: {
-    ...mapState('event', ['organizerEvents'])
+    ...mapState('event', ['organizerEvents']),
+    ...mapState('user', ['local'])
   }
 }
 </script>
