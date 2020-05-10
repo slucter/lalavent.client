@@ -34,7 +34,7 @@
                 <i class="fas fa-user-cog mr-1"></i>
                 Edit Profile
               </router-link>
-              <router-link to="/history" class="dropdown-item" v-if="this.local.role == 1">
+              <router-link to="/dashboard" class="dropdown-item" v-if="this.local.role == 1">
                 <i class="fas fa-history mr-1 mt-1"></i>
                 History Event
               </router-link>
