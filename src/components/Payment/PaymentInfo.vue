@@ -89,29 +89,35 @@
                 </tr>
               </tbody>
             </table>
-            <Button>Bayar Tiket</Button>
+            <Button @btn-click="createTiket" data-toggle="modal" data-target="#success-payment">Bayar Tiket</Button>
           </div>
         </div>
       </div>
     </div>
+    <modal title="Update Personal Profil" button="Ok" id="success-payment" dismiss="modal">
+      <p>Tiket Created!</p>
+    </modal>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import axios from 'axios'
 import Button from '@/components/Button'
+import modal from '@/components/Modal.vue'
 export default {
   name: 'PaymentInfo',
   props: ['events'],
   data () {
     return {
       adminFee: 5000,
-      price: 25000,
-      qty: 2
+      harga: 0
+      // hargaAwal: this.events.event.price
     }
   },
   components: {
-    Button
+    Button,
+    modal
   },
   methods: {
     applyPayment () {
@@ -120,19 +126,36 @@ export default {
       cardName.classList.toggle('border-check')
       check.classList.toggle('hide')
     },
-    CreateTiket () {
+    createTiket () {
       axios
-        .post('http://192.168.1.97:5000/api/lalavent/ticket')
+        .post('http://192.168.1.97:5000/api/lalavent/ticket', {
+          event_id: this.events.event.event_id,
+          user_id: this.local.id,
+          price: this.events.event.price
+        },
+        {
+          headers: { 'baca-bismillah': this.local.token }
+        })
+        .then(res => {
+          console.log(res)
+          setTimeout(() => {
+            this.$router.push('/dashboard')
+          }, 2000)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
+    // hitung () {
+    //   this.harga = this.adminFee + this.hargaAwal
+    // }
   },
   computed: {
-    total () {
-      return this.adminFee + this.harga
-    },
-    harga () {
-      return this.qty * this.price
-    }
+    ...mapState('user', ['local'])
   }
+  // created () {
+  //   this.hitung()
+  // }
 }
 </script>
 
@@ -169,6 +192,7 @@ export default {
   color: #f39c12;
   font-weight: bold;
   font-size: 18px;
+  display: none;
 }
 .hide{
   display: none;

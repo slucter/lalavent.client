@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <EventName v-bind:event="myEvent"/>
+      <EventName v-bind:eventd="myEvent"/>
       <PersonalUser v-bind:users="user"/>
       <PaymentInfo v-bind:events="myEvent"/>
     </div>
@@ -41,7 +41,7 @@ export default {
   },
   mounted () {
     this.getEvent()
-    this.getUserById()
+    this.getUserById(this.local.id)
   },
   computed: {
     ...mapState('user', ['user']),
